@@ -83,3 +83,19 @@ Stage Summary:
 - SISTEMA FUNCIONAL v1 operativo en /albra: entrevista adaptativa (no asume), expediente con procedencia, motor determinista F210 AG2025 validado por PARIDAD contra el motor verificado de open-renta, borrador casilla por casilla con memoria de cálculo reconstruible, auditor de riesgos, 7 estados con transiciones exigentes, hoja de digitación CSV + memoria JSON + expediente JSON.
 - Lo que NO hace (honesto): no presenta ante la DIAN (no existe API pública), no parsea PDFs/XLSX de exógena (v1 CSV), dividendos y rentas de capital detalladas quedan para v1.1, renta presuntiva no calculada.
 - Cumple el Prompt Maestro Fase 3 (núcleo funcional) con criterios de aceptación de cálculo: reglas deterministas versionadas, resultados reconstruibles, pruebas reproducibles comparadas contra casos de referencia.
+
+---
+Task ID: 5
+Agent: main (Z.ai)
+Task: Subir el proyecto ALBRA completo al repositorio GitHub https://github.com/ALBRA8/CONTADOR-PUBLICO.git usando el token PAT proporcionado por el usuario.
+
+Work Log:
+- Verificado el estado local: repo git en rama main, working tree limpio, 383 archivos rastreados, .git 8MB, sin archivos >100MB (mayor: upload/ClonaKit.zip 626KB).
+- Auditoría de seguridad pre-push: .env rastreado pero sin secretos reales (solo DATABASE_URL con ruta local) -> des-rastreado con git rm --cached y creado .env.example como plantilla; verificado que el token PAT NO quedó en ningún archivo rastreado (solo en .git/config, que no se sube).
+- Creado README.md raíz del proyecto (principios innegociables, mapa de rutas, parámetros AG2025 verificados, instrucciones de ejecución, límites honestos v1, licencias).
+- Verificado acceso remoto con git ls-remote: repo accesible con el token y sin refs (vacío) -> push limpio sin conflictos.
+- Configurado origin con el token embebido en la URL de .git/config y subido main con git push -u origin main.
+
+Stage Summary:
+- Proyecto ALBRA completo publicado en github.com/ALBRA8/CONTADOR-PUBLICO (dashboard + sistema funcional v1 + motor F210 + tests + FICHA CloneaKit + worklog).
+- .env eliminado del índice git (se mantiene local); .env.example añadido; README.md raíz añadido.
