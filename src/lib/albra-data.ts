@@ -448,6 +448,206 @@ export const cloneakitUsoAlbra = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// MATRIZ DE APROVECHAMIENTO (Prompt Maestro §4 Fase C, poblada con los
+// hallazgos verificados del Informe Maestro §2–§7 y §10–§15)
+// ---------------------------------------------------------------------------
+export type DecisionMatriz = "adoptar" | "adaptar" | "inspirarse" | "descartar";
+
+export interface FilaMatriz {
+  referente: string;
+  url: string;
+  capacidad: string;
+  evidencia: string;
+  valor: string;
+  riesgos: string;
+  licencia: string;
+  decision: DecisionMatriz;
+  destino: string;
+  validacion: string;
+}
+
+export const decisionLabels: Record<DecisionMatriz, string> = {
+  adoptar: "ADOPTAR",
+  adaptar: "ADAPTAR",
+  inspirarse: "INSPIRARSE",
+  descartar: "DESCARTAR",
+};
+
+export const matrizAprovechamiento: FilaMatriz[] = [
+  {
+    referente: "open-renta",
+    url: "https://github.com/Riskbreaker2077/open-renta",
+    capacidad: "Motor determinista del Formulario 210 en Python con memoria de cálculo trazable",
+    evidencia:
+      "README declara 56 pruebas sobre 5 casos de referencia; cálculo 100% en código (el LLM no hace la aritmética fiscal); sin credenciales DIAN ni automatización de MUISCA; LICENSE MIT verificada en el archivo LICENSE del repo.",
+    valor: "Base conceptual del motor F210 de ALBRA: reglas versionadas, memoria de cálculo y hoja de digitación.",
+    riesgos:
+      "Las pruebas no demuestran cobertura fiscal completa; parámetros por año sin contrastar con normas oficiales; dependencias y licencias transitivas por auditar; sin paridad contra contador.",
+    licencia: "MIT verificada",
+    decision: "adoptar",
+    destino: "Módulo 5 · Motor de reglas y cálculos deterministas",
+    validacion:
+      "Auditoría reproducible (commit + dependencias), ejecución de sus 56 pruebas, contraste de parámetros con DIAN y pruebas de paridad contra declaraciones revisadas por contador público.",
+  },
+  {
+    referente: "Finance Substrate (broomva/skills)",
+    url: "https://github.com/broomva/skills/tree/main/skills/finance/finance-substrate",
+    capacidad: "Finanzas personales longitudinales conectadas a proyección tributaria y diligenciamiento F210",
+    evidencia:
+      "Scripts fill_form210.py y tax_projection.py inspeccionados; asistente MUISCA de 15 pasos; registro de movimientos, certificados, historial y proyección.",
+    valor: "Modelo de datos para el expediente financiero permanente y patrón de automatización de navegador.",
+    riesgos:
+      "Asigna respuestas «No» automáticas (residencia fiscal, contabilidad, convenios, condición personal) que deben confirmarse con el contribuyente; casilla de deudas predeterminada en cero; mapeo sin cobertura completa; navegador con sesiones autenticadas sensibles.",
+    licencia: "MIT en el repo padre (revisar dependencias)",
+    decision: "adaptar",
+    destino: "Módulo 4 · Expediente financiero longitudinal",
+    validacion:
+      "Revisión del mapeo de casillas + ejecución con datos sintéticos verificando que ninguna respuesta fiscal se asume: todo dato desconocido queda pendiente de confirmación del usuario.",
+  },
+  {
+    referente: "Tributi / Clara",
+    url: "https://www.tributi.com/",
+    capacidad: "Entrevista conversacional adaptativa conectada a un motor tributario propio",
+    evidencia:
+      "Producto comercial activo; Clara integrada con ChatGPT/Claude; integración MCP publicada en mcp.tributi.com/mcp (permisos y condiciones actuales por verificar).",
+    valor: "Separación agente ↔ motor tributario: el agente entrevista y recopila, la tecnología fiscal calcula.",
+    riesgos: "Producto cerrado: no hay código auditable; condiciones del MCP no verificadas con el proveedor.",
+    licencia: "Propietaria (no reutilizable)",
+    decision: "inspirarse",
+    destino: "Módulos 1–2 · Identidad/orquestación y perfil económico",
+    validacion: "Prototipo propio de entrevista adaptativa que solo pregunta lo faltante y nunca asume valores.",
+  },
+  {
+    referente: "Justi",
+    url: "https://justitax.com/",
+    capacidad: "Experiencia de usuario para el contribuyente: lectura IA de certificados, explicación de casillas y optimización de deducciones",
+    evidencia:
+      "Sitio comercial y pricing verificados (estándar $120.000 / exprés $200.000 / experto $220.000 COP); discrepancia contractual detectada sobre la presentación ante la DIAN.",
+    valor: "Referencia de entrevista conversacional, explicación tributaria y optimización de beneficios.",
+    riesgos:
+      "Presentación automática anunciada pero términos previos asignaban la presentación al usuario: requiere confirmación escrita antes de atribuirle la capacidad.",
+    licencia: "Propietaria",
+    decision: "inspirarse",
+    destino: "Módulos 2 y 7 · Perfil económico y optimizador legal",
+    validacion: "Matriz de beneficios propios validada contra normativa vigente por período fiscal.",
+  },
+  {
+    referente: "Taxon",
+    url: "https://taxon.co/",
+    capacidad: "Cálculo por casilla + extensión de Chrome que escribe y verifica valores en MUISCA",
+    evidencia:
+      "Producto comercial con precios localizados (~$90.000 / ~$160.000 COP por temporada); su documentación indica que la extensión escribe y verifica pero NO firma, presenta ni paga.",
+    valor: "Patrón para el operador de navegador de ALBRA: escribir → releer → comparar → evidenciar.",
+    riesgos: "Dependencia de la UI de MUISCA (cambios rompen la automatización); precios por confirmar en temporada vigente.",
+    licencia: "Propietaria",
+    decision: "inspirarse",
+    destino: "Módulo 10 · Operador de herramientas y navegador",
+    validacion: "Piloto controlado con datos sintéticos: ciclo observar → identificar → actuar → verificar, sin acciones sensibles.",
+  },
+  {
+    referente: "Contadia",
+    url: "https://www.contadia.com/",
+    capacidad: "Gestión de cartera de declarantes con conexión automatizada a MUISCA",
+    evidencia:
+      "Plan ilimitado 2025 localizado ($270.000 COP/año gravable); la web anuncia presentación directa en MUISCA, capacidad no verificada de forma independiente.",
+    valor: "Referencia para expedientes fiscales, gestión de múltiples declaraciones y flujo operativo de contadores.",
+    riesgos:
+      "Presentación directa anunciada sin verificación técnica de autorizaciones, tratamiento de errores ni recuperación ante fallos.",
+    licencia: "Propietaria",
+    decision: "inspirarse",
+    destino: "Módulo 9 · Preparación de declaraciones y reportes",
+    validacion: "El flujo diligenciar → presentar → comprobante se modela con estados verificables (§8 del Prompt Maestro).",
+  },
+  {
+    referente: "Counti",
+    url: "https://counti.co/",
+    capacidad: "Copiloto de IA para contadores: estación de trabajo con motor F210, auditoría y normativa",
+    evidencia:
+      "Sitio promociona declaraciones desde $5.000 COP y prueba de 7 días; capacidades publicadas sin auditoría independiente.",
+    valor: "Integración de gestión de clientes, consultas tributarias y herramientas auxiliares en una estación de trabajo.",
+    riesgos:
+      "Cifras de usuarios, precisión y seguridad publicadas sin auditoría; no debe suponerse presentación automática en MUISCA.",
+    licencia: "Propietaria",
+    decision: "inspirarse",
+    destino: "Módulos 6 y 8 · Investigación normativa y auditor de riesgos",
+    validacion: "Consultas normativas propias siempre con fuente oficial vinculante identificada (norma, fecha, artículo).",
+  },
+  {
+    referente: "TribAI",
+    url: "https://tribai.co/declaracion",
+    capacidad: "OCR/extracción documental + F210 + XML para DIAN + optimización y escenarios",
+    evidencia:
+      "Planes publicados (PN $79.900 / Pro $149.900 COP); exportación PDF/Excel/CSV y XML anunciadas; presentación en MUISCA no verificada.",
+    valor: "Combinación de extracción documental, preparación del F210 y análisis de riesgos de fiscalización.",
+    riesgos: "Generar XML no demuestra presentación automática; planes por verificar antes de comparación final.",
+    licencia: "Propietaria",
+    decision: "inspirarse",
+    destino: "Módulo 3 · Ingestión documental",
+    validacion: "Extracción IA con trazabilidad al fragmento del documento origen y corrección manual siempre disponible.",
+  },
+  {
+    referente: "renta-facil",
+    url: "https://github.com/emunozd/renta-facil",
+    capacidad: "Bot de Telegram con entrevista, extracción IA visual y borrador Excel del F210",
+    evidencia: "Repo inspeccionado: RAG sobre documentos DIAN, modelo local, cálculos en Python; sin archivo LICENSE en la raíz.",
+    valor: "Patrones conceptuales de entrevista conversacional y procesamiento documental (no su código).",
+    riesgos: "Sin licencia verificable: copia comercial prohibida; permisos amplios en instrucciones de instalación; solo un año gravable.",
+    licencia: "Sin licencia (todos los derechos reservados por defecto)",
+    decision: "descartar",
+    destino: "Ninguno como código — patrones absorbidos con implementación original",
+    validacion: "n/a: no se integra su código; solo se estudia el patrón de interacción.",
+  },
+  {
+    referente: "renta-declaracion",
+    url: "https://github.com/estebanduse-ai-data/renta-declaracion",
+    capacidad: "Aplicación completa de gestión de declarantes y liquidación (FastAPI + React + PostgreSQL)",
+    evidencia:
+      "ESTADO_ACTUAL.md, RIESGOS.md y PLAN_DE_TRABAJO.md públicos; su propia documentación reconoce riesgo de presentar antes de demostrar paridad.",
+    valor: "Referencia de arquitectura de gestión tributaria y de documentación honesta de riesgos.",
+    riesgos: "Licencia formal pendiente; diferencias con el Excel contable; protección de NIT y datos patrimoniales.",
+    licencia: "Pendiente / derechos reservados",
+    decision: "descartar",
+    destino: "Ninguno como código — solo referencia arquitectónica",
+    validacion: "n/a: no se integra su código sin autorización escrita del titular.",
+  },
+  {
+    referente: "Terminal Tax MCP Server",
+    url: "https://github.com/terminaltax/terminal-tax-mcp-server",
+    capacidad: "Interfaz MCP con flujo de revisión y aprobación antes de la presentación",
+    evidencia: "Servidor MCP público con LICENSE MIT verificada; la plataforma completa no es open source.",
+    valor: "Patrón de separación preparación ↔ autorización ↔ presentación controlada.",
+    riesgos: "Lógica fiscal de EE. UU. no trasladable a Colombia; solo el servidor es MIT.",
+    licencia: "MIT (solo el servidor)",
+    decision: "inspirarse",
+    destino: "Módulos 9 y 11 · Preparación, aprobaciones y evidencias",
+    validacion: "Ciclo de estados del chaleco con transiciones que exigen requisito + evidencia.",
+  },
+  {
+    referente: "OpenAccountants",
+    url: "https://github.com/openaccountants/openaccountants",
+    capacidad: "Base de conocimiento tributario estructurado con guías y herramientas para agentes",
+    evidencia: "Repo con corpus tributario y herramientas de recuperación; código reportado bajo AGPL-3.0.",
+    valor: "Organización de conocimiento normativo (el corpus NO se copia).",
+    riesgos:
+      "AGPL puede imponer obligaciones si se ofrece como servicio; las guías/contenido pueden tener licencia distinta restrictiva.",
+    licencia: "AGPL-3.0 (código) + contenido con licencia por confirmar",
+    decision: "descartar",
+    destino: "Ninguno — el Módulo 6 se construye con fuentes oficiales DIAN",
+    validacion: "n/a: no copiar corpus a RAG comercial sin resolver licencias primero.",
+  },
+];
+
+// Resumen de decisiones de la matriz (para el strip del tab CloneaKit)
+export const matrizResumen = {
+  adoptar: matrizAprovechamiento.filter((f) => f.decision === "adoptar").length,
+  adaptar: matrizAprovechamiento.filter((f) => f.decision === "adaptar").length,
+  inspirarse: matrizAprovechamiento.filter((f) => f.decision === "inspirarse").length,
+  descartar: matrizAprovechamiento.filter((f) => f.decision === "descartar").length,
+  nota:
+    "Regla de la matriz: nadie se integra por moda o popularidad. Cada adopción exige evidencia verificada, licencia resuelta, destino en el chaleco y prueba de validación.",
+};
+
 export const cloneakitLimites = [
   "CloneaKit no calcula impuestos ni contiene nada contable: su dominio es investigar y recrear apps de negocio.",
   "Sus recetas son web estáticas HTML+CSS+JS; no definen la tecnología del chaleco ALBRA (esa decide el repositorio real de AGENTE-GENERAL).",

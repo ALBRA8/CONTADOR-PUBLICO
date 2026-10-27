@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Wrench,
   Terminal,
@@ -15,6 +16,8 @@ import {
   CheckCircle2,
   Presentation,
   BookOpen,
+  Grid3X3,
+  ExternalLink,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +31,25 @@ import {
   cloneakitFormacion,
   cloneakitUsoAlbra,
   cloneakitLimites,
+  matrizAprovechamiento,
+  matrizResumen,
+  decisionLabels,
+  type DecisionMatriz,
 } from "@/lib/albra-data";
+
+const decisionStyles: Record<DecisionMatriz, string> = {
+  adoptar: "border-emerald-500/50 bg-emerald-500/15 text-emerald-300",
+  adaptar: "border-cyan-500/50 bg-cyan-500/15 text-cyan-300",
+  inspirarse: "border-amber-500/50 bg-amber-500/15 text-amber-300",
+  descartar: "border-rose-500/50 bg-rose-500/15 text-rose-300",
+};
+
+const decisionDot: Record<DecisionMatriz, string> = {
+  adoptar: "bg-emerald-400",
+  adaptar: "bg-cyan-400",
+  inspirarse: "bg-amber-400",
+  descartar: "bg-rose-400",
+};
 
 const herramientaIcons = [FileSearch, Camera, Play, CheckCircle2, Presentation];
 
@@ -255,6 +276,116 @@ function LimitesCard() {
   );
 }
 
+function MatrizCard() {
+  const [filtro, setFiltro] = useState<DecisionMatriz | "todas">("todas");
+  const filas = matrizAprovechamiento.filter((f) => filtro === "todas" || f.decision === filtro);
+  const contadores: { key: DecisionMatriz | "todas"; n: number; label: string }[] = [
+    { key: "todas", n: matrizAprovechamiento.length, label: "Todas" },
+    { key: "adoptar", n: matrizResumen.adoptar, label: "Adoptar" },
+    { key: "adaptar", n: matrizResumen.adaptar, label: "Adaptar" },
+    { key: "inspirarse", n: matrizResumen.inspirarse, label: "Inspirarse" },
+    { key: "descartar", n: matrizResumen.descartar, label: "Descartar" },
+  ];
+
+  return (
+    <Card className="border-primary/30">
+      <CardHeader>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Grid3X3 className="h-4 w-4 text-primary" />
+            <CardTitle className="text-base">
+              Matriz de aprovechamiento — entregable de la Fase C, ya poblada
+            </CardTitle>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {contadores.map((c) => (
+              <button
+                key={c.key}
+                type="button"
+                onClick={() => setFiltro(c.key)}
+                className={`rounded-md border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                  filtro === c.key
+                    ? "border-primary/60 bg-primary/15 text-primary"
+                    : "border-border bg-secondary/40 text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {c.label} · {c.n}
+              </button>
+            ))}
+          </div>
+        </div>
+        <CardDescription className="leading-relaxed">
+          Los 9 campos obligatorios del Prompt Maestro (§4·C): referente · capacidad · evidencia · valor ·
+          riesgos · licencia · decisión · destino · validación. Poblada con los hallazgos verificados del
+          Informe Maestro — {matrizResumen.nota.toLowerCase()}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-3 lg:grid-cols-2">
+        {filas.map((f) => (
+          <div
+            key={f.referente}
+            className="flex flex-col gap-2.5 rounded-lg border border-border bg-card/60 p-3.5"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-2">
+                <span className={`h-2 w-2 shrink-0 rounded-full ${decisionDot[f.decision]}`} />
+                <p className="truncate text-[13px] font-semibold text-foreground">{f.referente}</p>
+                {f.url ? (
+                  <a
+                    href={f.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="shrink-0 text-muted-foreground/60 transition-colors hover:text-cyan-300"
+                    aria-label={`Abrir ${f.referente}`}
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                ) : null}
+              </div>
+              <Badge
+                variant="outline"
+                className={`shrink-0 border text-[10px] font-bold tracking-wide ${decisionStyles[f.decision]}`}
+              >
+                {decisionLabels[f.decision]}
+              </Badge>
+            </div>
+            <div className="space-y-1.5 text-[11px] leading-relaxed">
+              <p>
+                <span className="font-semibold text-cyan-300">Capacidad:</span>{" "}
+                <span className="text-muted-foreground">{f.capacidad}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-cyan-300">Evidencia:</span>{" "}
+                <span className="text-muted-foreground">{f.evidencia}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-cyan-300">Valor:</span>{" "}
+                <span className="text-muted-foreground">{f.valor}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-amber-300">Riesgos:</span>{" "}
+                <span className="text-muted-foreground">{f.riesgos}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-cyan-300">Licencia:</span>{" "}
+                <span className="text-muted-foreground">{f.licencia}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-emerald-300">Destino:</span>{" "}
+                <span className="text-muted-foreground">{f.destino}</span>
+              </p>
+              <p>
+                <span className="font-semibold text-cyan-300">Validación:</span>{" "}
+                <span className="text-muted-foreground">{f.validacion}</span>
+              </p>
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
 export function CloneakitTab() {
   return (
     <div className="space-y-6">
@@ -263,6 +394,7 @@ export function CloneakitTab() {
         <HerramientasCard />
         <SalaLimpiaCard />
       </div>
+      <MatrizCard />
       <RecetasCard />
       <UsoAlbraCard />
       <LimitesCard />

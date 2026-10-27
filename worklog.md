@@ -44,3 +44,22 @@ Stage Summary:
 - CloneaKit documentado tal cual es (REA, sala limpia, recetas, herramientas) y mapeado a las Fases A–D del Prompt Maestro, con sus límites declarados.
 - 6 pestañas: Resumen 360 / Chaleco / CloneaKit real / Competencia COL / Open Source / Plan y Criterios.
 - Archivos clave: src/lib/albra-data.ts, src/app/page.tsx, src/components/dashboard/{header,kpi-strip,footer,resumen-tab,arquitectura-tab,cloneakit-tab,competencia-tab,opensource-tab,plan-tab}.tsx, src/app/layout.tsx, eslint.config.mjs.
+
+---
+Task ID: 3
+Agent: main (Z.ai)
+Task: Completar la corrección del dashboard con la Matriz de Aprovechamiento poblada (entregable Fase C del Prompt Maestro §4) y re-verificar todo el proyecto.
+
+Work Log:
+- Re-leídos COMPLETOS los 3 adjuntos reales: Informe Maestro (1.264 líneas, 16 secciones — extraídas 57 URLs únicas), Prompt Maestro del Constructor (789 líneas, 15 secciones) y ClonaKit.zip extraído (README, CLAUDE.md, herramientas/*.mjs, plantillas/FICHA.md).
+- Detectado el único faltante de la corrección previa: la Matriz de Aprovechamiento (9 campos: referente, capacidad, evidencia, valor, riesgos, licencia, decisión, destino, validación) existía solo como descripción de fase, no poblada.
+- Agregado al albra-data.ts: tipo DecisionMatriz, interfaz FilaMatriz, matrizAprovechamiento con 12 filas de datos reales (open-renta ADOPTAR · Finance Substrate ADAPTAR · Tributi/Clara, Justi, Taxon, Contadia, Counti, TribAI, Terminal Tax MCP INSPIRARSE · renta-facil, renta-declaracion, OpenAccountants DESCARTAR) y matrizResumen con conteos.
+- Cada fila usa hechos verificados del Informe Maestro: 56 pruebas/5 casos de open-renta, respuestas «No» automáticas y casilla deudas=0 de Finance Substrate, discrepancia contractual de Justi, precios COP exactos, licencias MIT/AGPL/sin-licencia con su estado de verificación.
+- Nuevo componente MatrizCard en cloneakit-tab.tsx: filtros interactivos por decisión (Todas/Adoptar/Adaptar/Inspirarse/Descartar), badges coloreados, enlace externo por referente, los 9 campos visibles por tarjeta; insertada entre UsoAlbraCard y LimitesCard.
+- Verificación completa: bun run lint 0 errores; tsc --noEmit en src/ 0 errores (solo errores preexistentes en examples/ y skills/, ajenos); HTTP 200 en /; Agent Browser: tab CloneaKit real carga, texto "Matriz de aprovechamiento" presente, filtro "Descartar · 3" funcional y restaurado a "Todas · 12", sin errores de consola; screenshots desktop + móvil 390x844 en scripts/verify3-*.png, sin overflow.
+- worklog actualizado (este registro).
+
+Stage Summary:
+- El tab CloneaKit real queda completo: ficha del kit v0.1.0 + 5 herramientas + sala limpia + MATRIZ DE APROVECHAMIENTO POBLADA (12 referentes × 9 campos) + 9 recetas + mapeo Fases A–D + límites honestos.
+- Dashboard 100% alineado con las 3 fuentes reales del usuario; la pregunta "¿usaste CloneaKit?" queda respondida dentro del propio producto con la matriz Fase C.
+- 6 pestañas estables: Resumen 360 / Chaleco / CloneaKit real / Competencia COL / Open Source / Plan y Criterios.

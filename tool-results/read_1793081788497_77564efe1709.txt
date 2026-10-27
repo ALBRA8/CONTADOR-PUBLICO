@@ -1,0 +1,1168 @@
+     1→// ============================================================================
+     2→// DATOS ESTRUCTURADOS — PROYECTO CONTADOR PÚBLICO ALBRA
+     3→// Fuentes reales (verificadas, en /upload):
+     4→//   1. Informe Maestro de Investigación (26-oct-2026) — Pasted Content_1793076237083.txt
+     5→//   2. Prompt Maestro para el Constructor — Pasted Content_1793076871286.txt
+     6→//   3. ClonaKit.zip (v0.1.0, MIT, Divisual Project) — analizado en /upload/clonakit-extracted
+     7→// ============================================================================
+     8→
+     9→// ---------------------------------------------------------------------------
+    10→// CATEGORÍAS DE SOLUCIONES IDENTIFICADAS (Informe Maestro §1)
+    11→// ---------------------------------------------------------------------------
+    12→export const solutionCategories = [
+    13→  { n: 1, title: "Preparadoras de renta PN", desc: "Plataformas que preparan declaraciones de renta para personas naturales." },
+    14→  { n: 2, title: "Copilotos IA contables", desc: "Asistentes de inteligencia artificial para contadores profesionales." },
+    15→  { n: 3, title: "Motores deterministas F210", desc: "Cálculo reproducible del Formulario 210 sin depender del LLM." },
+    16→  { n: 4, title: "Agentes documentales", desc: "Procesan documentos, exógena y certificados tributarios." },
+    17→  { n: 5, title: "Automatización de formulario", desc: "Diligenciamiento asistido de formularios mediante navegador." },
+    18→] as const;
+    19→
+    20→// ---------------------------------------------------------------------------
+    21→// KPIs GLOBALES
+    22→// ---------------------------------------------------------------------------
+    23→export const kpis = [
+    24→  { label: "Estado del contador", value: "Plan", hint: "Nada construido aún: sin motor ni agente", icon: "gauge" },
+    25→  { label: "Competidores COL", value: "6", hint: "Justi, Tributi, Taxon, Contadia, Counti, TribAI", icon: "building" },
+    26→  { label: "Repos GitHub COL", value: "8", hint: "Auditados en la matriz de decisión", icon: "github" },
+    27→  { label: "Módulos del chaleco", value: "11", hint: "Prompt Maestro §7, M1→M11", icon: "layers" },
+    28→  { label: "Capacidades objetivo", value: "15", hint: "Prompt Maestro §3", icon: "target" },
+    29→  { label: "Fases del plan", value: "7", hint: "Fase 0 (inspección) → Fase 6 (entrega)", icon: "list" },
+    30→  { label: "Criterios de aceptación", value: "23", hint: "5 bloques verificables con evidencia", icon: "check" },
+    31→  { label: "Herramientas CloneaKit", value: "5", hint: "investigar · capturas · probar · comprobar · diapositivas", icon: "wrench" },
+    32→] as const;
+    33→
+    34→// ---------------------------------------------------------------------------
+    35→// ESTADO REAL DEL PROYECTO (respuesta honesta a: ¿ya es operativo o es mock?)
+    36→// ---------------------------------------------------------------------------
+    37→export interface RealidadItem {
+    38→  estado: "existe" | "parcial" | "no-existe";
+    39→  titulo: string;
+    40→  detalle: string;
+    41→}
+    42→
+    43→export const realidadDelProyecto: {
+    44→  veredicto: string;
+    45→  explicacion: string;
+    46→  items: RealidadItem[];
+    47→} = {
+    48→  veredicto: "Este dashboard es una herramienta de gestión del proyecto, no el contador.",
+    49→  explicacion:
+    50→    "CONTADOR PÚBLICO ALBRA aún no existe como software operativo. Lo que existe hoy es la fase de investigación y definición: el informe maestro de competencia, el prompt maestro que define el chaleco para AGENTE-GENERAL y el análisis del kit CloneaKit. El primer código del contador (motor F210, agente, expediente) llega en las Fases 2–4 del plan, después de auditar open-renta y completar la matriz de aprovechamiento. Este panel refleja el estado real, sin maquillar.",
+    51→  items: [
+    52→    {
+    53→      estado: "existe",
+    54→      titulo: "Informe maestro de investigación",
+    55→      detalle: "Completo: 6 competidores COL con precios, 8 repos GitHub auditados, referentes internacionales, fuentes DIAN, riesgos y plan. Fecha 26-oct-2026.",
+    56→    },
+    57→    {
+    58→      estado: "existe",
+    59→      titulo: "Prompt maestro del constructor",
+    60→      detalle: "Especificación completa del chaleco: misión, reglas arquitectónicas innegociables, 11 módulos, 7 estados, fases 0–6, 23 criterios de aceptación e informe final obligatorio.",
+    61→    },
+    62→    {
+    63→      estado: "existe",
+    64→      titulo: "Análisis real de CloneaKit",
+    65→      detalle: "Kit estudiado desde el zip (v0.1.0): REA 6.4.0, 5 herramientas, método de sala limpia, 9 recetas, formación de 9 lecciones. Mapeado a las Fases A–D del prompt.",
+    66→    },
+    67→    {
+    68→      estado: "existe",
+    69→      titulo: "Este dashboard de gestión",
+    70→      detalle: "Visualización de investigación y plan. No calcula impuestos ni toca MUISCA.",
+    71→    },
+    72→    {
+    73→      estado: "no-existe",
+    74→      titulo: "Motor tributario determinista F210",
+    75→      detalle: "No hay código. El plan prevé auditar open-renta (MIT) como base conceptual y construir el motor con reglas versionadas por año gravable (Fases 2–4).",
+    76→    },
+    77→    {
+    78→      estado: "no-existe",
+    79→      titulo: "Agente conversacional contador",
+    80→      detalle: "No hay agente. Debe ser un chaleco que se activa sobre AGENTE-GENERAL (repo ALBRA8/AGENTE-GENERAL), no un chatbot independiente.",
+    81→    },
+    82→    {
+    83→      estado: "no-existe",
+    84→      titulo: "Expediente financiero, ingestión documental y Hands",
+    85→      detalle: "Sin modelo de datos, sin extracción de certificados/exógena, sin operador de navegador. Pertenecen a las Fases 2–6.",
+    86→    },
+    87→    {
+    88→      estado: "no-existe",
+    89→      titulo: "Integración con AGENTE-GENERAL y pruebas tributarias",
+    90→      detalle: "El repositorio AGENTE-GENERAL no ha sido inspeccionado aún (Fase 0). Sin casos de paridad ni validación con contador público (Fase 5).",
+    91→    },
+    92→  ],
+    93→};
+    94→
+    95→// ---------------------------------------------------------------------------
+    96→// MISIÓN Y METÁFORA ARQUITECTÓNICA (Prompt Maestro §1)
+    97→// ---------------------------------------------------------------------------
+    98→export const mision = {
+    99→  repositorioBase: "https://github.com/ALBRA8/AGENTE-GENERAL.git",
+   100→  herramienta: "CloneaKit (ingenería y análisis de referentes)",
+   101→  objetivoCorto:
+   102→    "Construir CONTADOR PÚBLICO ALBRA, un arnés/chaleco de especialización contable que AGENTE-GENERAL se pone cuando necesita actuar como contador público colombiano. No es un ERP, no es otro agente autónomo, no es un chatbot tributario.",
+   103→  metafora: [
+   104→    {
+   105→      rol: "AGENTE-GENERAL",
+   106→      parte: "El cuerpo central",
+   107→      detalle:
+   108→        "Conserva su identidad, su arquitectura cognitiva, sus capacidades generales, su memoria, sus guardrails, su observabilidad y sus mecanismos de orquestación existentes.",
+   109→    },
+   110→    {
+   111→      rol: "CONTADOR PÚBLICO ALBRA",
+   112→      parte: "El chaleco especializado",
+   113→      detalle:
+   114→        "Incorpora el conocimiento, las herramientas, los procedimientos, las reglas, los contratos y las capacidades para resolver tareas contables y tributarias.",
+   115→    },
+   116→    {
+   117→      rol: "CloneaKit",
+   118→      parte: "Herramienta de ingeniería",
+   119→      detalle:
+   120→        "Estudia referentes, identifica patrones útiles y mejora la implementación sin convertir el proyecto en una colección desordenada de copias.",
+   121→    },
+   122→    {
+   123→      rol: "Motores y validadores",
+   124→      parte: "Componentes del chaleco",
+   125→      detalle:
+   126→        "Los motores de cálculo, validadores, conectores y herramientas especializadas son piezas del chaleco, no identidad del agente.",
+   127→    },
+   128→  ],
+   129→  prioridad:
+   130→    "Colombia y personas naturales, con énfasis en renta y complementarios, Formulario 210 y procedimientos DIAN. Arquitectura ampliable sin reconstruir desde cero.",
+   131→};
+   132→
+   133→// ---------------------------------------------------------------------------
+   134→// REGLAS ARQUITECTÓNICAS INNEGOCIABLES (Prompt Maestro §2)
+   135→// ---------------------------------------------------------------------------
+   136→export const reglasInnegociables = [
+   137→  {
+   138→    n: "2.1",
+   139→    titulo: "No modificar innecesariamente AGENTE-GENERAL",
+   140→    puntos: [
+   141→      "Inspeccionar el repositorio real antes de desarrollar: la implementación es la fuente de verdad, no este prompt.",
+   142→      "Preservar identidad, orquestación, memoria, guardrails, observabilidad y conectores existentes.",
+   143→      "No reescribir el núcleo, no meter dependencias contables en el centro, no duplicar el agente, no fusionar indiscriminadamente.",
+   144→      "Integrar por el mecanismo real más compatible (skill, capability, módulo, adaptador, contrato o herramienta).",
+   145→      "La especialización debe poder incorporarse, actualizarse, probarse y retirarse sin destruir el agente central.",
+   146→    ],
+   147→  },
+   148→  {
+   149→    n: "2.2",
+   150→    titulo: "El producto es un agente, no un programa de contabilidad",
+   151→    puntos: [
+   152→      "No convertir el proyecto en ERP, facturación, libro diario, nómina ni aplicación de formularios.",
+   153→      "La interfaz principal es el agente conversacional que razona, investiga, recopila, usa herramientas y explica.",
+   154→      "Motores deterministas y bases de datos son válidos cuando sirven al agente, no cuando lo sustituyen.",
+   155→      "Cada componente debe justificar su existencia respondiendo: ¿qué necesita AGENTE-GENERAL para actuar como especialista en contaduría pública colombiana?",
+   156→    ],
+   157→  },
+   158→  {
+   159→    n: "2.3",
+   160→    titulo: "El arnés debe ser agnóstico y reutilizable",
+   161→    puntos: [
+   162→      "Separar instrucciones, herramientas, contratos, adaptadores, integraciones, permisos y evidencias.",
+   163→      "AGENTE-GENERAL es el primer anfitrión, no una dependencia que impida otros agentes compatibles.",
+   164→      "No desarrollar adaptadores hipotéticos: implementar primero el camino real y comprobable.",
+   165→    ],
+   166→  },
+   167→];
+   168→
+   169→// ---------------------------------------------------------------------------
+   170→// 15 CAPACIDADES OBJETIVO (Prompt Maestro §3)
+   171→// ---------------------------------------------------------------------------
+   172→export const capacidadesObjetivo = [
+   173→  "Comprender la situación económica, patrimonial y tributaria del usuario.",
+   174→  "Formular preguntas para identificar información faltante.",
+   175→  "Recopilar y organizar documentos financieros y tributarios.",
+   176→  "Extraer información de certificados, extractos, PDF y hojas de cálculo.",
+   177→  "Identificar ingresos, costos, gastos, patrimonio, deudas y retenciones.",
+   178→  "Contrastar la información con fuentes oficiales y normativa aplicable.",
+   179→  "Calcular obligaciones con motores deterministas y reglas versionadas.",
+   180→  "Identificar beneficios tributarios potenciales y verificar requisitos.",
+   181→  "Detectar inconsistencias, omisiones, duplicidades y riesgos.",
+   182→  "Explicar los cálculos y decisiones de manera comprensible.",
+   183→  "Preparar borradores, reportes, soportes y datos estructurados.",
+   184→  "Asistir en la presentación oficial cuando exista un mecanismo autorizado y verificable.",
+   185→  "Mantener trazabilidad entre conclusión, documento de origen, regla y cálculo.",
+   186→  "Registrar decisiones, aprobaciones y acciones relevantes.",
+   187→  "Reconocer cuándo hace falta más información o un profesional humano.",
+   188→] as const;
+   189→
+   190→// ---------------------------------------------------------------------------
+   191→// 11 MÓDULOS DEL CHALECO (Prompt Maestro §7)
+   192→// ---------------------------------------------------------------------------
+   193→export interface ModuloChaleco {
+   194→  id: string;
+   195→  nombre: string;
+   196→  funcion: string;
+   197→  claves: string[];
+   198→  destacado?: boolean;
+   199→}
+   200→
+   201→export const modulosChaleco: ModuloChaleco[] = [
+   202→  {
+   203→    id: "M1",
+   204→    nombre: "Identidad y orquestación contable",
+   205→    funcion:
+   206→      "Define cómo AGENTE-GENERAL activa el modo especialista, qué instrucciones recibe, qué herramientas puede usar, cómo selecciona procedimientos y cuándo pedir intervención humana.",
+   207→    claves: ["Conserva la identidad del agente central", "Activación y desactivación limpia"],
+   208→  },
+   209→  {
+   210→    id: "M2",
+   211→    nombre: "Perfil económico y tributario",
+   212→    funcion:
+   213→      "Recopila la información para comprender la situación del usuario, distinguiendo el origen y la confianza de cada dato.",
+   214→    claves: [
+   215→      "7 tipos de dato: confirmado, extraído, importado, calculado, inferencia pendiente, desconocido, contradictorio",
+   216→      "Cada dato conserva procedencia, fecha y período fiscal",
+   217→    ],
+   218→  },
+   219→  {
+   220→    id: "M3",
+   221→    nombre: "Ingestión documental",
+   222→    funcion:
+   223→      "Procesa documentos compatibles, extrae campos y mantiene trazabilidad hasta el archivo y fragmento de origen.",
+   224→    claves: [
+   225→      "Detecta ilegibles, faltantes, duplicados, períodos incorrectos y discrepancias",
+   226→      "La extracción IA nunca se convierte automáticamente en dato contable definitivo",
+   227→    ],
+   228→  },
+   229→  {
+   230→    id: "M4",
+   231→    nombre: "Expediente financiero longitudinal",
+   232→    funcion:
+   233→      "Estructura que mantiene la información a través del tiempo: la capa que convierte el producto en contador permanente y no en app de temporada.",
+   234→    claves: [
+   235→      "Ingresos, retenciones, patrimonio, deudas, movimientos, costos, exógena, declaraciones previas",
+   236→      "Diseñada para ampliar sin duplicar datos ni perder procedencia",
+   237→    ],
+   238→    destacado: true,
+   239→  },
+   240→  {
+   241→    id: "M5",
+   242→    nombre: "Motor de reglas y cálculos deterministas",
+   243→    funcion:
+   244→      "Ejecuta las operaciones fiscales formalizables como reglas comprobables. El agente interpreta, pregunta y explica; el motor calcula.",
+   245→    claves: [
+   246→      "Reglas versionadas por período fiscal, fórmulas reproducibles, topes, redondeo",
+   247→      "Manejo explícito de valores desconocidos, referencias normativas, pruebas unitarias",
+   248→      "Cada cifra debe poder reconstruirse desde sus entradas y operaciones",
+   249→    ],
+   250→    destacado: true,
+   251→  },
+   252→  {
+   253→    id: "M6",
+   254→    nombre: "Investigación normativa",
+   255→    funcion:
+   256→      "Busca y recupera normativa, doctrina y documentación oficial, distinguiendo fuentes vinculantes, orientaciones, conceptos interpretativos y fuentes secundarias.",
+   257→    claves: ["Cada conclusión identifica sus fuentes", "La recuperación no sustituye la comprobación de vigencia"],
+   258→  },
+   259→  {
+   260→    id: "M7",
+   261→    nombre: "Optimizador tributario legal",
+   262→    funcion:
+   263→      "Identifica alternativas lícitas que mejoren la posición tributaria. Nunca inventa deducciones, gastos ficticios ni asume requisitos cumplidos.",
+   264→    claves: [
+   265→      "Explica requisitos, evidencias, efecto económico, límites, riesgos y razón de la decisión",
+   266→      "Sin pruebas, la alternativa queda como potencial, no como beneficio confirmado",
+   267→    ],
+   268→  },
+   269→  {
+   270→    id: "M8",
+   271→    nombre: "Auditor de riesgos e inconsistencias",
+   272→    funcion:
+   273→      "Detecta omisiones, contradicciones, cifras atípicas, datos sin soporte, errores de clasificación y diferencias entre documentos y resultados.",
+   274→    claves: ["Clasifica hallazgos por severidad", "Una anomalía no es una infracción confirmada"],
+   275→  },
+   276→  {
+   277→    id: "M9",
+   278→    nombre: "Preparación de declaraciones y reportes",
+   279→    funcion:
+   280→      "Prepara borradores, cálculos, informes y estructuras de datos para el formulario correspondiente.",
+   281→    claves: [
+   282→      "El usuario ve: qué se usó, qué falta, qué reglas se aplicaron, qué validaciones corrieron, qué riesgos siguen abiertos y qué requiere aprobación humana",
+   283→    ],
+   284→  },
+   285→  {
+   286→    id: "M10",
+   287→    nombre: "Operador de herramientas y navegador (Hands)",
+   288→    funcion:
+   289→      "Ejecutor especializado reutilizando capacidades del ecosistema ALBRA compatibles con Hands: navegación, diligenciamiento y verificación con permisos explícitos.",
+   290→    claves: [
+   291→      "Ciclo: observar → identificar → actuar → verificar",
+   292→      "No inventa resultados ni afirma que algo fue presentado si solo fue preparado",
+   293→    ],
+   294→  },
+   295→  {
+   296→    id: "M11",
+   297→    nombre: "Evidencias y auditoría",
+   298→    funcion:
+   299→      "Registra datos, reglas, cálculos, decisiones, aprobaciones y acciones para poder reconstruir el procedimiento completo.",
+   300→    claves: [
+   301→      "Distingue lo calculado, lo verificado, lo aprobado por el usuario y lo ejecutado en sistema externo",
+   302→      "Protege confidencialidad; nunca guarda credenciales en registros ordinarios",
+   303→    ],
+   304→  },
+   305→];
+   306→
+   307→// ---------------------------------------------------------------------------
+   308→// 7 ESTADOS OBLIGATORIOS DEL PROCEDIMIENTO (Prompt Maestro §8)
+   309→// ---------------------------------------------------------------------------
+   310→export interface EstadoDeclaracion {
+   311→  n: number;
+   312→  estado: string;
+   313→  definicion: string;
+   314→}
+   315→
+   316→export const estadosDeclaracion: EstadoDeclaracion[] = [
+   317→  { n: 1, estado: "INCOMPLETO", definicion: "Falta información necesaria." },
+   318→  { n: 2, estado: "PREPARADO", definicion: "Existe un borrador generado." },
+   319→  { n: 3, estado: "VALIDADO", definicion: "Se ejecutaron las comprobaciones previstas y se documentaron los resultados." },
+   320→  { n: 4, estado: "APROBADO", definicion: "El usuario autorizó la siguiente etapa correspondiente." },
+   321→  { n: 5, estado: "DILIGENCIADO", definicion: "Los datos se incorporaron al sistema oficial, cuando ese paso se haya realizado y comprobado." },
+   322→  { n: 6, estado: "PRESENTADO", definicion: "Existe evidencia verificable de la presentación oficial." },
+   323→  { n: 7, estado: "SOPORTADO", definicion: "Se archivaron los comprobantes y evidencias disponibles." },
+   324→];
+   325→
+   326→export const reglaInnegociableEstados =
+   327→  "Diligenciar no significa presentar. Guardar no significa firmar. Una pantalla de confirmación no sustituye el comprobante oficial. Ningún LLM puede cambiar un estado por conveniencia narrativa: cada transición exige requisitos y evidencia.";
+   328→
+   329→// ---------------------------------------------------------------------------
+   330→// CLONEAKIT REAL (analizado desde ClonaKit.zip v0.1.0)
+   331→// ---------------------------------------------------------------------------
+   332→export const cloneakitFicha = {
+   333→  nombre: "ClonaKit",
+   334→  version: "0.1.0",
+   335→  licencia: "MIT (ClonaKit © 2026 Divisual Project) · dependencia REA también MIT",
+   336→  origen: "Regalo de Divisual Project Academy (divisualproject.academy)",
+   337→  esencia:
+   338→    "Kit que convierte a Claude Code en tutor para crear tu propia versión de las apps que usas en un negocio, de forma legal y sin saber programar. No es un framework de agentes ni un motor tributario: es un conjunto de herramientas de investigación + método de sala limpia + recetas con demos.",
+   339→  motorInvestigacion:
+   340→    "REA (rea-agents 6.4.0, de morluto, MIT): averigua cómo está construida una app SIN ver su código — analiza binarios, paquetes, permisos, frameworks, librerías y plugins, y produce un informe en lenguaje sencillo.",
+   341→  requisitos: "Node.js LTS (^22.19 || ^24.11 || >=26), Git, Claude Code (cuenta de pago), Chrome opcional para webs.",
+   342→};
+   343→
+   344→export const cloneakitHerramientas = [
+   345→  {
+   346→    comando: "npm run investigar -- \"<app o URL>\" --nombre <clon>",
+   347→    script: "herramientas/investigar.mjs",
+   348→    queHace:
+   349→      "Analiza la app con REA y escribe clones/<clon>/investigacion/informe.md: tipo de app, permisos, piezas del sistema, librerías, plugins y pistas de arquitectura. Guarda datos en bruto en datos/ (nunca se publican).",
+   350→  },
+   351→  {
+   352→    comando: "npm run capturas -- <clon>",
+   353→    script: "herramientas/capturas.mjs",
+   354→    queHace:
+   355→      "Prepara clones/<clon>/investigacion/capturas/ para el modo capturas: investigar apps con inicio de sesión a partir de capturas de pantalla que hace la persona.",
+   356→  },
+   357→  {
+   358→    comando: "npm run probar -- <clon>",
+   359→    script: "herramientas/probar.mjs",
+   360→    queHace: "Sirve clones/<clon>/app/ en http://localhost:3000 (puertos 3000–3010) para probar el clon en el navegador.",
+   361→  },
+   362→  {
+   363→    comando: "npm run comprobar",
+   364→    script: "herramientas/comprobar.mjs",
+   365→    queHace: "Revisa que el ordenador tiene Node.js, Git, REA, Chrome y GitHub CLI correctamente instalados.",
+   366→  },
+   367→  {
+   368→    comando: "npm run diapositivas",
+   369→    script: "herramientas/diapositivas.mjs",
+   370→    queHace: "Abre la formación exprés (formacion/diapositivas.html) de 5 minutos.",
+   371→  },
+   372→];
+   373→
+   374→export const cloneakitComandos = [
+   375→  { cmd: "/empezar", hace: "Formación exprés + comprobar el ordenador + primer contacto con un clon." },
+   376→  { cmd: "/clonar", hace: "De una receta o cualquier app a tu propia versión funcionando (investigar → ficha → construir → probar)." },
+   377→  { cmd: "/desplegar", hace: "Publicar en Git, GitHub y Vercel, y actualizarla después." },
+   378→];
+   379→
+   380→export const metodoSalaLimpia = {
+   381→  principio:
+   382→    "Investigar y construir son fases separadas. Quien escribe el código solo ve la FICHA.md (especificación funcional con palabras propias del usuario), nunca la app original ni el informe de investigación.",
+   383→  estructura: [
+   384→    { carpeta: "clones/<clon>/investigacion/", contenido: "informe.md, datos/ en bruto de REA, capturas/ y observaciones.md — NUNCA se publica", sePublica: false },
+   385→    { carpeta: "clones/<clon>/FICHA.md", contenido: "Especificación funcional escrita con palabras propias — único insumo del constructor", sePublica: true },
+   386→    { carpeta: "clones/<clon>/CONSTRUCCION.md", contenido: "Nota de los ayudantes entre etapas de construcción — no se publica", sePublica: false },
+   387→    { carpeta: "clones/<clon>/app/", contenido: "El código: lo único que se sube a GitHub y Vercel", sePublica: true },
+   388→  ],
+   389→  reglas: [
+   390→    "No copiar nada protegido: ni código, ni textos, ni imágenes, iconos, sonidos, nombres o logos.",
+   391→    "No reproducir lo que REA muestre (pseudocódigo, scripts, nombres internos de funciones).",
+   392→    "Nombre e identidad propios; «Inspirado en X» está bien, usar la marca de X no.",
+   393→    "Nunca ayudar a saltarse pagos, licencias, DRM, logins ni protecciones.",
+   394→    "Si el original es open source, se estudia pero por defecto no se copia su código: cumplir la licencia (p. ej. GPL exige publicar).",
+   395→    "Antes de cada git add, revisar git status para no subir investigación/ ni .env.",
+   396→  ],
+   397→};
+   398→
+   399→export const cloneakitRecetas = [
+   400→  { nombre: "MiEnlace (enlaces-bio)", inspirada: "Linktree", dificultad: 1, nota: "Página de enlaces para la bio. La más sencilla." },
+   401→  { nombre: "Columnas (tablero-tareas)", inspirada: "Trello", dificultad: 2, nota: "Tablero de tareas por fases." },
+   402→  { nombre: "Pregunta (formularios)", inspirada: "Typeform", dificultad: 2, nota: "Formularios con webhook a n8n/Make/Zapier." },
+   403→  { nombre: "Corrillo (chat-equipo)", inspirada: "Slack", dificultad: 2, nota: "Chat por canales e hilos (demo un dispositivo)." },
+   404→  { nombre: "Taller (editor-codigo-ia)", inspirada: "Google Antigravity", dificultad: 2, nota: "Editor web con misiones para IA." },
+   405→  { nombre: "MiniEstudio (estudio-grabacion)", inspirada: "OBS Studio", dificultad: 2, nota: "Ya construida como ejemplo completo del kit, con informe de investigación real." },
+   406→  { nombre: "Trazo (pizarra-flujos)", inspirada: "Excalidraw", dificultad: 3, nota: "Pizarra de diagramas con exportación." },
+   407→  { nombre: "Celda (base-datos-visual)", inspirada: "Airtable", dificultad: 3, nota: "Base visual con vistas tabla/tablero/galería." },
+   408→  { nombre: "Embudo (email-marketing)", inspirada: "ActiveCampaign", dificultad: 3, nota: "Contactos, emails y secuencias (no envía de verdad)." },
+   409→];
+   410→
+   411→export const cloneakitFormacion = [
+   412→  "00 · Bienvenida",
+   413→  "01 · Prepara tu ordenador",
+   414→  "02 · Lo legal",
+   415→  "03 · Investigar una app",
+   416→  "04 · De la ficha al código",
+   417→  "05 · Probar en local",
+   418→  "06 · Git y GitHub",
+   419→  "07 · Desplegar en Vercel",
+   420→  "08 · Dominio y actualizaciones",
+   421→  "+ Glosario en español",
+   422→];
+   423→
+   424→// Cómo se usará CloneaKit en ALBRA: mapeo Fases A–D (Prompt Maestro §4) ↔ herramientas reales
+   425→export const cloneakitUsoAlbra = [
+   426→  {
+   427→    fase: "A · Investigación de referentes",
+   428→    como: "npm run investigar contra los repos/productos prioritarios (open-renta, Finance Substrate, renta-facil…) y el modo capturas para las plataformas comerciales con login (Justi, Tributi, Taxon…).",
+   429→    aporta: "Informes en lenguaje sencillo de cada referente: qué usa, qué permisos pide, cómo está montado, sin fiarse solo del README comercial.",
+   430→  },
+   431→  {
+   432→    fase: "B · Ingeniería inversa funcional",
+   433→    como:
+   434→      "Los informes de REA alimentan el análisis de 11 preguntas por referente: problema que resuelve, capacidades reales, arquitectura, limitaciones, riesgos, pruebas, licencia, qué adoptar, qué hacer distinto y qué descartar.",
+   435→    aporta: "Evidencia técnica verificada que separa funcionalidad anunciada de funcionalidad real, y prototipo de sistema apto para datos tributarios reales.",
+   436→  },
+   437→  {
+   438→    fase: "C · Matriz de aprovechamiento",
+   439→    como:
+   440→      "Cada hallazgo se registra con los 9 campos obligatorios: referente, capacidad, evidencia, valor para ALBRA, riesgos, licencia verificada, decisión (adoptar/adaptar/inspirarse/descartar), destino en el chaleco y validación.",
+   441→    aporta: "Evita integrar componentes por moda o semejanza superficial. La regla de sala limpia de CloneaKit refuerza las reglas de licencias del prompt (§10).",
+   442→  },
+   443→  {
+   444→    fase: "D · Construcción original",
+   445→    como:
+   446→      "Se construye desde las decisiones de la matriz, como los clones de CloneaKit se construyen desde su FICHA.md: código original, sin copiar repos completos ni acumular fragmentos incompatibles.",
+   447→    aporta: "Un chaleco coherente con la arquitectura ALBRA, con reutilización legal y técnicamente segura, y soluciones originales donde son más adecuadas.",
+   448→  },
+   449→];
+   450→
+   451→export const cloneakitLimites = [
+   452→  "CloneaKit no calcula impuestos ni contiene nada contable: su dominio es investigar y recrear apps de negocio.",
+   453→  "Sus recetas son web estáticas HTML+CSS+JS; no definen la tecnología del chaleco ALBRA (esa decide el repositorio real de AGENTE-GENERAL).",
+   454→  "No reemplaza la auditoría fiscal: ejecuta pruebas de paridad contra casos revisados por contador público sigue siendo requisito del Prompt Maestro (Fase 5).",
+   455→  "El método sala limpia SÍ se adopta tal cual: investigar (REA) y construir (ficha → código) permanecen separados para cumplir licencias.",
+   456→  "Para ALBRA se usan las herramientas y el método, no el tutor conversacional ni la publicación en Vercel de recetas.",
+   457→];
+   458→
+   459→// ---------------------------------------------------------------------------
+   460→// COMPETENCIA COMERCIAL COLOMBIANA (Informe Maestro §2–§3, datos exactos)
+   461→// ---------------------------------------------------------------------------
+   462→export type CapStatus = "si" | "no" | "parcial" | "aclarar";
+   463→
+   464→export interface Competitor {
+   465→  id: string;
+   466→  name: string;
+   467→  site: string;
+   468→  market: string;
+   469→  f210: CapStatus;
+   470→  docs: CapStatus;
+   471→  aiChat: CapStatus;
+   472→  muisca: CapStatus;
+   473→  muiscaNote: string;
+   474→  priceRange: string;
+   475→  plans: { plan: string; price: string; note?: string }[];
+   476→  highlights: string[];
+   477→  observation: string;
+   478→  valueForAlbra: string;
+   479→  color: string;
+   480→}
+   481→
+   482→export const competitors: Competitor[] = [
+   483→  {
+   484→    id: "justi",
+   485→    name: "Justi",
+   486→    site: "https://justitax.com/",
+   487→    market: "Personas naturales",
+   488→    f210: "si",
+   489→    docs: "si",
+   490→    aiChat: "si",
+   491→    muisca: "aclarar",
+   492→    muiscaNote:
+   493→      "La web anuncia presentación ante la DIAN, pero términos contractuales previos describían entrega de borrador y presentación por el usuario. Requiere confirmación escrita.",
+   494→    priceRange: "$120K – $220K",
+   495→    plans: [
+   496→      { plan: "Estándar", price: "$120.000" },
+   497→      { plan: "Exprés", price: "$200.000" },
+   498→      { plan: "Con experto", price: "$220.000" },
+   499→    ],
+   500→    highlights: [
+   501→      "Lectura IA de certificados 220, exógena y facturación electrónica",
+   502→      "Preparación F210 + optimización de deducciones y beneficios",
+   503→      "Explicación de casillas y auditoría de riesgos",
+   504→      "Borrador de declaración + agente conversacional",
+   505→      "Modalidad con experto tributario",
+   506→    ],
+   507→    observation:
+   508→      "Precios para año gravable 2025 / temporada 2026: confirmar antes de una comparación comercial definitiva.",
+   509→    valueForAlbra:
+   510→      "Referencia de UX: lectura de documentos, entrevista conversacional, explicación tributaria y optimización de deducciones.",
+   511→    color: "#00E676",
+   512→  },
+   513→  {
+   514→    id: "tributi",
+   515→    name: "Tributi / Clara",
+   516→    site: "https://www.tributi.com/",
+   517→    market: "Personas naturales",
+   518→    f210: "si",
+   519→    docs: "si",
+   520→    aiChat: "si",
+   521→    muisca: "parcial",
+   522→    muiscaNote: "La presentación depende de la modalidad contratada.",
+   523→    priceRange: "$0 – $550K",
+   524→    plans: [
+   525→      { plan: "Clara con impuesto a pagar", price: "Gratis", note: "$170.000 si queda en cero o saldo a favor" },
+   526→      { plan: "App sin afán", price: "$170.000" },
+   527→      { plan: "App exprés", price: "$470.000" },
+   528→      { plan: "Experto sin afán", price: "$250.000" },
+   529→      { plan: "Experto exprés", price: "$550.000" },
+   530→    ],
+   531→    highlights: [
+   532→      "Agente conversacional Clara integrable con ChatGPT o Claude",
+   533→      "Preguntas adaptativas y solicitud de documentos",
+   534→      "Cálculo con tecnología tributaria propia",
+   535→      "Integración MCP publicada: https://mcp.tributi.com/mcp",
+   536→    ],
+   537→    observation:
+   538→      "Disponibilidad, permisos y condiciones de la integración MCP deben verificarse directamente con el proveedor.",
+   539→    valueForAlbra:
+   540→      "El referente clave para separar agente conversacional de motor tributario: Clara entrevista y recopila; la tecnología fiscal calcula.",
+   541→    color: "#22D3EE",
+   542→  },
+   543→  {
+   544→    id: "taxon",
+   545→    name: "Taxon",
+   546→    site: "https://taxon.co/",
+   547→    market: "Contadores",
+   548→    f210: "si",
+   549→    docs: "si",
+   550→    aiChat: "parcial",
+   551→    muisca: "parcial",
+   552→    muiscaNote:
+   553→      "Extensión de Chrome que escribe y verifica campos en MUISCA, pero NO firma, NO presenta, NO paga: el usuario revisa y presenta.",
+   554→    priceRange: "$0 – $160K",
+   555→    plans: [
+   556→      { plan: "Gratuito limitado", price: "$0" },
+   557→      { plan: "Estándar", price: "~$90.000", note: "Por temporada" },
+   558→      { plan: "Completo", price: "~$160.000", note: "Por temporada" },
+   559→    ],
+   560→    highlights: [
+   561→      "Importación de información exógena",
+   562→      "Cálculos por casilla con explicación de fórmulas y normas",
+   563→      "Optimización tributaria y gestión de clientes",
+   564→      "Extensión Chrome con verificación de valores introducidos",
+   565→    ],
+   566→    observation: "Precios aproximados localizados durante la investigación; comprobar la temporada vigente.",
+   567→    valueForAlbra:
+   568→      "Referencia especialmente útil para la futura integración entre el motor tributario y las manos de navegador (Hands) de ALBRA.",
+   569→    color: "#F59E0B",
+   570→  },
+   571→  {
+   572→    id: "contadia",
+   573→    name: "Contadia",
+   574→    site: "https://www.contadia.com/",
+   575→    market: "Contadores",
+   576→    f210: "si",
+   577→    docs: "si",
+   578→    aiChat: "parcial",
+   579→    muisca: "aclarar",
+   580→    muiscaNote:
+   581→      "Anuncia presentación directa en MUISCA, pero no se realizó presentación de prueba: mecanismo técnico, autorizaciones, errores y recuperación sin verificar.",
+   582→    priceRange: "$270K / año",
+   583→    plans: [{ plan: "Ilimitado AG 2025", price: "$270.000", note: "Por año gravable; primera declaración gratis anunciada" }],
+   584→    highlights: [
+   585→      "Gestión de declarantes y expedientes fiscales",
+   586→      "Procesamiento de exógena y lectura de certificados",
+   587→      "Conexión automatizada con MUISCA",
+   588→      "Soporte de expertos y múltiples declaraciones",
+   589→    ],
+   590→    observation: "Capacidad anunciada por el proveedor, no auditada de forma independiente.",
+   591→    valueForAlbra:
+   592→      "Referencia para gestión de carteras de clientes, expedientes fiscales y automatización operativa para contadores.",
+   593→    color: "#A78BFA",
+   594→  },
+   595→  {
+   596→    id: "counti",
+   597→    name: "Counti",
+   598→    site: "https://counti.co/",
+   599→    market: "Contadores",
+   600→    f210: "si",
+   601→    docs: "si",
+   602→    aiChat: "si",
+   603→    muisca: "no",
+   604→    muiscaNote: "No debe suponerse presentación automática: no está documentada.",
+   605→    priceRange: "Desde $5.000",
+   606→    plans: [
+   607→      { plan: "Declaraciones desde", price: "$5.000", note: "Qué plan lo incluye y límites: sin confirmar" },
+   608→      { plan: "Prueba gratuita", price: "7 días" },
+   609→    ],
+   610→    highlights: [
+   611→      "Copiloto de IA para contadores colombianos",
+   612→      "Lectura de certificados 220, exógena y facturación electrónica",
+   613→      "Motor tributario F210 + auditoría de riesgos",
+   614→      "Normativa, calendario, calculadoras de IVA y retención, informes",
+   615→    ],
+   616→    observation:
+   617→      "Cifras de usuarios, precisión y seguridad publicadas por el proveedor no han sido auditadas independientemente.",
+   618→    valueForAlbra:
+   619→      "Referencia para integrar gestión de clientes, consultas, preparación de declaraciones y herramientas auxiliares en una misma estación de trabajo.",
+   620→    color: "#FB7185",
+   621→  },
+   622→  {
+   623→    id: "tribai",
+   624→    name: "TribAI",
+   625→    site: "https://tribai.co/declaracion",
+   626→    market: "Personas naturales y profesionales",
+   627→    f210: "si",
+   628→    docs: "si",
+   629→    aiChat: "si",
+   630→    muisca: "parcial",
+   631→    muiscaNote:
+   632→      "Genera XML para DIAN, pero el XML por sí solo no demuestra presentación automática en MUISCA.",
+   633→    priceRange: "$0 – $149.9K",
+   634→    plans: [
+   635→      { plan: "Gratuito", price: "$0", note: "Análisis limitado + vista parcial del F210" },
+   636→      { plan: "Declaración PN", price: "$79.900" },
+   637→      { plan: "Declaración Pro", price: "$149.900" },
+   638→    ],
+   639→    highlights: [
+   640→      "Análisis de documentos con OCR y extracción IA",
+   641→      "Preparación F210 con exportación PDF, Excel, CSV y XML DIAN",
+   642→      "Sugerencias de optimización y comparación de escenarios",
+   643→      "Consulta con recuperación de información y referencias normativas",
+   644→      "Análisis de riesgos de fiscalización",
+   645→    ],
+   646→    observation: "Planes y precios por verificar antes de la comparación comercial final.",
+   647→    valueForAlbra:
+   648→      "Combina preparación F210, extracción documental, optimización y consulta normativa en un competidor adicional relevante.",
+   649→    color: "#34D399",
+   650→  },
+   651→];
+   652→
+   653→export const otrosProveedores = [
+   654→  { name: "Tributa Bien", site: "https://www.tributa.com.co/", note: "Servicios tributarios con IA + asistencia humana. Sin precio público comparable." },
+   655→  { name: "Finantic", site: "https://finantic.com.co/", note: "Soluciones financieras y contables." },
+   656→  { name: "Finark", site: "https://www.finark.net/", note: "Herramientas financieras y contables." },
+   657→  { name: "Siigo", site: "https://www.siigo.com/", note: "Software contable y de gestión empresarial." },
+   658→  { name: "NETSOLIN", site: "https://www.netsolin.com/", note: "Soluciones contables y tecnológicas." },
+   659→];
+   660→
+   661→export const conclusionComercial =
+   662→  "Cada proveedor resuelve una parte: Justi la experiencia del contribuyente; Tributi/Clara el agente conversacional sobre tecnología tributaria; Taxon el motor de cálculo + navegador; Contadia la gestión operativa; Counti la estación de trabajo de IA para contadores; TribAI la preparación documental. La oportunidad de ALBRA es integrar esas capacidades en un sistema financiero y tributario permanente.";
+   663→
+   664→// ---------------------------------------------------------------------------
+   665→// GITHUB COLOMBIA (Informe Maestro §4, veredictos exactos)
+   666→// ---------------------------------------------------------------------------
+   667→export interface RepoCOL {
+   668→  name: string;
+   669→  url: string;
+   670→  aporte: string;
+   671→  licencia: string;
+   672→  licenciaStatus: "verificada" | "reportada" | "sin-licencia" | "pendiente";
+   673→  recomendacion: string;
+   674→  nivel: "primero" | "segundo" | "secundaria" | "auditar" | "no-copiar";
+   675→  detalle: string;
+   676→  riesgos?: string[];
+   677→}
+   678→
+   679→export const reposColombia: RepoCOL[] = [
+   680→  {
+   681→    name: "open-renta",
+   682→    url: "https://github.com/Riskbreaker2077/open-renta",
+   683→    aporte: "Motor F210 determinista en Python con memoria de cálculo trazable",
+   684→    licencia: "MIT",
+   685→    licenciaStatus: "verificada",
+   686→    recomendacion: "Auditar primero",
+   687→    nivel: "primero",
+   688→    detalle:
+   689→      "Procesa exógena, organiza el expediente tributario, calcula de forma determinista, genera informes, réplica visual del F210, hoja de digitación, parámetros por año, validaciones, optimización de beneficios y pruebas automatizadas (56 pruebas sobre 5 casos de referencia declaradas en el README). Declara no solicitar credenciales DIAN ni automatizar MUISCA. Principio arquitectónico: el LLM no hace la aritmética fiscal.",
+   690→    riesgos: [
+   691→      "Las pruebas existentes no demuestran cobertura completa de todas las situaciones fiscales",
+   692→      "Parámetros por año deben contrastarse con normas oficiales",
+   693→      "Auditar dependencias y licencias transitivas",
+   694→      "Requiere pruebas de paridad contra declaraciones revisadas por contador",
+   695→    ],
+   696→  },
+   697→  {
+   698→    name: "Finance Substrate (broomva/skills)",
+   699→    url: "https://github.com/broomva/skills/tree/main/skills/finance/finance-substrate",
+   700→    aporte: "Finanzas personales longitudinales + proyección + automatización F210",
+   701→    licencia: "MIT",
+   702→    licenciaStatus: "reportada",
+   703→    recomendacion: "Estudiar y corregir supuestos",
+   704→    nivel: "segundo",
+   705→    detalle:
+   706→      "Organiza información financiera personal y la conecta con la preparación tributaria: registro de movimientos, gestión de documentos, lectura de certificados, procesamiento DIAN, historial, proyección de impuestos, planes de diligenciamiento y asistente MUISCA de 15 pasos. Script fill_form210.py genera comandos de diligenciamiento desde una proyección; tax_projection.py proyecta impuestos.",
+   707→    riesgos: [
+   708→      "Asigna automáticamente respuestas «No» (residencia fiscal, contabilidad, convenios, condición personal) que deben confirmarse con el contribuyente",
+   709→      "Casilla de deudas aparece con valor predeterminado cero, no incorporada a la proyección",
+   710→      "Mapeo de campos sin cobertura completa demostrada",
+   711→      "Usa navegador autenticado con sesiones sensibles; cobertura de firma/presentación sin auditar",
+   712→    ],
+   713→  },
+   714→  {
+   715→    name: "renta-facil",
+   716→    url: "https://github.com/emunozd/renta-facil",
+   717→    aporte: "Bot conversacional de Telegram + extracción IA visual + borrador Excel",
+   718→    licencia: "Sin licencia",
+   719→    licenciaStatus: "sin-licencia",
+   720→    recomendacion: "No copiar sin permiso del titular",
+   721→    nivel: "no-copiar",
+   722→    detalle:
+   723→      "Guía al contribuyente por el F210: análisis de exógena, recopilación de documentos, preguntas sobre dependientes y vivienda, cálculos en Python, modelo local con RAG sobre documentos DIAN y borrador en Excel. La IA extrae y explica; la lógica tributaria está en código.",
+   724→    riesgos: ["Sin LICENSE verificable", "Permisos amplios en instrucciones de instalación", "Solo el año gravable configurado"],
+   725→  },
+   726→  {
+   727→    name: "renta-declaracion",
+   728→    url: "https://github.com/estebanduse-ai-data/renta-declaracion",
+   729→    aporte: "Aplicación completa de gestión y liquidación (FastAPI + React + PostgreSQL)",
+   730→    licencia: "Pendiente",
+   731→    licenciaStatus: "pendiente",
+   732→    recomendacion: "No reutilizar sin autorización escrita",
+   733→    nivel: "no-copiar",
+   734→    detalle:
+   735→      "Gestión de declarantes, wizard de captura, liquidación tributaria, persistencia, importación masiva, panel de administración y parámetros por año. Su propia documentación reconoce riesgos: diferencias con el Excel contable, actualización normativa, protección de NIT y datos patrimoniales, copias de seguridad y riesgo de presentar antes de demostrar paridad.",
+   736→  },
+   737→  {
+   738→    name: "asesor-dian-claude",
+   739→    url: "https://github.com/juandiegoandres/asesor-dian-claude",
+   740→    aporte: "Instrucciones de agente tributario para Claude Code",
+   741→    licencia: "MIT reportada",
+   742→    licenciaStatus: "reportada",
+   743→    recomendacion: "Referencia secundaria",
+   744→    nivel: "secundaria",
+   745→    detalle:
+   746→      "Útil como referencia para instrucciones de un agente tributario, organización de herramientas, consultas de renta e interacción modelo-herramientas. Requiere revisar código, pruebas, actividad y cobertura fiscal.",
+   747→  },
+   748→  {
+   749→    name: "Declaracion-Renta-Automated",
+   750→    url: "https://github.com/nicolasdcubillos/Declaracion-Renta-Automated",
+   751→    aporte: "Automatización de formularios F210, F160 y F490",
+   752→    licencia: "MIT reportada",
+   753→    licenciaStatus: "reportada",
+   754→    recomendacion: "Auditar antes de adoptar",
+   755→    nivel: "auditar",
+   756→    detalle: "Verificar estado actual del repositorio, cobertura de pruebas y licencia en la versión exacta a utilizar.",
+   757→  },
+   758→  {
+   759→    name: "calculadora-declaracion-renta",
+   760→    url: "https://github.com/jsowl044/calculadora-declaracion-renta",
+   761→    aporte: "Cálculo offline del F210 con importación de exógena",
+   762→    licencia: "MIT reportada",
+   763→    licenciaStatus: "reportada",
+   764→    recomendacion: "Auditar antes de adoptar",
+   765→    nivel: "auditar",
+   766→    detalle: "Actividad reciente en octubre de 2026, sin madurez productiva ni paridad fiscal independiente demostrada.",
+   767→  },
+   768→  {
+   769→    name: "contaia-colombia",
+   770→    url: "https://github.com/Jhonnymgx115/contaia-colombia",
+   771→    aporte: "Asistente contable con funciones tributarias, exógena y calendario DIAN",
+   772→    licencia: "MIT reportada",
+   773→    licenciaStatus: "reportada",
+   774→    recomendacion: "Auditar antes de adoptar",
+   775→    nivel: "auditar",
+   776→    detalle: "Revisar el LICENSE vigente, dependencias y cobertura del motor antes de usar código.",
+   777→  },
+   778→];
+   779→
+   780→export const advertenciaLicencias =
+   781→  "Una licencia abierta no certifica exactitud tributaria, seguridad ni preparación para producción. Un repositorio sin licencia explícita no es de libre reutilización comercial.";
+   782→
+   783→// ---------------------------------------------------------------------------
+   784→// REFERENTES INTERNACIONALES (Informe Maestro §5–§7, uso recomendado)
+   785→// ---------------------------------------------------------------------------
+   786→export const referentesInternacionales = [
+   787→  { name: "Terminal Tax MCP Server", url: "https://github.com/terminaltax/terminal-tax-mcp-server", uso: "Patrón MCP de integración, revisión y aprobación con presentación controlada. Licencia MIT del servidor; la plataforma completa no es open source." },
+   788→  { name: "Taxfill MCP", url: "https://github.com/Ryanczj0306/taxfill-mcp", uso: "Flujo de recolección, cálculo determinista y generación de documentos. Cobertura fiscal estadounidense: no reutilizar para Colombia." },
+   789→  { name: "FreeTaxUSA MCP", url: "https://github.com/schwarztim/freetaxusa-mcp", uso: "Referencia de automatización de navegador; revisar código antes de adoptar patrones. Manejo de sesión autenticada y funciones en desarrollo." },
+   790→  { name: "OpenTax (Filed)", url: "https://opentax.filed.com/", uso: "Separación de reglas fiscales y datos, cálculo determinista. AGPL-3.0: revisar impacto antes de integrar en servicio comercial." },
+   791→  { name: "OpenAccountants", url: "https://github.com/openaccountants/openaccountants", uso: "Base de conocimiento tributario con fuentes y herramientas para agentes. AGPL-3.0; el contenido puede tener otra licencia: no copiar corpus a RAG comercial sin resolver licencias." },
+   792→  { name: "OpenAccountant Skills", url: "https://github.com/openaccountant/skills", uso: "Biblioteca de habilidades financieras para agentes; revisar licencia de la versión a reutilizar." },
+   793→  { name: "India ITR Prep Skill", url: "https://github.com/NidheeshJain/itr-prep-skill", uso: "Referencia de preparación tributaria por agente (India)." },
+   794→  { name: "AU Tax Return", url: "https://github.com/kiwizznz/au-tax-return", uso: "Referencia de flujo de preparación (Australia)." },
+   795→  { name: "Spain IRPF Helper", url: "https://github.com/antonioibars/irpf-declaration-helper", uso: "Referencia de ayudante IRPF (España)." },
+   796→  { name: "Brazil MCP Fiscal", url: "https://github.com/DeHor-Labs/mcp-fiscal-brasil", uso: "Herramientas fiscales por MCP (Brasil)." },
+   797→];
+   798→
+   799→export const productosInternacionales = [
+   800→  { name: "Instead", site: "https://www.instead.com/", valor: "Plataforma de agentes tributarios especializados. Desde US$30 por crédito." },
+   801→  { name: "Filed", site: "https://www.filed.com/", valor: "Trazabilidad de datos, extracción y revisión profesional para profesionales." },
+   802→  { name: "Black Ore", site: "https://blackore.ai/", valor: "Automatización de tareas de alto volumen con supervisión profesional." },
+   803→  { name: "TaxGPT", site: "https://www.taxgpt.com/", valor: "Investigación tributaria asistida y soporte a profesionales." },
+   804→  { name: "Dezu", site: "https://www.dezu.ai/", valor: "Automatización tributaria internacional." },
+   805→  { name: "UpTax", site: "https://uptax.ai/", valor: "Herramientas tributarias digitales." },
+   806→  { name: "E2E Compliance", site: "https://e2ecomply.com/", valor: "Cumplimiento tributario (mercado británico)." },
+   807→  { name: "TaxGo", site: "https://taxgo.uk/pricing", valor: "£79 una modalidad; £149 con revisión completa (confirmar oferta)." },
+   808→  { name: "Valarix", site: "https://valarix.com/", valor: "Referencia del mercado mexicano." },
+   809→  { name: "Avalara", site: "https://www.avalara.com/", valor: "Automatización internacional de impuestos, más relevante para empresas." },
+   810→  { name: "Fonoa", site: "https://www.fonoa.com/", valor: "Automatización fiscal e impuestos indirectos." },
+   811→  { name: "OpenTax", site: "https://opentax.filed.com/", valor: "Motor determinista de preparación (ver §5.4)." },
+   812→];
+   813→
+   814→export const patronesTecnicos = [
+   815→  "No delegar aritmética fiscal al modelo de lenguaje.",
+   816→  "Representar dinero con tipos y reglas de redondeo controlados.",
+   817→  "Mantener libros y registros auditables.",
+   818→  "Usar herramientas específicas para operaciones contables.",
+   819→  "Exigir aprobación para operaciones sensibles.",
+   820→  "Separar consulta normativa, cálculo y ejecución.",
+   821→  "Mantener evidencia de cada modificación.",
+   822→];
+   823→
+   824→export const jvzooResultado =
+   825→  "JVZoo: sin competidor directo verificable para un agente contador de personas naturales colombianas y el F210. No permite asegurar que no exista en ofertas privadas; no se asignan nombres ni precios no verificados.";
+   826→
+   827→// ---------------------------------------------------------------------------
+   828→// PLAN DE CONSTRUCCIÓN POR FASES (Prompt Maestro §11, real: Fase 0–6)
+   829→// ---------------------------------------------------------------------------
+   830→export interface FasePlan {
+   831→  id: string;
+   832→  nombre: string;
+   833→  objetivo: string;
+   834→  pasos: string[];
+   835→  resultado: string;
+   836→}
+   837→
+   838→export const fasesPlan: FasePlan[] = [
+   839→  {
+   840→    id: "F0",
+   841→    nombre: "Inspección del entorno",
+   842→    objetivo: "Conocer el estado real antes de escribir una línea.",
+   843→    pasos: [
+   844→      "Identificar repositorio y rama de trabajo de AGENTE-GENERAL",
+   845→      "Examinar instrucciones, pruebas, contratos, herramientas y mecanismos de extensión",
+   846→      "Comprobar capacidades reales de CloneaKit",
+   847→      "Identificar estado del árbol de trabajo y cambios preexistentes (no sobrescribir)",
+   848→    ],
+   849→    resultado: "Informe breve de situación y plan técnico adaptado al repositorio real.",
+   850→  },
+   851→  {
+   852→    id: "F1",
+   853→    nombre: "Investigación y evaluación de referentes",
+   854→    objetivo: "Convertir el informe maestro en decisiones técnicas justificadas.",
+   855→    pasos: [
+   856→      "Examinar referentes prioritarios (open-renta, Finance Substrate, renta-facil…) con CloneaKit/REA",
+   857→      "Verificar funcionalidades, código, pruebas y licencias",
+   858→      "Elaborar la matriz de aprovechamiento (9 campos: referente, capacidad, evidencia, valor, riesgos, licencia, decisión, destino, validación)",
+   859→      "Establecer qué construir, reutilizar, adaptar o descartar",
+   860→    ],
+   861→    resultado: "Decisiones técnicas justificadas y mapa de componentes.",
+   862→  },
+   863→  {
+   864→    id: "F2",
+   865→    nombre: "Diseño del arnés",
+   866→    objetivo: "Arquitectura implementable sin rediseñar el núcleo general.",
+   867→    pasos: [
+   868→      "Estructura de archivos y contratos de entrada/salida",
+   869→      "Interfaz de activación por AGENTE-GENERAL",
+   870→      "Herramientas, permisos, flujo de información y gestión del expediente",
+   871→      "Motor tributario, evidencias, gestión de errores y pruebas",
+   872→      "Estrategia de integración",
+   873→    ],
+   874→    resultado: "Arquitectura implementable, sin rediseñar innecesariamente el núcleo general.",
+   875→  },
+   876→  {
+   877→    id: "F3",
+   878→    nombre: "Construcción del núcleo funcional",
+   879→    objetivo: "Primera versión que ejecute un flujo tributario realista de principio a fin con datos de prueba.",
+   880→    pasos: [
+   881→      "Activación de la especialización + recopilación estructurada de información",
+   882→      "Gestión explícita de datos desconocidos (nunca asumir valores)",
+   883→      "Ingestión o importación de los documentos del alcance inicial",
+   884→      "Cálculos deterministas, validaciones y referencias normativas",
+   885→      "Borrador con soportes + registro de evidencias + errores y limitaciones visibles",
+   886→      "No simular integraciones ausentes para aparentar que el flujo está terminado",
+   887→    ],
+   888→    resultado: "Flujo F210 de persona natural con datos de prueba, con evidencias y límites declarados.",
+   889→  },
+   890→  {
+   891→    id: "F4",
+   892→    nombre: "Integración con AGENTE-GENERAL",
+   893→    objetivo: "Conectar el chaleco por la interfaz compatible con el repositorio real.",
+   894→    pasos: [
+   895→      "AGENTE-GENERAL puede activar la especialización",
+   896→      "Las herramientas cumplen sus contratos de entrada/salida",
+   897→      "Los permisos se respetan y los errores se manejan correctamente",
+   898→      "El núcleo general y las demás capacidades siguen funcionando (regresión)",
+   899→      "La especialización se prueba sin ejecutar acciones tributarias externas",
+   900→    ],
+   901→    resultado: "Chaleco operativo sobre el agente central, probado sin acciones externas.",
+   902→  },
+   903→  {
+   904→    id: "F5",
+   905→    nombre: "Pruebas y validación tributaria",
+   906→    objetivo: "Demostrar exactitud con casos reproducibles, nunca declararla sin evidencia.",
+   907→    pasos: [
+   908→      "Casos ordinarios, con información faltante, contradictoria, límite y de error documental",
+   909→      "Diferentes períodos fiscales, reglas y topes relevantes",
+   910→      "Recuperación después de fallo + pruebas de permisos y seguridad",
+   911→      "Regresión de AGENTE-GENERAL",
+   912→      "Comparación contra casos de referencia revisados por contador público competente y normativa oficial",
+   913→      "No marcar una prueba como aprobada si solo se ejecutó sin comprobar resultados",
+   914→    ],
+   915→    resultado: "Informe de paridad y limitaciones con evidencia verificable.",
+   916→  },
+   917→  {
+   918→    id: "F6",
+   919→    nombre: "Documentación y entrega",
+   920→    objetivo: "Que el arnés sepa instalarlo, usarlo, probarlo y mantenerlo.",
+   921→    pasos: [
+   922→      "Documentación de instalación, configuración, uso, pruebas y mantenimiento",
+   923→      "Limitaciones conocidas, componentes pendientes, fuentes normativas y versiones de reglas",
+   924→      "Instrucciones para incorporar futuras capacidades",
+   925→      "Registro de cambios de arquitectura y hallazgos en el mecanismo de contexto del proyecto",
+   926→    ],
+   927→    resultado: "Informe final obligatorio con 14 secciones y estado IMPLEMENTADO / PROBADO / VALIDADO / PENDIENTE / NO VERIFICADO.",
+   928→  },
+   929→];
+   930→
+   931→// ---------------------------------------------------------------------------
+   932→// CRITERIOS DE ACEPTACIÓN (Prompt Maestro §12 — 23 ítems, 5 bloques)
+   933→// ---------------------------------------------------------------------------
+   934→export interface CriterioBloque {
+   935→  bloque: string;
+   936→  items: string[];
+   937→}
+   938→
+   939→export const criteriosAceptacion: CriterioBloque[] = [
+   940→  {
+   941→    bloque: "Arquitectura",
+   942→    items: [
+   943→      "AGENTE-GENERAL conserva su identidad y su funcionamiento central",
+   944→      "CONTADOR PÚBLICO ALBRA existe como especialización modular",
+   945→      "La integración utiliza contratos e interfaces verificables",
+   946→      "Las dependencias están justificadas y documentadas",
+   947→    ],
+   948→  },
+   949→  {
+   950→    bloque: "Inteligencia especializada",
+   951→    items: [
+   952→      "El agente distingue datos confirmados, desconocidos, extraídos y calculados",
+   953→      "Puede solicitar la información faltante",
+   954→      "Puede explicar los resultados",
+   955→      "Utiliza fuentes normativas verificables",
+   956→      "No inventa requisitos, cifras ni beneficios tributarios",
+   957→    ],
+   958→  },
+   959→  {
+   960→    bloque: "Cálculo y validación",
+   961→    items: [
+   962→      "Los cálculos críticos se realizan mediante reglas deterministas cuando corresponda",
+   963→      "Las reglas están versionadas por período fiscal",
+   964→      "Los resultados se pueden reconstruir",
+   965→      "Existen pruebas reproducibles",
+   966→      "Los resultados se compararon con casos de referencia apropiados",
+   967→    ],
+   968→  },
+   969→  {
+   970→    bloque: "Operación",
+   971→    items: [
+   972→      "Los procedimientos tienen estados explícitos",
+   973→      "Se distinguen los borradores de las declaraciones presentadas",
+   974→      "Las acciones sensibles requieren las autorizaciones correspondientes",
+   975→      "Los errores no producen afirmaciones falsas de éxito",
+   976→      "Las evidencias se conservan de manera segura",
+   977→    ],
+   978→  },
+   979→  {
+   980→    bloque: "Seguridad y mantenimiento",
+   981→    items: [
+   982→      "Se revisaron licencias y dependencias",
+   983→      "Se protegieron documentos, credenciales y sesiones",
+   984→      "Existen instrucciones de configuración y uso",
+   985→      "Se documentaron las limitaciones y las funciones que todavía no están implementadas",
+   986→    ],
+   987→  },
+   988→];
+   989→
+   990→export const reglaCriterios =
+   991→  "El proyecto no se considera terminado por tener estructura de carpetas, README, interfaz atractiva o un agente que responda preguntas generales. Un criterio sin evidencia se reporta como PENDIENTE, no como aprobado.";
+   992→
+   993→// ---------------------------------------------------------------------------
+   994→// REGLAS DE EJECUCIÓN PARA EL CONSTRUCTOR (Prompt Maestro §13)
+   995→// ---------------------------------------------------------------------------
+   996→export const reglasEjecucion = [
+   997→  "No borrar ni sobrescribir trabajo preexistente sin justificación y autorización.",
+   998→  "No hacer cambios destructivos en AGENTE-GENERAL ni cambiar contratos externos sin revisar consumidores.",
+   999→  "No instalar dependencias innecesarias ni exponer credenciales.",
+  1000→  "No usar datos reales sensibles en pruebas sin autorización y protección adecuadas.",
+  1001→  "No realizar presentaciones tributarias reales ni enviar información financiera a terceros sin autorización.",
+  1002→  "No crear commits, publicar versiones, hacer push, desplegar o ejecutar acciones irreversibles como consecuencia automática del trabajo.",
+  1003→  "No confundir pruebas simuladas con integraciones reales.",
+  1004→  "No añadir agentes independientes si sus responsabilidades se resuelven de forma más simple dentro del arnés.",
+  1005→  "Ante bloqueo de seguridad, licencia incompatible, conflicto destructivo o divergencia importante: detenerse en ese punto y documentar la decisión. En los demás casos, continuar con el mejor criterio técnico.",
+  1006→];
+  1007→
+  1008→// ---------------------------------------------------------------------------
+  1009→// SEGURIDAD Y RESPONSABILIDAD PROFESIONAL (Prompt Maestro §9)
+  1010→// ---------------------------------------------------------------------------
+  1011→export const controlesSeguridad = [
+  1012→  "Permisos mínimos necesarios y separación entre datos de usuarios.",
+  1013→  "Protección de documentos y credenciales; gestión segura de sesiones.",
+  1014→  "Redacción de secretos en registros y validación de archivos y entradas.",
+  1015→  "Restricciones sobre acciones externas y trazabilidad de operaciones sensibles.",
+  1016→  "Aprobación humana antes de acciones con consecuencias legales o fiscales.",
+  1017→  "Mecanismos de interrupción y recuperación segura.",
+  1018→];
+  1019→
+  1020→export const prohibicionesProfesionales = [
+  1021→  "No asumir automáticamente respuestas tributarias desconocidas.",
+  1022→  "No rellenar campos críticos con valores predeterminados que alteren la declaración.",
+  1023→  "No presentar una estimación como resultado oficial.",
+  1024→  "No afirmar que el agente es contador público humano titulado, con matrícula o que hizo revisión humana si no es cierto.",
+  1025→  "Las decisiones que legalmente requieran firma de profesional habilitado se tratan conforme a la normativa aplicable.",
+  1026→];
+  1027→
+  1028→// ---------------------------------------------------------------------------
+  1029→// LICENCIAS — PROCESO OBLIGATORIO (Prompt Maestro §10)
+  1030→// ---------------------------------------------------------------------------
+  1031→export const procesoLicencias = [
+  1032→  "Identificar el repositorio de origen.",
+  1033→  "Comprobar la licencia del proyecto y de los componentes relevantes.",
+  1034→  "Revisar las licencias de dependencias y activos.",
+  1035→  "Verificar obligaciones de atribución, distribución y publicación de modificaciones.",
+  1036→  "Distinguir código, documentación, datos, modelos y contenido.",
+  1037→  "Documentar el origen de cada componente reutilizado.",
+  1038→  "Descartar cualquier incorporación cuya licencia no permita el uso previsto, hasta obtener autorización suficiente.",
+  1039→];
+  1040→
+  1041→export const reglasLicencias =
+  1042→  "La disponibilidad pública de un repositorio NO es autorización automática para uso comercial. MIT permite uso comercial bajo sus condiciones; AGPL puede imponer obligaciones al ofrecerlo como servicio de red; cuando convenga, reproducir la idea con implementación original sin copiar código protegido.";
+  1043→
+  1044→// ---------------------------------------------------------------------------
+  1045→// INFORME FINAL OBLIGATORIO (Prompt Maestro §14 — 14 secciones)
+  1046→// ---------------------------------------------------------------------------
+  1047→export const informeFinal = [
+  1048→  "Resumen ejecutivo: qué se construyó y cuál es su utilidad.",
+  1049→  "Arquitectura final: cómo funciona el chaleco y cómo se conecta con AGENTE-GENERAL.",
+  1050→  "Mapa de archivos: nuevos, modificados y su responsabilidad.",
+  1051→  "Resultados de CloneaKit: referentes examinados y patrones aprovechados.",
+  1052→  "Matriz de licencias: origen y condiciones de los componentes reutilizados.",
+  1053→  "Capacidades implementadas, separadas de las planificadas.",
+  1054→  "Pruebas ejecutadas: comandos, resultados y evidencia verificable.",
+  1055→  "Validación tributaria: casos de referencia, diferencias y limitaciones.",
+  1056→  "Seguridad: controles incorporados y riesgos pendientes.",
+  1057→  "Integración: qué funciona realmente con AGENTE-GENERAL y qué sigue aislado.",
+  1058→  "Limitaciones: funciones no implementadas, bloqueos y supuestos.",
+  1059→  "Instrucciones de uso: cómo activar y probar el arnés.",
+  1060→  "Próximos pasos: prioridades ordenadas por impacto y riesgo.",
+  1061→  "Estado final: IMPLEMENTADO / PROBADO / VALIDADO / PENDIENTE / NO VERIFICADO.",
+  1062→];
+  1063→
+  1064→// ---------------------------------------------------------------------------
+  1065→// FUENTES OFICIALES DIAN (Informe Maestro §9)
+  1066→// ---------------------------------------------------------------------------
+  1067→export const fuentesDian = [
+  1068→  { name: "Micrositio renta PN AG 2025", url: "https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/" },
+  1069→  { name: "Cómo hacer la declaración", url: "https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/como-hacer-su-declaracion/" },
+  1070→  { name: "Preparación de la declaración", url: "https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/preparese-para-la-declaracion/" },
+  1071→  { name: "Formulario 210 (MUISCA)", url: "https://muisca.dian.gov.co/WebDilIngresoFormRenta210/" },
+  1072→  { name: "Formulario 210 v16", url: "https://muisca.dian.gov.co/WebFormRenta210v16/" },
+  1073→  { name: "Trámites tributarios DIAN", url: "https://www.dian.gov.co/tramitesservicios/tramites-y-servicios/tributarios/Paginas/tramites-tributarios.aspx" },
+  1074→  { name: "Normograma — Resolución 227 de 2025", url: "https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0227_2025.htm" },
+  1075→];
+  1076→
+  1077→export const principiosDian = [
+  1078→  "Los datos precargados por la DIAN deben verificarse.",
+  1079→  "La responsabilidad de la declaración recae en el contribuyente.",
+  1080→  "Un borrador no equivale a una declaración presentada.",
+  1081→  "La firma y la presentación se tratan como acciones separadas.",
+  1082→  "El comprobante de presentación es la evidencia de que el proceso terminó.",
+  1083→];
+  1084→
+  1085→export const alertaApiDian =
+  1086→  "No se encontró evidencia de una API pública oficial de terceros para presentar automáticamente declaraciones F210. ALBRA no debe diseñarse suponiendo que existe esa API hasta confirmarlo directamente con la DIAN.";
+  1087→
+  1088→// ---------------------------------------------------------------------------
+  1089→// RIESGOS (Informe Maestro §13 + Prompt Maestro §9)
+  1090→// ---------------------------------------------------------------------------
+  1091→export const riesgosBloques = [
+  1092→  {
+  1093→    titulo: "Datos personales y financieros",
+  1094→    items: [
+  1095→      "Los documentos tributarios revelan ingresos, patrimonio, cuentas y dependientes.",
+  1096→      "Definir: cifrado, control de acceso, retención y borrado, gestión de incidentes.",
+  1097→      "Tratamiento de datos personales, protección de credenciales, aislamiento de sesiones autenticadas y auditoría de accesos.",
+  1098→    ],
+  1099→  },
+  1100→  {
+  1101→    titulo: "Licencias",
+  1102→    items: [
+  1103→      "MIT: uso comercial generalmente permitido bajo sus condiciones.",
+  1104→      "AGPL: obligaciones relevantes al distribuir u ofrecer como servicio de red (OpenTax, OpenAccountants).",
+  1105→      "Sin licencia explícita (renta-facil) o pendiente (renta-declaracion): no reutilizar comercialmente.",
+  1106→      "La licencia del código puede diferir de la de documentos, corpus y guías incluidos.",
+  1107→    ],
+  1108→  },
+  1109→  {
+  1110→    titulo: "Exactitud tributaria",
+  1111→    items: [
+  1112→      "Requisito antes de declaraciones reales: casos sintéticos, casos revisados por contadores, pruebas de paridad, casos límite.",
+  1113→      "Validación de cada año gravable y revisión de normas oficiales.",
+  1114→      "Auditoría de parámetros y dependencias; pruebas de recuperación ante fallos.",
+  1115→      "Una licencia abierta no certifica exactitud ni preparación para producción.",
+  1116→    ],
+  1117→  },
+  1118→];
+  1119→
+  1120→// ---------------------------------------------------------------------------
+  1121→// COMPARACIÓN ARQUITECTÓNICA (Informe Maestro §10)
+  1122→// ---------------------------------------------------------------------------
+  1123→export const comparacionArquitectonica = [
+  1124→  { componente: "Motor determinista F210", referencia: "open-renta", decision: "Auditar y evaluar reutilización" },
+  1125→  { componente: "Contabilidad personal longitudinal", referencia: "Finance Substrate", decision: "Estudiar modelo de datos y fuentes" },
+  1126→  { componente: "Entrevista conversacional", referencia: "Tributi/Clara y Justi", decision: "Diseñar preguntas adaptativas" },
+  1127→  { componente: "Gestión de clientes", referencia: "Contadia y renta-declaracion", decision: "Estudiar flujos y expedientes" },
+  1128→  { componente: "Automatización de navegador", referencia: "Taxon y Finance Substrate", decision: "Adoptar patrones seguros" },
+  1129→  { componente: "Consulta normativa", referencia: "Counti y OpenAccountants", decision: "Construir conocimiento con fuentes oficiales y licencias claras" },
+  1130→  { componente: "Aprobación de presentación", referencia: "Terminal Tax y Taxfill", decision: "Separar preparación y autorización" },
+  1131→  { componente: "Seguridad y trazabilidad", referencia: "Patrones de contabilidad auditable", decision: "Aplicar controles de ALBRA y Hands" },
+  1132→];
+  1133→
+  1134→// ---------------------------------------------------------------------------
+  1135→// PILARES Y PRÓXIMO PASO (Informe Maestro §15)
+  1136→// ---------------------------------------------------------------------------
+  1137→export const pilares = [
+  1138→  {
+  1139→    n: 1,
+  1140→    titulo: "Contabilidad personal permanente",
+  1141→    detalle: "Expediente financiero longitudinal con ingresos, patrimonio, deudas, movimientos y fuentes — todo el año, no solo temporada.",
+  1142→  },
+  1143→  {
+  1144→    n: 2,
+  1145→    titulo: "Motor tributario determinista y auditable",
+  1146→    detalle: "Reglas fiscales colombianas versionadas por año, fórmulas por casilla, memoria de cálculo y referencias normativas.",
+  1147→  },
+  1148→  {
+  1149→    n: 3,
+  1150→    titulo: "Agente de IA para entrevista y coordinación",
+  1151→    detalle: "Extrae, explica, pregunta solo lo faltante, nunca asume valores desconocidos y coordina herramientas especializadas.",
+  1152→  },
+  1153→  {
+  1154→    n: 4,
+  1155→    titulo: "Hands para navegador y MUISCA",
+  1156→    detalle: "Asistencia controlada: observar, escribir valores autorizados, verificar, guardar evidencia y pedir autorización para lo sensible.",
+  1157→  },
+  1158→];
+  1159→
+  1160→export const decisionFinal = {
+  1161→  veredicto:
+  1162→    "Desarrollar el Agente Contador Digital ALBRA con 4 pilares: un agente central que coordina herramientas especializadas, una única fuente de verdad financiera, reglas fiscales verificables y controles explícitos para cada operación sensible. No una multitud de agentes que calculen por separado.",
+  1163→  proximoPaso:
+  1164→    "Auditoría técnica reproducible de open-renta (commit fijado, dependencias, pruebas, fórmulas, parámetros oficiales, paridad con casos de contador). Solo después de validar el motor comienza la integración con el expediente financiero y las manos de navegador.",
+  1165→};
+  1166→
+  1167→
+  1168→
