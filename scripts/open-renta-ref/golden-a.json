@@ -1,0 +1,299 @@
+{
+  "valores": {
+    "patrimonio_bruto": 400000000,
+    "patrimonio_deudas": 150000000,
+    "patrimonio_liquido": 250000000,
+    "cg_ingresos_brutos": 180000000,
+    "cg_trabajo_ingresos": 180000000,
+    "cg_capital_ingresos": 0,
+    "cg_no_laborales_ingresos": 0,
+    "cg_trabajo_incrngo": 14400000,
+    "cg_capital_incrngo": 0,
+    "cg_no_laborales_incrngo": 0,
+    "cg_incrngo": 14400000,
+    "cg_trabajo_costos": 0,
+    "cg_capital_costos": 0,
+    "cg_no_laborales_costos": 0,
+    "cg_costos": 0,
+    "cg_base_limite": 165600000,
+    "cg_limite": 66240000,
+    "cg_exentas_deducciones": 66240000,
+    "cg_dependientes_336": 7171056,
+    "cg_factura_electronica": 600000,
+    "cg_renta_liquida_gravable": 91588944,
+    "renta_liquida_gravable": 91588944,
+    "impuesto_renta": 7717264,
+    "descuentos": 0,
+    "impuesto_neto_renta": 7717264,
+    "total_impuesto_cargo": 7717264,
+    "retenciones": 12000000,
+    "anticipo_siguiente": 0,
+    "saldo_a_favor": 4283000,
+    "saldo_a_pagar": 0
+  },
+  "valores_fmt": {
+    "patrimonio_bruto": "$400.000.000",
+    "patrimonio_deudas": "$150.000.000",
+    "patrimonio_liquido": "$250.000.000",
+    "cg_ingresos_brutos": "$180.000.000",
+    "cg_trabajo_ingresos": "$180.000.000",
+    "cg_capital_ingresos": "$0",
+    "cg_no_laborales_ingresos": "$0",
+    "cg_trabajo_incrngo": "$14.400.000",
+    "cg_capital_incrngo": "$0",
+    "cg_no_laborales_incrngo": "$0",
+    "cg_incrngo": "$14.400.000",
+    "cg_trabajo_costos": "$0",
+    "cg_capital_costos": "$0",
+    "cg_no_laborales_costos": "$0",
+    "cg_costos": "$0",
+    "cg_base_limite": "$165.600.000",
+    "cg_limite": "$66.240.000",
+    "cg_exentas_deducciones": "$66.240.000",
+    "cg_dependientes_336": "$7.171.056",
+    "cg_factura_electronica": "$600.000",
+    "cg_renta_liquida_gravable": "$91.588.944",
+    "renta_liquida_gravable": "$91.588.944",
+    "impuesto_renta": "$7.717.264",
+    "descuentos": "$0",
+    "impuesto_neto_renta": "$7.717.264",
+    "total_impuesto_cargo": "$7.717.264",
+    "retenciones": "$12.000.000",
+    "anticipo_siguiente": "$0",
+    "saldo_a_favor": "$4.283.000",
+    "saldo_a_pagar": "$0"
+  },
+  "memoria_calculo": [
+    {
+      "seccion": "Patrimonio",
+      "concepto": "Total patrimonio bruto a 31 de diciembre",
+      "valor": 400000000,
+      "valor_fmt": "$400.000.000",
+      "formula": "",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Patrimonio",
+      "concepto": "Deudas",
+      "valor": 150000000,
+      "valor_fmt": "$150.000.000",
+      "formula": "",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Patrimonio",
+      "concepto": "Total patrimonio liquido",
+      "valor": 250000000,
+      "valor_fmt": "$250.000.000",
+      "formula": "$400.000.000 - $150.000.000",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Ingresos brutos de la cedula general",
+      "valor": 180000000,
+      "valor_fmt": "$180.000.000",
+      "formula": "trabajo $180.000.000 + capital $0 + no laborales $0",
+      "norma": "Art. 335 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Ingresos no constitutivos de renta ni ganancia ocasional",
+      "valor": 14400000,
+      "valor_fmt": "$14.400.000",
+      "formula": "aportes_obligatorios_salud (trabajo) $7.200.000 + aportes_obligatorios_pension (trabajo) $7.200.000",
+      "norma": "Arts. 55 y 56 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Costos y gastos procedentes",
+      "valor": 0,
+      "valor_fmt": "$0",
+      "formula": "Solo rentas de capital y no laborales (y honorarios con costos)",
+      "norma": "Art. 336 num. 2 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Renta liquida de la cedula general (base del limite)",
+      "valor": 165600000,
+      "valor_fmt": "$165.600.000",
+      "formula": "$180.000.000 - $14.400.000 - $0",
+      "norma": "Art. 336 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "  Intereses de credito de vivienda",
+      "valor": 18000000,
+      "valor_fmt": "$18.000.000",
+      "formula": "declarado $18.000.000",
+      "norma": "Articulo 119 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "  Medicina prepagada y seguros de salud",
+      "valor": 9561408,
+      "valor_fmt": "$9.561.408",
+      "formula": "declarado $9.600.000",
+      "norma": "Articulo 387 ET",
+      "nota": "limitado al tope de 192 UVT ($9.561.408); se pierden $38.592"
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "  GMF (4x1000) deducible",
+      "valor": 600000,
+      "valor_fmt": "$600.000",
+      "formula": "50% de $1.200.000 certificado",
+      "norma": "Articulo 115 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "  Dependientes (art. 387)",
+      "valor": 18000000,
+      "valor_fmt": "$18.000.000",
+      "formula": "menor entre 10% de $180.000.000 = $18.000.000 y 384 UVT = $19.122.816",
+      "norma": "Articulo 387 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "  Renta exenta 25% de rentas de trabajo",
+      "valor": 29859648,
+      "valor_fmt": "$29.859.648",
+      "formula": "25% de (ingresos laborales $180.000.000 - INCRNGO $14.400.000 - deducciones y exentas ya imputadas $46.161.408) = $29.859.648",
+      "norma": "Articulo 206 numeral 10 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Limite a rentas exentas y deducciones",
+      "valor": 66240000,
+      "valor_fmt": "$66.240.000",
+      "formula": "menor entre 40% de $165.600.000 = $66.240.000 y 1340 UVT = $66.730.660",
+      "norma": "Articulo 336 numeral 3 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Rentas exentas y deducciones imputables (aplicadas)",
+      "valor": 66240000,
+      "valor_fmt": "$66.240.000",
+      "formula": "solicitadas $76.021.056, limite $66.240.000",
+      "norma": "Articulo 336 numeral 3 ET",
+      "nota": "RECHAZADAS por exceso: $9.781.056"
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Deduccion de 72 UVT por 2 dependiente(s)",
+      "valor": 7171056,
+      "valor_fmt": "$7.171.056",
+      "formula": "2 x 72 UVT x $49.799",
+      "norma": "Articulo 336 numeral 3 ET (Ley 2277 de 2022)",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "Deduccion del 1% por compras con factura electronica",
+      "valor": 600000,
+      "valor_fmt": "$600.000",
+      "formula": "1% de $60.000.000 = $600.000",
+      "norma": "Articulo 336 numeral 5 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Cedula general",
+      "concepto": "RENTA LIQUIDA GRAVABLE DE LA CEDULA GENERAL",
+      "valor": 91588944,
+      "valor_fmt": "$91.588.944",
+      "formula": "$165.600.000 - $66.240.000 - $7.771.056",
+      "norma": "Art. 336 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "RENTA LIQUIDA GRAVABLE TOTAL",
+      "valor": 91588944,
+      "valor_fmt": "$91.588.944",
+      "formula": "cedula general $91.588.944 + pensiones $0 + dividendos $0",
+      "norma": "Art. 331 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "Impuesto sobre la renta liquida gravable",
+      "valor": 7717264,
+      "valor_fmt": "$7.717.264",
+      "formula": "(1839.17 UVT - 1700 UVT) x 28% + 116 UVT = 154.97 UVT",
+      "norma": "Art. 241 ET",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "Total descuentos tributarios",
+      "valor": 0,
+      "valor_fmt": "$0",
+      "formula": "limitados al impuesto sobre la renta",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "IMPUESTO NETO DE RENTA",
+      "valor": 7717264,
+      "valor_fmt": "$7.717.264",
+      "formula": "$7.717.264 - $0",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "TOTAL IMPUESTO A CARGO",
+      "valor": 7717264,
+      "valor_fmt": "$7.717.264",
+      "formula": "impuesto neto $7.717.264 + ganancias ocasionales $0",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "Total retenciones en la fuente del ano",
+      "valor": 12000000,
+      "valor_fmt": "$12.000.000",
+      "formula": "",
+      "norma": "",
+      "nota": ""
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "Anticipo del impuesto para el ano siguiente",
+      "valor": 0,
+      "valor_fmt": "$0",
+      "formula": "opcion impuesto del ano: 75% de $7.717.264 - retenciones = $0; opcion promedio de dos anos: $0",
+      "norma": "Art. 807 ET",
+      "nota": "Se toma la opcion mas favorable permitida por la norma."
+    },
+    {
+      "seccion": "Liquidacion privada",
+      "concepto": "SALDO A FAVOR",
+      "valor": 4283000,
+      "valor_fmt": "$4.283.000",
+      "formula": "retenciones y anticipos superan el impuesto a cargo mas el anticipo",
+      "norma": "Art. 577 ET (aproximacion al mil mas cercano)",
+      "nota": ""
+    }
+  ],
+  "alertas": [
+    "Las rentas exentas y deducciones solicitadas superan el limite del 40%/1.340 UVT en $9.781.056. Ese exceso NO es aprovechable en este ano gravable."
+  ],
+  "desenlace": "R3_saldo_a_favor",
+  "casilla_140": false,
+  "pct_costos_336_1": null
+}

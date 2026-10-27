@@ -1,0 +1,1194 @@
+{
+  "meta": {
+    "fuente": "Formulario_210_2025.pdf",
+    "descripcion": "Mapa de casillas del formulario 210 extraido del instructivo oficial de la DIAN. Ningun numero de casilla esta escrito a mano: todos salen del PDF.",
+    "total_casillas": 127,
+    "faltantes": [
+      2,
+      3,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "secciones": [
+      "DATOS DEL DECLARANTE",
+      "DEDUCCIONES IMPUTABLES A LAS RENTAS DE CAPITAL",
+      "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO",
+      "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO QUE NO PROVENGAN",
+      "DEDUCCIONES IMPUTABLES A LAS RENTAS NO LABORALES",
+      "RENTAS EXENTAS DE LAS RENTAS DE CAPITAL",
+      "RENTAS EXENTAS DE LAS RENTAS DE TRABAJO QUE NO PROVENGAN DE",
+      "RENTAS EXENTAS DE LAS RENTAS NO LABORALES",
+      "RENTAS EXENTAS DE RENTAS DE TRABAJO",
+      "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTA DE",
+      "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "SECCIÓN CÉDULA DE PENSIONES",
+      "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "SECCIÓN GANANCIAS OCASIONALES",
+      "SECCIÓN LIQUIDACIÓN PRIVADA",
+      "SECCIÓN PATRIMONIO",
+      "SECCIÓN RENTAS DE CAPITAL",
+      "SECCIÓN RENTAS DE TRABAJO",
+      "SECCIÓN RENTAS DE TRABAJO QUE NO PROVENGAN DE UNA RELACIÓN",
+      "SECCIÓN RENTAS NO LABORALES"
+    ],
+    "anio_gravable": 2025
+  },
+  "casillas": [
+    {
+      "casilla": 1,
+      "nombre": "Año",
+      "formula": "",
+      "seccion": "",
+      "descripcion": "corresponde al año gravable que está declarando.",
+      "pagina_instructivo": 2,
+      "orden": 1
+    },
+    {
+      "casilla": 4,
+      "nombre": "Número de formulario",
+      "formula": "",
+      "seccion": "",
+      "descripcion": "espacio determinado para el número único asignado por la Dirección de Impuestos y Aduanas Nacionales (en adelante DIAN) a cada uno de los formularios.",
+      "pagina_instructivo": 2,
+      "orden": 2
+    },
+    {
+      "casilla": 5,
+      "nombre": "No. de Identificación Tributaria",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "corresponde al Número de Identificación Tributaria asignado al contribuyente por la DIAN, sin el dígito de verificación, tal como aparece en la casilla 5 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 3
+    },
+    {
+      "casilla": 6,
+      "nombre": "DV",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "corresponde al número que en su NIT se encuentra separado, llamado “Dígito de verificación” (DV), tal como aparece en la casilla 6 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 4
+    },
+    {
+      "casilla": 7,
+      "nombre": "Primer apellido",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "se diligencia automáticamente con el primer apellido que figura en la casilla 31 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 5
+    },
+    {
+      "casilla": 8,
+      "nombre": "Segundo apellido",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "se diligencia automáticamente con el segundo apellido que figura en la casilla 32 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 6
+    },
+    {
+      "casilla": 9,
+      "nombre": "Primer nombre",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "se diligencia automáticamente con el primer nombre que figura en la casilla 33 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 7
+    },
+    {
+      "casilla": 10,
+      "nombre": "Otros nombres",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "se diligencian automáticamente con los otros nombres que figuran en la casilla 34 de la hoja principal del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 8
+    },
+    {
+      "casilla": 12,
+      "nombre": "Cód. Dir. seccional",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "se registra el código de la dirección seccional que corresponda al domicilio principal de su actividad o negocio, según lo informado en la casilla 12 del RUT.",
+      "pagina_instructivo": 2,
+      "orden": 9
+    },
+    {
+      "casilla": 24,
+      "nombre": "Actividad económica principal",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "código que corresponde a la actividad económica que le generó el mayor valor de ingresos en el período gravable a declarar, la cual debe corresponder a alguna de las informadas en el RUT, para el período declarado, casilla 46, casilla 48 o casilla 50, de la hoja principal. Cuando no corresponda a ninguna de las casillas anteriores, actualice este dato en el RUT,",
+      "pagina_instructivo": 2,
+      "orden": 10
+    },
+    {
+      "casilla": 25,
+      "nombre": "Cód.",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "si la declaración es una corrección, el SI de Diligenciamiento registrará: “1” si es una corrección a la declaración privada; “2” si es una corrección a la corrección generada por la DIAN, con fundamento en el artículo 43 de la Ley 962 del 8 de julio de 2005 o “3” si es una corrección provocada con ocasión de un acto administrativo.",
+      "pagina_instructivo": 2,
+      "orden": 11
+    },
+    {
+      "casilla": 26,
+      "nombre": "Número de formulario anterior",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "corresponde al número de formulario de la casilla 4 de la declaración objeto de corrección o del acto administrativo que se corrige.",
+      "pagina_instructivo": 2,
+      "orden": 12
+    },
+    {
+      "casilla": 27,
+      "nombre": "Fracción año gravable siguiente",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "si va a presentar declaración por la fracción del año gravable siguiente seleccione en el SI de Diligenciamiento previo ingreso al formulario, la opción “Nueva fracción año”.",
+      "pagina_instructivo": 2,
+      "orden": 13
+    },
+    {
+      "casilla": 28,
+      "nombre": "Uno por ciento (1%) de compras con factura electrónica",
+      "formula": "",
+      "seccion": "DATOS DEL DECLARANTE",
+      "descripcion": "las personas naturales que declaren ingresos de la cédula general a los que se refiere el artículo 335 del Estatuto Tributario (en adelante del E.T.), que adquieran bienes y/o servicios, podrán solicitar como deducción en el impuesto sobre la renta, independientemente que tenga o no relación de causalidad con la actividad productora de renta del",
+      "pagina_instructivo": 2,
+      "orden": 14
+    },
+    {
+      "casilla": 29,
+      "nombre": "Total patrimonio bruto",
+      "formula": "",
+      "seccion": "SECCIÓN PATRIMONIO",
+      "descripcion": "registre en esta casilla el total del valor patrimonial de todos los bienes y derechos apreciables en dinero poseídos en el país o en el exterior por el contribuyente al final del periodo fiscal, tales como: bienes y/o efectivo en moneda extranjera, efectivo en moneda nacional, saldo en cuentas corrientes y cuentas de ahorros, inversiones en moneda nacional, inventarios que",
+      "pagina_instructivo": 2,
+      "orden": 15
+    },
+    {
+      "casilla": 30,
+      "nombre": "Deudas",
+      "formula": "",
+      "seccion": "SECCIÓN PATRIMONIO",
+      "descripcion": "registre en esta casilla el valor total de los saldos pendientes de pago a 31 de diciembre del periodo fiscal, tales como: obligaciones financieras, cuentas por pagar, arrendamientos por pagar, otros pasivos financieros, impuestos, gravámenes y tasas por pagar, pasivos por beneficios a los empleados, pasivos por ingresos diferidos y otros pasivos u obligaciones diferentes a las anteriores.",
+      "pagina_instructivo": 2,
+      "orden": 16
+    },
+    {
+      "casilla": 31,
+      "nombre": "Total patrimonio líquido",
+      "formula": "29 - 30",
+      "seccion": "SECCIÓN PATRIMONIO",
+      "descripcion": "es el resultado de restar del valor de la casilla 29 (Total patrimonio bruto) el valor de la casilla 30 (Deudas).",
+      "pagina_instructivo": 3,
+      "orden": 17
+    },
+    {
+      "casilla": 32,
+      "nombre": "Ingresos brutos de las Rentas de trabajo",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO",
+      "descripcion": "registre en esta casilla el valor en dinero o en especie correspondiente a salarios, prima legal, primas extralegales, cesantías efectivamente pagadas por su empleador en el período o las aplicadas a un crédito hipotecario o retiradas en el período de su fondo de cesantías, viáticos, gastos de representación, ingresos en especie (artículo 29-1 del E.T.), ingresos y/o pagos",
+      "pagina_instructivo": 3,
+      "orden": 18
+    },
+    {
+      "casilla": 33,
+      "nombre": "Ingresos no constitutivos de renta de las Rentas de trabajo",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO",
+      "descripcion": "incluya en esta sección los ingresos no constitutivos de renta de las Rentas de trabajo, tales como: Aportes obligatorios a fondos de pensiones y solidaridad pensional y aportes voluntarios al régimen de ahorro individual con solidaridad – RAIS: incluya los aportes obligatorios que efectúen los trabajadores y afiliados al Sistema General de",
+      "pagina_instructivo": 3,
+      "orden": 19
+    },
+    {
+      "casilla": 34,
+      "nombre": "Renta líquida de las Rentas de trabajo",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO",
+      "descripcion": "es el resultado de restarle a la casilla 32 (Ingresos brutos por rentas de trabajo) el valor de la casilla 33 (Ingresos no constitutivos de renta).",
+      "pagina_instructivo": 3,
+      "orden": 20
+    },
+    {
+      "casilla": 35,
+      "nombre": "Rentas exentas de las Rentas de trabajo – Aportes voluntarios AFC, FVP y/o AVC",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE RENTAS DE TRABAJO",
+      "descripcion": "si el valor de la casilla 34 es mayor que cero (0), registre en esta casilla el valor de los depósitos efectuados a las Cuentas de Ahorro para el Fomento de la Construcción – AFC, aportes voluntarios a los seguros privados de pensiones – FVP y a las Cuentas de Ahorro Voluntario Contractual – AVC, que no deben exceder el treinta por ciento (30%) del ingreso laboral o del ingreso tributario del",
+      "pagina_instructivo": 3,
+      "orden": 21
+    },
+    {
+      "casilla": 36,
+      "nombre": "Rentas exentas de las Rentas de trabajo – Otras rentas exentas",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE RENTAS DE TRABAJO",
+      "descripcion": "si el valor de la casilla 34 (Renta líquida de las Rentas de trabajo) es mayor que cero (0), registre en esta casilla las rentas exentas imputables a las Rentas de trabajo diferentes a las registradas en la casilla 35 (Rentas exentas de las Rentas de trabajo – Aportes voluntarios AFC, FVP y AVC).",
+      "pagina_instructivo": 4,
+      "orden": 22
+    },
+    {
+      "casilla": 37,
+      "nombre": "Total rentas exentas de las Rentas de trabajo",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE RENTAS DE TRABAJO",
+      "descripcion": "es el resultado de sumar las casillas 35 (Rentas exentas de las Rentas de trabajo – Aportes voluntarios AFC, FVP y AVC) y 36 (Rentas exentas de las Rentas de trabajo – Otras rentas exentas).",
+      "pagina_instructivo": 4,
+      "orden": 23
+    },
+    {
+      "casilla": 38,
+      "nombre": "Deducciones imputables a las Rentas de trabajo – Intereses de vivienda",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO",
+      "descripcion": "si el valor de la casilla 34 (Renta líquida de las Rentas de trabajo) es mayor que cero (0), registre en esta casilla el valor de los intereses y/o corrección monetaria pagados sobre préstamos para adquisición de vivienda de acuerdo con lo establecido en el artículo 119 del E.T. el cual no podrá exceder de mil doscientas (1.200) UVT en el",
+      "pagina_instructivo": 4,
+      "orden": 24
+    },
+    {
+      "casilla": 39,
+      "nombre": "Deducciones imputables a las Rentas de trabajo – Otras deducciones imputables",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO",
+      "descripcion": "si el valor de la casilla 34 (Renta líquida de las Rentas de trabajo) es mayor que cero (0), registre en esta casilla las deducciones imputables",
+      "pagina_instructivo": 4,
+      "orden": 25
+    },
+    {
+      "casilla": 40,
+      "nombre": "Total deducciones imputables a las Rentas de trabajo",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO",
+      "descripcion": "es el resultado de sumar las casillas 38 (Deducciones imputables a las Rentas de trabajo – Intereses de vivienda) y 39 (Deducciones imputables a las Rentas de trabajo – Otras deducciones imputables).",
+      "pagina_instructivo": 5,
+      "orden": 26
+    },
+    {
+      "casilla": 41,
+      "nombre": "Rentas exentas y/o deducciones imputables a las Rentas de trabajo (Limitadas)",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTA DE",
+      "descripcion": "de acuerdo con la instrucción para el cálculo de las Rentas exentas y deducciones imputables a la Renta líquida cédula general, el SI de diligenciamiento distribuirá en esta casilla el valor de las Rentas exentas y deducciones imputables a las que tiene derecho y que fueron registradas en la casilla 37 (Total rentas exentas) y la casilla 40 (Total deducciones imputables) de las Rentas de trabajo,",
+      "pagina_instructivo": 5,
+      "orden": 27
+    },
+    {
+      "casilla": 42,
+      "nombre": "Renta líquida ordinaria de las Rentas de trabajo",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTA DE",
+      "descripcion": "es el resultado positivo de restar del valor de la casilla 34 (Renta líquida), el valor de la casilla 41 (Rentas exentas y/o deducciones imputables (Limitadas)).",
+      "pagina_instructivo": 5,
+      "orden": 28
+    },
+    {
+      "casilla": 43,
+      "nombre": "Ingresos brutos de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO QUE NO PROVENGAN DE UNA RELACIÓN",
+      "descripcion": "registre en esta casilla el valor de los ingresos por rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria obtenidos por las personas siempre y cuando optaron por solicitar costos y deducciones procedentes en lugar de la exención contemplada en el numeral 10 del artículo 206 del E.T.",
+      "pagina_instructivo": 5,
+      "orden": 29
+    },
+    {
+      "casilla": 44,
+      "nombre": "Ingresos no constitutivos de renta de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO QUE NO PROVENGAN DE UNA RELACIÓN",
+      "descripcion": "incluya en esta casilla los ingresos no constitutivos de renta de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria, tales como: Aportes obligatorios a fondos de pensiones y solidaridad pensional y aportes voluntarios al régimen de ahorro individual con solidaridad – RAIS: incluya los",
+      "pagina_instructivo": 6,
+      "orden": 30
+    },
+    {
+      "casilla": 45,
+      "nombre": "Costos y deducciones procedentes de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO QUE NO PROVENGAN DE UNA RELACIÓN",
+      "descripcion": "se podrán restar los costos y los gastos asociados a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria, en desarrollo de las actividades correspondientes. Los contribuyentes a los que les resulte aplicable el parágrafo 5 del artículo 206 del E.T. deberán optar entre restar los costos y gastos procedentes o la renta",
+      "pagina_instructivo": 6,
+      "orden": 31
+    },
+    {
+      "casilla": 46,
+      "nombre": "Renta líquida de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE TRABAJO QUE NO PROVENGAN DE UNA RELACIÓN",
+      "descripcion": "es el resultado positivo de restarle al valor de la casilla 43 (Ingresos brutos) de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria, los valores de las casillas 44 (Ingresos no constitutivos de renta) de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria y 45 (Costos y deducciones procedentes) de las",
+      "pagina_instructivo": 6,
+      "orden": 32
+    },
+    {
+      "casilla": 47,
+      "nombre": "Rentas exentas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Aportes voluntarios AFC, FVP y/o AVC",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE TRABAJO QUE NO PROVENGAN DE",
+      "descripcion": "si el valor de la casilla 46 (Renta líquida de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria) es mayor que cero (0), registre en esta casilla el valor de los depósitos efectuados a las Cuentas de Ahorro para el Fomento de la Construcción – AFC, aportes voluntarios a los seguros privados de",
+      "pagina_instructivo": 6,
+      "orden": 33
+    },
+    {
+      "casilla": 48,
+      "nombre": "Rentas exentas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Otras rentas exentas",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE TRABAJO QUE NO PROVENGAN DE",
+      "descripcion": "si el valor de la casilla 46 (Renta líquida de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria) es mayor que cero (0), registre en esta casilla las rentas exentas imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria diferentes a las registradas en la casilla 47 (Rentas",
+      "pagina_instructivo": 6,
+      "orden": 34
+    },
+    {
+      "casilla": 49,
+      "nombre": "Total rentas exentas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE TRABAJO QUE NO PROVENGAN DE",
+      "descripcion": "es el resultado de sumar las casillas 47 (Rentas exentas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Aportes voluntarios AFC, FVP y/o AVC) y 48 (Rentas exentas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Otras rentas exentas).",
+      "pagina_instructivo": 6,
+      "orden": 35
+    },
+    {
+      "casilla": 50,
+      "nombre": "Deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Intereses de vivienda",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO QUE NO PROVENGAN",
+      "descripcion": "si el valor de la casilla 46 (Renta líquida de las Rentas de trabajo que no provengan de una",
+      "pagina_instructivo": 6,
+      "orden": 36
+    },
+    {
+      "casilla": 51,
+      "nombre": "Deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Otras deducciones imputables",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO QUE NO PROVENGAN",
+      "descripcion": "si el valor de la casilla 46 (Renta líquida de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria) es mayor que cero (0), registre en esta casilla las deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria diferentes a las registradas en la",
+      "pagina_instructivo": 7,
+      "orden": 37
+    },
+    {
+      "casilla": 52,
+      "nombre": "Total deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE TRABAJO QUE NO PROVENGAN",
+      "descripcion": "es el resultado de sumar las casillas 50 (Deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Intereses de vivienda) y 51 (Deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria – Otras deducciones imputables).",
+      "pagina_instructivo": 7,
+      "orden": 38
+    },
+    {
+      "casilla": 53,
+      "nombre": "Rentas exentas y/o deducciones imputables a las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria (Limitadas)",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "descripcion": "de acuerdo con la instrucción para el cálculo de las Rentas exentas y deducciones imputables a la Renta líquida cédula general, el SI de Diligenciamiento distribuirá en esta casilla el valor de las Rentas exentas y deducciones imputables a las que tiene derecho y que fueron registradas en la casilla 49 (Total rentas exentas de las",
+      "pagina_instructivo": 7,
+      "orden": 39
+    },
+    {
+      "casilla": 54,
+      "nombre": "Renta líquida ordinaria del ejercicio de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "descripcion": "es el resultado positivo de restar del valor de la casilla 43 (Ingresos brutos de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria), los valores de las casillas 44 (Ingresos no constitutivos de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria), 45 (Costos",
+      "pagina_instructivo": 8,
+      "orden": 40
+    },
+    {
+      "casilla": 55,
+      "nombre": "Pérdida líquida ordinaria del ejercicio de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "descripcion": "es el resultado positivo de la siguiente operación: valor de la casilla 44 (Ingresos no constitutivos de renta de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria), más el valor de la casilla 45 (Costos y deducciones procedentes de las Rentas de trabajo que no provengan de una relación laboral o legal y",
+      "pagina_instructivo": 8,
+      "orden": 41
+    },
+    {
+      "casilla": 56,
+      "nombre": "Compensaciones por pérdidas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "descripcion": "registre en esta casilla el valor de las compensaciones por pérdidas acumuladas a 31 de diciembre del año gravable anterior al que se declara, relacionadas con las Rentas de trabajo que no provengan de una relación laboral o legal reglamentaria, teniendo en cuenta los límites y porcentajes de compensación establecidos en las normas vigentes. Las",
+      "pagina_instructivo": 8,
+      "orden": 42
+    },
+    {
+      "casilla": 57,
+      "nombre": "Renta líquida ordinaria de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES A LAS RENTAS DE",
+      "descripcion": "es el resultado positivo de restarle al valor de la casilla 54 (Renta líquida ordinaria del ejercicio de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria), el valor de la casilla 56 (Compensaciones por pérdidas de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria).",
+      "pagina_instructivo": 8,
+      "orden": 43
+    },
+    {
+      "casilla": 58,
+      "nombre": "Ingresos brutos de las Rentas de capital",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE CAPITAL",
+      "descripcion": "registre el valor total de los siguientes conceptos: Intereses y rendimientos financieros: el cien por ciento (100%) de los rendimientos financieros gravados y no gravados obtenidos durante el año gravable, tales como intereses y corrección monetaria, intereses de depósitos a",
+      "pagina_instructivo": 8,
+      "orden": 44
+    },
+    {
+      "casilla": 59,
+      "nombre": "Ingresos no constitutivos de renta de las Rentas de capital",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE CAPITAL",
+      "descripcion": "registre en esta casilla el valor de los ingresos no constitutivos de renta que aplican para las Rentas de capital, entre otros: • Los aportes obligatorios que efectúen los trabajadores y afiliados al Sistema General de Seguridad Social en Pensiones.",
+      "pagina_instructivo": 8,
+      "orden": 45
+    },
+    {
+      "casilla": 60,
+      "nombre": "Costos y deducciones procedentes de las Rentas de capital",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE CAPITAL",
+      "descripcion": "registre en esta casilla el valor total de los costos y gastos pagados o devengados contablemente durante el período, que tengan relación de causalidad con la generación de los ingresos de las Rentas de capital. Los costos y gastos que se pueden detraer corresponden a todas aquellas",
+      "pagina_instructivo": 8,
+      "orden": 46
+    },
+    {
+      "casilla": 61,
+      "nombre": "Renta líquida de las Rentas de capital",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE CAPITAL",
+      "descripcion": "registre el resultado positivo de restar del valor de la casilla 58 (Ingresos brutos de las Rentas de capital) el valor de la casilla 59 (Ingresos no constitutivos de renta de las Rentas de capital) y el valor de la casilla 60 (Costos y deducciones procedentes de las Rentas de capital).",
+      "pagina_instructivo": 8,
+      "orden": 47
+    },
+    {
+      "casilla": 62,
+      "nombre": "Rentas líquidas pasivas – ECE de las Rentas de capital",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS DE CAPITAL",
+      "descripcion": "las rentas pasivas a que se refiere el artículo 884 del E.T. provenientes de Entidades Controladas del Exterior (ECE), correspondientes a personas naturales, que cumplan con los presupuestos consagrados en el Libro VII del Estatuto Tributario, deberán ser declaradas en la correspondiente renta, según el origen. Respecto de estas rentas",
+      "pagina_instructivo": 8,
+      "orden": 48
+    },
+    {
+      "casilla": 63,
+      "nombre": "Rentas exentas de las Rentas de capital – Aportes voluntarios AFC, FVP y/o AVC",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE CAPITAL",
+      "descripcion": "si el valor de la casilla 61 (Renta líquida de las Rentas de capital) más la casilla 62 (Rentas líquidas pasivas – ECE de las Rentas de capital) es mayor que cero (0), registre en esta casilla el valor de los depósitos efectuados a las Cuentas de Ahorro para el Fomento de la Construcción – AFC, aportes voluntarios a los seguros privados de pensiones – FVP y/o a las Cuentas de Ahorro Voluntario",
+      "pagina_instructivo": 9,
+      "orden": 49
+    },
+    {
+      "casilla": 64,
+      "nombre": "Rentas exentas de las Rentas de capital – Otras rentas exentas",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE CAPITAL",
+      "descripcion": "si el valor de la casilla 61 (Renta líquida de las Rentas de capital) más la casilla 62 (Rentas líquidas pasivas – ECE de las Rentas de capital) es mayor que cero (0), registre en esta casilla las rentas exentas imputables a las Rentas de capital diferentes a las registradas en la casilla 63 (Rentas exentas de las Rentas de capital – Aportes",
+      "pagina_instructivo": 9,
+      "orden": 50
+    },
+    {
+      "casilla": 65,
+      "nombre": "Total rentas exentas de las Rentas de capital",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS DE CAPITAL",
+      "descripcion": "es el resultado de sumar las casillas 63 (Rentas exentas de las Rentas de capital – Aportes voluntarios AFC, FVP y/o AVC) y 64 (Rentas exentas de las Rentas de capital – Otras rentas exentas).",
+      "pagina_instructivo": 9,
+      "orden": 51
+    },
+    {
+      "casilla": 66,
+      "nombre": "Deducciones imputables a las Rentas de capital – Intereses de vivienda",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE CAPITAL",
+      "descripcion": "si el valor de la casilla 61 (Renta líquida de las Rentas de capital) más la casilla 62 (Rentas líquidas pasivas – ECE de las Rentas de capital) es mayor que cero (0), registre en esta casilla el valor de los intereses y/o corrección monetaria pagados sobre préstamos para adquisición de vivienda de acuerdo con lo establecido en el",
+      "pagina_instructivo": 9,
+      "orden": 52
+    },
+    {
+      "casilla": 67,
+      "nombre": "Deducciones imputables a las Rentas de capital – Otras deducciones imputables",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE CAPITAL",
+      "descripcion": "si el valor de la casilla 61 (Renta líquida de las Rentas de capital) más la casilla 62 (Rentas líquidas pasivas – ECE de las Rentas de capital) es mayor que cero (0), registre en esta casilla las deducciones imputables a las Rentas de capital diferentes a las registradas en la casilla 66 (Deducciones imputables a las Rentas de capital – Intereses de vivienda).",
+      "pagina_instructivo": 9,
+      "orden": 53
+    },
+    {
+      "casilla": 68,
+      "nombre": "Total deducciones imputables a las Rentas de capital",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS DE CAPITAL",
+      "descripcion": "es el resultado de sumar las casillas 66 (Deducciones imputables a las Rentas de capital – Intereses de vivienda) y 67 (Deducciones imputables a las Rentas de capital – Otras deducciones imputables).",
+      "pagina_instructivo": 9,
+      "orden": 54
+    },
+    {
+      "casilla": 69,
+      "nombre": "Rentas exentas y/o deducciones imputables a las Rentas de capital (Limitadas)",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "descripcion": "de acuerdo con la instrucción para el cálculo de las rentas exentas y deducciones imputables a la renta líquida cédula general, el SI de Diligenciamiento distribuirá en esta casilla el valor de las rentas exentas y deducciones imputables a las que tiene derecho y que fueron registradas en las casillas 65 (Total rentas exentas de las Rentas de capital) y 68 (Total deducciones imputables a las Rentas",
+      "pagina_instructivo": 10,
+      "orden": 55
+    },
+    {
+      "casilla": 70,
+      "nombre": "Renta líquida ordinaria del ejercicio de las Rentas de capital",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 58 (Ingresos brutos de las Rentas de capital) y 62 (Rentas líquidas pasivas – ECE de las Rentas de capital), y de restar los valores de las casillas 59 (Ingresos no constitutivos de renta de las Rentas de capital), 60 (Costos y deducciones procedentes de las Rentas de capital) y 69",
+      "pagina_instructivo": 10,
+      "orden": 56
+    },
+    {
+      "casilla": 71,
+      "nombre": "Pérdida líquida del ejercicio de las Rentas de capital",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 59 (Ingresos no constitutivos de renta de las Rentas de capital) y 60 (Costos y deducciones procedentes de las Rentas de capital), y de restar los valores de las casillas 58 (Ingresos brutos de las Rentas de capital) y 62 (Rentas líquidas pasivas – ECE de las Rentas de capital).",
+      "pagina_instructivo": 10,
+      "orden": 57
+    },
+    {
+      "casilla": 72,
+      "nombre": "Compensaciones por pérdidas de las Rentas de capital",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "descripcion": "si el valor de la casilla 70 (Renta líquida ordinaria del ejercicio de las Rentas de capital) es mayor que cero, puede solicitar el valor de las pérdidas incurridas dentro de las Rentas de capital del año gravable anterior al que se declara, pudiendo ser compensadas contra las Rentas de capital, en los siguientes períodos gravables, teniendo en",
+      "pagina_instructivo": 10,
+      "orden": 58
+    },
+    {
+      "casilla": 73,
+      "nombre": "Renta líquida ordinaria de las Rentas de capital",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE CAPITAL (LIMITADAS)",
+      "descripcion": "es el resultado positivo de restarle al valor de la casilla 70 (Renta líquida ordinaria del ejercicio de las Rentas de capital), el valor de la casilla 72 (Compensaciones por pérdidas de las Rentas de capital).",
+      "pagina_instructivo": 10,
+      "orden": 59
+    },
+    {
+      "casilla": 74,
+      "nombre": "Ingresos brutos de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "incluya el valor total de los siguientes conceptos: Ingresos no laborales: registre el valor de los ingresos recibidos en el periodo que no se clasifiquen expresamente en ninguna de las demás rentas y aquellos ingresos que no cumplan con la definición de servicios personales.",
+      "pagina_instructivo": 10,
+      "orden": 60
+    },
+    {
+      "casilla": 75,
+      "nombre": "Devoluciones, rebajas y descuentos de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "registre en esta casilla las devoluciones, rebajas y descuentos de las Rentas no laborales, teniendo en cuenta que estos conceptos van a disminuir los ingresos ordinarios en el año o período gravable, que fueron susceptibles de producir un incremento neto del patrimonio en el momento de su percepción.",
+      "pagina_instructivo": 10,
+      "orden": 61
+    },
+    {
+      "casilla": 76,
+      "nombre": "Ingresos no constitutivos de renta de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "registre en esta casilla el valor de los ingresos no constitutivos de renta que aplican para las Rentas no laborales. • Apoyos económicos no reembolsables o condonados: registre aquí los ingresos por concepto de apoyos económicos no reembolsables o condonados,",
+      "pagina_instructivo": 10,
+      "orden": 62
+    },
+    {
+      "casilla": 77,
+      "nombre": "Costos y deducciones procedentes de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "registre en esta casilla el costo de ventas, incluyendo el costo asignado por el ente económico a los artículos y productos vendidos, de acuerdo con el sistema que legalmente le corresponda para establecer el costo de los activos movibles enajenados, y el costo de los servicios prestados. Los rubros para incluir son los de la cuenta “Costo",
+      "pagina_instructivo": 11,
+      "orden": 63
+    },
+    {
+      "casilla": 78,
+      "nombre": "Renta líquida de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "es el resultado positivo de restar los valores de la casilla 74 (Ingresos brutos de las Rentas no laborales), los valores de las casillas 75 (Devoluciones, rebajas y descuentos de las Rentas no laborales), 76 (Ingresos no constitutivos de renta de las Rentas no laborales) y 77 (Costos y deducciones procedentes de las Rentas no laborales).",
+      "pagina_instructivo": 11,
+      "orden": 64
+    },
+    {
+      "casilla": 79,
+      "nombre": "Rentas líquidas pasivas – ECE de las Rentas no laborales",
+      "formula": "",
+      "seccion": "SECCIÓN RENTAS NO LABORALES",
+      "descripcion": "las rentas pasivas a que se refiere el artículo 884 del E.T. provenientes de Entidades Controladas del Exterior (ECE), correspondientes a personas naturales, que cumplan con los presupuestos consagrados en el Libro VII del Estatuto Tributario, deberán ser declaradas en la correspondiente renta, según el origen de la renta. Respecto",
+      "pagina_instructivo": 11,
+      "orden": 65
+    },
+    {
+      "casilla": 80,
+      "nombre": "Rentas exentas de las Rentas no laborales – Aportes voluntarios AFC, FVP y/o AVC",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS NO LABORALES",
+      "descripcion": "si el valor de la casilla 78 (Renta líquida de las Rentas no laborales) más la casilla 79 (Rentas líquidas pasivas – ECE de las Rentas no laborales) es mayor que cero (0), registre en esta casilla el valor de los depósitos efectuados a las Cuentas de Ahorro para el Fomento de la Construcción – AFC, aportes voluntarios a los seguros privados de pensiones – FVP y/o a las Cuentas de Ahorro Voluntario",
+      "pagina_instructivo": 11,
+      "orden": 66
+    },
+    {
+      "casilla": 81,
+      "nombre": "Rentas exentas de las Rentas no laborales – Otras rentas exentas",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS NO LABORALES",
+      "descripcion": "si el valor de la casilla 78 (Renta líquida de las Rentas no laborales) más la casilla 79 (Rentas líquidas pasivas – ECE de las Rentas no laborales) es mayor que cero (0), registre en esta casilla las rentas exentas imputables a las Rentas no laborales diferentes a las registradas en la casilla 80 (Rentas exentas de las Rentas no laborales –",
+      "pagina_instructivo": 12,
+      "orden": 67
+    },
+    {
+      "casilla": 82,
+      "nombre": "Total rentas exentas de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS DE LAS RENTAS NO LABORALES",
+      "descripcion": "es el resultado de sumar las casillas 80 (Rentas exentas de las Rentas no laborales – Aportes voluntarios AFC, FVP y/o AVC) y 81(Rentas exentas de las Rentas no laborales – Otras rentas exentas).",
+      "pagina_instructivo": 12,
+      "orden": 68
+    },
+    {
+      "casilla": 83,
+      "nombre": "Deducciones imputables a las Rentas no laborales – Intereses de vivienda",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS NO LABORALES",
+      "descripcion": "si el valor de la casilla 78 (Renta líquida de las Rentas no laborales) más la casilla 79 (Rentas líquidas pasivas – ECE de las Rentas no laborales) es mayor que cero (0), registre en esta casilla el valor de los intereses y/o corrección monetaria pagados sobre préstamos para adquisición de vivienda de acuerdo con lo establecido en el",
+      "pagina_instructivo": 12,
+      "orden": 69
+    },
+    {
+      "casilla": 84,
+      "nombre": "Deducciones imputables a las Rentas no laborales – Otras deducciones imputables",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS NO LABORALES",
+      "descripcion": "si el valor de la casilla 78 (Renta líquida de las Rentas no laborales) más la casilla 79 (Rentas líquidas pasivas – ECE de las Rentas no laborales) es mayor que cero (0), registre en esta casilla las deducciones imputables a las Rentas no laborales diferentes a las registradas en la casilla 83 (Deducciones imputables a las Rentas no laborales – Intereses de vivienda).",
+      "pagina_instructivo": 12,
+      "orden": 70
+    },
+    {
+      "casilla": 85,
+      "nombre": "Total deducciones imputables a las Rentas no laborales",
+      "formula": "",
+      "seccion": "DEDUCCIONES IMPUTABLES A LAS RENTAS NO LABORALES",
+      "descripcion": "es el resultado de sumar las casillas 83 (Deducciones imputables a las Rentas no laborales – Intereses de vivienda) y 84 (Deducciones imputables a las Rentas no laborales – Otras deducciones imputables).",
+      "pagina_instructivo": 12,
+      "orden": 71
+    },
+    {
+      "casilla": 86,
+      "nombre": "Rentas exentas y/o deducciones imputables (Limitadas) de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "de acuerdo con la instrucción para el cálculo de las rentas exentas y deducciones imputables a la renta líquida cédula general, el SI de Diligenciamiento distribuirá en esta casilla el valor de las rentas exentas y deducciones imputables a las que tiene derecho y que fueron registradas en las casillas 82 (Total rentas exentas de las Rentas no laborales) y 85 (Total deducciones imputables a",
+      "pagina_instructivo": 13,
+      "orden": 72
+    },
+    {
+      "casilla": 87,
+      "nombre": "Renta líquida ordinaria del ejercicio de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado positivo de la suma de los valores de las casillas 74 (Ingresos brutos de las Rentas no laborales) y 79 (Rentas líquidas pasivas – ECE de las Rentas no laborales), menos los valores de las casillas 75 (Devoluciones, rebajas y descuentos de las Rentas no laborales), 76 (Ingresos no constitutivos de renta de las Rentas no",
+      "pagina_instructivo": 13,
+      "orden": 73
+    },
+    {
+      "casilla": 88,
+      "nombre": "Pérdida líquida del ejercicio de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado positivo de la suma de los valores de las casillas 75 (Devoluciones, rebajas y descuentos de las Rentas no laborales), 76 (Ingresos no constitutivos de renta de las Rentas no laborales) y 77 (Costos y deducciones procedentes de las Rentas no laborales), menos los valores de las casillas 74 (Ingresos brutos de las Rentas no laborales) y",
+      "pagina_instructivo": 13,
+      "orden": 74
+    },
+    {
+      "casilla": 89,
+      "nombre": "Compensaciones por pérdidas de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "si el valor de la casilla 87 (Renta líquida ordinaria del ejercicio de las Rentas no laborales) es mayor que cero, puede solicitar el valor de las pérdidas incurridas dentro de las Rentas no laborales del año gravable anterior al que se está declarando, pudiendo ser compensadas contra las Rentas no laborales, en los siguientes periodos gravables,",
+      "pagina_instructivo": 13,
+      "orden": 75
+    },
+    {
+      "casilla": 90,
+      "nombre": "Renta líquida ordinaria de las Rentas no laborales",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado positivo de restarle al valor de la casilla 87 (Renta líquida ordinaria del ejercicio de las Rentas no laborales) el valor de la casilla 89 (Compensaciones por pérdidas de las Rentas no laborales).",
+      "pagina_instructivo": 13,
+      "orden": 76
+    },
+    {
+      "casilla": 91,
+      "nombre": "Renta líquida cédula general",
+      "formula": "41 + 42 + 53 + 57 + 69 + 73 + 86 + 90",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado de la sumatoria de las casillas 41 (Rentas exentas y/o deducciones imputables (Limitadas) de las Rentas de Trabajo), 42 (Renta líquida ordinaria de las Rentas de trabajo), 53 (Rentas exentas y/o deducciones imputables (Limitadas) de las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria), 57",
+      "pagina_instructivo": 13,
+      "orden": 77
+    },
+    {
+      "casilla": 92,
+      "nombre": "Rentas exentas y deducciones imputables limitadas",
+      "formula": "28 + 41 + 53 + 69 + 86 + 139",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "esta casilla es el resultado de sumar la casilla 28 (Uno por ciento (1%) de compras con factura electrónica), las rentas exentas y deducciones imputables limitadas de las casillas 41 (Rentas exentas y/o deducciones imputables (Limitadas) de las Rentas de trabajo), 53 (Rentas exentas y/o deducciones imputables (Limitadas) de las Rentas de trabajo que no provengan de una relación laboral o",
+      "pagina_instructivo": 13,
+      "orden": 78
+    },
+    {
+      "casilla": 93,
+      "nombre": "Renta líquida ordinaria cédula general",
+      "formula": "91 - 92",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado positivo de restarle al valor de la casilla 91 (Renta Líquida de la cédula general), el valor de la casilla 92 (Rentas exentas y deducciones imputables limitadas).",
+      "pagina_instructivo": 13,
+      "orden": 79
+    },
+    {
+      "casilla": 94,
+      "nombre": "Compensaciones por pérdidas año gravable 2018 y anteriores",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "las personas naturales que tengan pérdidas fiscales declaradas en los periodos gravables 2018 y anteriores y que no se hayan compensado, teniendo derecho a ello, podrán imputarlas contra la cédula general sin afectar las rentas de trabajo, lo anterior de conformidad con lo estipulado en el parágrafo transitorio del artículo 330 del E.T. y",
+      "pagina_instructivo": 13,
+      "orden": 80
+    },
+    {
+      "casilla": 95,
+      "nombre": "Compensaciones por exceso de renta presuntiva",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "las personas naturales residentes contribuyentes del impuesto sobre la renta, podrán compensar los excesos en renta presuntiva, hasta el valor de renta líquida ordinaria cédula general del periodo fiscal correspondiente, en los términos del artículo 189 del E.T. Las personas naturales residentes que a 31 de diciembre de 2016 poseían",
+      "pagina_instructivo": 13,
+      "orden": 81
+    },
+    {
+      "casilla": 96,
+      "nombre": "Rentas gravables",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "incluya el valor total de los siguientes conceptos: Rentas líquidas gravables (activos omitidos y/o pasivos inexistentes y/o recuperación de deducciones): cuando el contribuyente tenga activos omitidos y/o pasivos inexistentes, incluirá sus respectivos valores como renta líquida gravable, dentro de la cédula general, atendiendo a lo dispuesto en el artículo 239-",
+      "pagina_instructivo": 14,
+      "orden": 82
+    },
+    {
+      "casilla": 97,
+      "nombre": "Renta líquida gravable cédula general",
+      "formula": "93 + 96 - 94 - 95",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 93 (Renta líquida ordinaria cédula general) y 96 (Rentas gravables) y de restarle los valores de las casillas 94 (Compensaciones por pérdidas año gravable 2018 y anteriores) y 95 (Compensaciones por exceso de renta presuntiva).",
+      "pagina_instructivo": 14,
+      "orden": 83
+    },
+    {
+      "casilla": 98,
+      "nombre": "Renta presuntiva",
+      "formula": "",
+      "seccion": "RENTAS EXENTAS Y DEDUCCIONES IMPUTABLES DE LAS RENTAS NO",
+      "descripcion": "la renta presuntiva se determina de la siguiente manera:",
+      "pagina_instructivo": 14,
+      "orden": 84
+    },
+    {
+      "casilla": 99,
+      "nombre": "Ingresos brutos por rentas de pensiones del país y del exterior",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE PENSIONES",
+      "descripcion": "incluya el valor total de los siguientes conceptos: Ingresos por pensiones: registre los ingresos de pensiones de jubilación, invalidez, vejez, de sobrevivientes y sobre riesgos laborales, así como aquellas provenientes de indemnizaciones sustitutivas de las pensiones o las devoluciones",
+      "pagina_instructivo": 14,
+      "orden": 85
+    },
+    {
+      "casilla": 100,
+      "nombre": "Ingresos no constitutivos de renta",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE PENSIONES",
+      "descripcion": "incluya los ingresos no constitutivos de renta que apliquen a la cédula de pensiones, como son los aportes obligatorios al sistema general de salud y las contribuciones al Fondo de Solidaridad Pensional para los obligados. Conciliación fiscal Anexo 210 (Estado de Resultado Integral – Renta Líquida, en",
+      "pagina_instructivo": 14,
+      "orden": 86
+    },
+    {
+      "casilla": 101,
+      "nombre": "Renta líquida",
+      "formula": "99 - 100",
+      "seccion": "SECCIÓN CÉDULA DE PENSIONES",
+      "descripcion": "es el resultado positivo de restar al valor de la casilla 99 (Ingresos brutos por rentas de pensiones del país y del exterior) el valor de la casilla 100 (Ingresos no constitutivos de renta).",
+      "pagina_instructivo": 14,
+      "orden": 87
+    },
+    {
+      "casilla": 102,
+      "nombre": "Rentas exentas de pensiones",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE PENSIONES",
+      "descripcion": "la renta exenta es un beneficio que recae sobre la renta líquida; es decir, es una porción de la renta líquida que se resta de esta, para obtener la renta líquida gravable. Los ingresos provenientes de esta cédula cuando sea una renta de fuente nacional, solo se le resta como renta exenta la que establece el numeral 5 del",
+      "pagina_instructivo": 14,
+      "orden": 88
+    },
+    {
+      "casilla": 103,
+      "nombre": "Renta líquida gravable cédula de pensiones",
+      "formula": "101 - 102",
+      "seccion": "SECCIÓN CÉDULA DE PENSIONES",
+      "descripcion": "es el resultado de restar del valor de la casilla 101 (Renta líquida) de la Cédula de pensiones el valor de la casilla 102 (Rentas exentas de pensiones).",
+      "pagina_instructivo": 15,
+      "orden": 89
+    },
+    {
+      "casilla": 104,
+      "nombre": "Dividendos, participaciones año 2016 y anteriores, y otros",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "registre en esta casilla el valor total de cada uno de los siguientes conceptos: Ingresos por dividendos y participaciones año 2016 y anteriores: incluya el total de los dividendos y participaciones pagados o abonados en cuenta a las personas naturales residentes y sucesiones ilíquidas de causantes residentes",
+      "pagina_instructivo": 15,
+      "orden": 90
+    },
+    {
+      "casilla": 105,
+      "nombre": "Ingresos no constitutivos de renta",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "incluya los dividendos y participaciones de periodos gravables del año 2016 y anteriores, pagados o abonados en cuenta en los periodos gravables siguientes provenientes de distribuciones de utilidades conforme a lo dispuesto en el numeral 3 del artículo 49 del E.T., y que constituyen ingreso no constitutivo de renta y no le es aplicable lo previsto en los artículos",
+      "pagina_instructivo": 15,
+      "orden": 91
+    },
+    {
+      "casilla": 106,
+      "nombre": "Renta líquida ordinaria año 2016 y anteriores",
+      "formula": "104 - 105",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "es el resultado de restar del valor de la casilla 104 (Dividendos, participaciones año 2016 y anteriores y otros), el valor de la casilla 105 (Ingresos no constitutivos de renta).",
+      "pagina_instructivo": 15,
+      "orden": 92
+    },
+    {
+      "casilla": 107,
+      "nombre": "1a. Subcédula años 2017 y siguientes numeral 3 art. 49 del E.T .",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "incluya los dividendos y participaciones correspondientes a los años gravables 2017 y siguientes que hayan sido distribuidos según el cálculo establecido en el numeral 3 del artículo 49 del E.T. La renta líquida obtenida en esta subcédula estará gravada a la tarifa establecida",
+      "pagina_instructivo": 15,
+      "orden": 93
+    },
+    {
+      "casilla": 108,
+      "nombre": "2a. Subcédula años 2017 y siguientes, parágrafo 2° art. 49 del E.T .",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "incluya los dividendos y participaciones correspondientes a los años gravables 2017 y siguientes, provenientes de utilidades calculadas de conformidad con lo dispuesto en el parágrafo 2 del artículo 49 del E.T. La renta líquida obtenida en esta subcédula estará gravada a la tarifa establecida",
+      "pagina_instructivo": 15,
+      "orden": 94
+    },
+    {
+      "casilla": 109,
+      "nombre": "Dividendos y participaciones recibidas del exterior",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "tenga en cuenta que son ingresos pasivos obtenidos por una ECE, los dividendos, retiros, repartos y cualquier otra forma de distribución o realización de utilidades provenientes de participaciones en otras sociedades o vehículos de inversión, salvo que: a) Las utilidades que son susceptibles de distribución correspondan a rentas",
+      "pagina_instructivo": 15,
+      "orden": 95
+    },
+    {
+      "casilla": 110,
+      "nombre": "Rentas exentas de la casilla 109",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "tratándose de estas rentas recibidas en los países miembros de la Comunidad Andina de Naciones – CAN, por personas naturales residentes en Colombia, se debe observar el régimen previsto en la Decisión 578 de la Comisión de la Comunidad Andina en donde se prevé que las rentas provenientes de esta cédula solo serán gravables en el territorio en el",
+      "pagina_instructivo": 16,
+      "orden": 96
+    },
+    {
+      "casilla": 111,
+      "nombre": "Renta liquída gravable (Cédula general o Renta presuntiva, de pensiones y de dividendos y participaciones art. 241 E.T .) base casillas 97 o 98 + 103 + 107 + 108 - 118)",
+      "formula": "",
+      "seccion": "SECCIÓN CÉDULA DE DIVIDENDOS Y/O PARTICIPACIONES",
+      "descripcion": "esta casilla es el resultado de sumar al mayor valor entre las casillas 97 (Renta líquida gravable cédula general) y 98 (Renta presuntiva), el valor de las casillas 103 (Renta líquida gravable cédula de pensiones), 107 (1a. Subcédula años 2017 y siguientes numeral 3 art. 49 del E.T.) y 108 (2a. Subcédula años 2017 y siguientes, parágrafo 2 art. 49 del E.T.) menos el",
+      "pagina_instructivo": 16,
+      "orden": 97
+    },
+    {
+      "casilla": 112,
+      "nombre": "Ingresos por ganancias ocasionales del país y del exterior",
+      "formula": "",
+      "seccion": "SECCIÓN GANANCIAS OCASIONALES",
+      "descripcion": "registre el resultado de la suma de todos los ingresos gravados y no gravados obtenidos en el país y en el exterior susceptibles de constituir ganancia ocasional, como son: los provenientes de la enajenación de bienes de cualquier naturaleza, que hayan hecho parte del activo fijo del contribuyente por un término igual o superior",
+      "pagina_instructivo": 16,
+      "orden": 98
+    },
+    {
+      "casilla": 113,
+      "nombre": "Costos por ganancias ocasionales",
+      "formula": "",
+      "seccion": "SECCIÓN GANANCIAS OCASIONALES",
+      "descripcion": "registre el costo de los activos fijos enajenados en el país o en el exterior, para cuya determinación debe tener en cuenta lo contemplado en el Capítulo II del Título I del Libro 1 del Estatuto Tributario., en cuanto le sea aplicable, ya se trate de ganancia ocasional gravada, no gravada o exenta.",
+      "pagina_instructivo": 16,
+      "orden": 99
+    },
+    {
+      "casilla": 114,
+      "nombre": "Ganancias ocasionales no gravadas y exentas",
+      "formula": "",
+      "seccion": "SECCIÓN GANANCIAS OCASIONALES",
+      "descripcion": "registre el valor que por ley corresponda a ganancia ocasional no gravada o exenta. También serán consideradas como no constitutivas de ganancia ocasional al momento de su realización para efectos fiscales por parte del sujeto obligado al régimen de ECE de conformidad con el artículo 883 del E.T. en la proporción",
+      "pagina_instructivo": 16,
+      "orden": 100
+    },
+    {
+      "casilla": 115,
+      "nombre": "Ganancias ocasionales gravables",
+      "formula": "112 - 113 - 114",
+      "seccion": "SECCIÓN GANANCIAS OCASIONALES",
+      "descripcion": "esta casilla es el resultado de la siguiente operación: casilla 112 (Ingresos por ganancias ocasionales del país y del exterior) menos casilla 113 (Costos por ganancias ocasionales) menos casilla 114 (Ganancias ocasionales no gravadas y exentas). En el caso de que el resultado de esta operación sea negativo, el valor de esta casilla será igual a cero (0).",
+      "pagina_instructivo": 16,
+      "orden": 101
+    },
+    {
+      "casilla": 116,
+      "nombre": "Cédula general, de pensiones y de dividendos y participaciones (base casilla 111)",
+      "formula": "",
+      "seccion": "SECCIÓN LIQUIDACIÓN PRIVADA",
+      "descripcion": "esta casilla es el resultado de aplicar la tarifa para las personas naturales residentes y asignaciones y donaciones modales contemplada en el artículo 241 del E.T. al resultado de la casilla 111, cuando la casilla 97 es mayor que la casilla 98.",
+      "pagina_instructivo": 16,
+      "orden": 102
+    },
+    {
+      "casilla": 117,
+      "nombre": "Renta presuntiva, de pensiones y de dividendos y participaciones (base casilla 111)",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "esta casilla es el resultado de aplicar la tarifa para las personas naturales residentes y asignaciones y donaciones modales contemplada en el artículo 241 del E.T. al resultado de la casilla 111, cuando la casilla 98 es mayor que la casilla 97.",
+      "pagina_instructivo": 17,
+      "orden": 108
+    },
+    {
+      "casilla": 118,
+      "nombre": "Por dividendos y participaciones año 2017 y siguientes, 2a subcédula (Art 240 E.T)",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "esta casilla es el resultado de aplicar las tarifas del impuesto sobre la renta y complementario de que trata el artículo 240 del E.T., según corresponda, y de acuerdo con el período gravable en que se paguen o abonen en cuenta a la casilla 108 (2a. Subcédula años 2017 y siguientes parágrafos 2 art. 49 del E.T.). Para el año gravable 2023 y siguientes la tarifa general será del treinta y cinco por",
+      "pagina_instructivo": 17,
+      "orden": 106
+    },
+    {
+      "casilla": 119,
+      "nombre": "Por dividendos y participaciones año 2016 (base casilla 106)",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "los dividendos y participaciones provenientes de distribuciones de utilidades gravadas correspondientes al año gravable 2016 y anteriores conforme a lo dispuesto en el parágrafo 2 del artículo 49 del E.T., constituirán renta líquida gravable y se aplicará la tarifa prevista en el artículo 241 del E.T. vigente para el año gravable",
+      "pagina_instructivo": 17,
+      "orden": 107
+    },
+    {
+      "casilla": 120,
+      "nombre": "Por dividendos y participaciones recibidas del exterior",
+      "formula": "base casillas 109 - 110",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "Para el cálculo del impuesto sobre la renta de los dividendos y participaciones recibidas del exterior del resultado positivo de restar del valor de la casilla 109 (Dividendos y participaciones recibidas del exterior) el valor de la casilla 110 (Rentas exentas de la casilla 109) se aplica la tarifa del treinta y cinco por ciento (35%).",
+      "pagina_instructivo": 17,
+      "orden": 109
+    },
+    {
+      "casilla": 121,
+      "nombre": "Total impuesto sobre las rentas líquidas gravables",
+      "formula": "116 +117 + 118 + 119 + 120",
+      "seccion": "SECCIÓN LIQUIDACIÓN PRIVADA",
+      "descripcion": "es el resultado de sumar los valores de las casillas 116 (Cédula general, de pensiones y de dividendos y participaciones), 117 (Renta presuntiva, de pensiones y de dividendos y participaciones), 118 (Por dividendos y participaciones año 2017 y siguientes, 2a subcédula (Art 240 E.T)), 119 (Por dividendos y participaciones año 2016 (base casilla 106)) y 120 (Por dividendos y participaciones recibidas del",
+      "pagina_instructivo": 17,
+      "orden": 103
+    },
+    {
+      "casilla": 122,
+      "nombre": "Impuestos pagados en el exterior",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "las personas naturales residentes en el país que perciban rentas de fuente extranjera sujetas al impuesto sobre la renta en el país de origen, tienen derecho a descontar del monto del impuesto colombiano de renta y complementario, el impuesto pagado en el extranjero, cualquiera sea su denominación, liquidado sobre esas mismas rentas, siempre que el descuento",
+      "pagina_instructivo": 17,
+      "orden": 104
+    },
+    {
+      "casilla": 123,
+      "nombre": "Donaciones",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "Descuento para inversiones realizadas en investigación, desarrollo tecnológico o innovación. Las personas que realicen inversiones en proyectos calificados por el Consejo Nacional de Beneficios Tributarios en Ciencia y Tecnología en Innovación como de investigación, desarrollo tecnológico",
+      "pagina_instructivo": 17,
+      "orden": 105
+    },
+    {
+      "casilla": 124,
+      "nombre": "Dividendos, participaciones y otros",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "las personas naturales residentes y sucesiones ilíquidas de causantes que al momento de su muerte eran residentes del país, y hayan percibido ingresos por concepto de dividendos y/o participaciones declarados en los términos del artículo 331 del E.T., podrán descontar de su impuesto sobre la renta, en ese mismo período, el valor que se",
+      "pagina_instructivo": 18,
+      "orden": 110
+    },
+    {
+      "casilla": 125,
+      "nombre": "Total descuentos tributarios",
+      "formula": "122 + 123 + 124",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "es el resultado de la suma de los valores de las casillas 122 (Impuestos pagados en el exterior), 123 (Donaciones) y 124 (Dividendos, participaciones y otros). Nota: los descuentos de los que tratan los artículos 256, 257 y 257-1 del E.T., no podrán exceder en un treinta por ciento (30%) del impuesto sobre la renta a cargo",
+      "pagina_instructivo": 18,
+      "orden": 111
+    },
+    {
+      "casilla": 126,
+      "nombre": "Impuesto neto de renta",
+      "formula": "121 - 125",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "esta casilla es el valor resultante de restar del valor de la casilla 121 (Total impuesto sobre las rentas líquidas gravables) el valor de la casilla 125 (Total descuentos tributarios).",
+      "pagina_instructivo": 18,
+      "orden": 112
+    },
+    {
+      "casilla": 127,
+      "nombre": "Impuesto de ganancias ocasionales (Casilla 115 por tarifa)",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "si en la casilla 115 (Ganancias ocasionales gravables) existen ingresos por loterías, rifas y apuestas, aplique sobre estos la tarifa del veinte por ciento (20%). Sobre el valor de las demás ganancias ocasionales gravables liquide el impuesto a la tarifa del quince por ciento (15%).",
+      "pagina_instructivo": 18,
+      "orden": 113
+    },
+    {
+      "casilla": 128,
+      "nombre": "Descuento por impuestos pagados en el exterior por ganancias ocasionales",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "registre los impuestos pagados en el exterior a descontar del impuesto de ganancias ocasionales en virtud de lo establecido en convenios vigentes para evitar la doble tributación. Conciliación fiscal Anexo 210 (Estado de Resultado Integral – Renta Líquida, en",
+      "pagina_instructivo": 18,
+      "orden": 114
+    },
+    {
+      "casilla": 129,
+      "nombre": "Total impuesto a cargo",
+      "formula": "126 + 127 - 128",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "esta casilla es el valor resultante de sumar las casillas 126 (Impuesto neto de renta) y 127 (Impuesto de ganancias ocasionales) y restar el valor de la casilla 128 (Descuento por impuestos pagados en el exterior por ganancias ocasionales).",
+      "pagina_instructivo": 18,
+      "orden": 115
+    },
+    {
+      "casilla": 130,
+      "nombre": "Anticipo renta liquidado año gravable anterior",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "registre el valor de la casilla correspondiente al «Anticipo renta para el año gravable siguiente» de la declaración de renta y complementario del año gravable anterior al que se está declarando. Si no declaró o no liquidó anticipo, el SI de Diligenciamiento registra automáticamente el valor cero (0).",
+      "pagina_instructivo": 18,
+      "orden": 116
+    },
+    {
+      "casilla": 131,
+      "nombre": "Saldo a favor del año gravable anterior sin solicitud de devolución y/o compensación",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "registre el valor incluido en la casilla correspondiente al «Total saldo a favor» de la declaración de renta y complementario del año gravable anterior al que se está declarando, que no haya sido solicitado en devolución y/o compensación. Si no tuvo saldo a favor del período anterior o no presentó declaración, el SI de Diligenciamiento registra automáticamente el valor cero (0).",
+      "pagina_instructivo": 18,
+      "orden": 117
+    },
+    {
+      "casilla": 132,
+      "nombre": "Retenciones año gravable a declarar",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "registre el valor de las retenciones en la fuente que, a título de renta y ganancias ocasionales, le fueron practicadas y las autorretenciones en la fuente a título de renta que se practicó durante el año gravable. Conciliación fiscal Anexo 210 (Estado de Resultado Integral – Renta Líquida, en",
+      "pagina_instructivo": 18,
+      "orden": 118
+    },
+    {
+      "casilla": 133,
+      "nombre": "Anticipo renta para el año gravable siguiente",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "determine el anticipo por el impuesto de renta por el año siguiente, así: - En el caso de contribuyentes que declaran por primera vez, el porcentaje de anticipo será del veinticinco por ciento (25%) del impuesto neto de renta. Renta líquida",
+      "pagina_instructivo": 18,
+      "orden": 119
+    },
+    {
+      "casilla": 134,
+      "nombre": "Saldo a pagar por impuesto",
+      "formula": "129 + 133 - 130 - 131 - 132",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 129 (Total impuesto a cargo), 133 (Anticipo renta para el año gravable siguiente), y de restar los valores de las casillas 130 (Anticipo renta liquidado año gravable anterior), 131 (Saldo a favor del año gravable anterior sin solicitud de devolución y/o compensación) y 132",
+      "pagina_instructivo": 19,
+      "orden": 120
+    },
+    {
+      "casilla": 135,
+      "nombre": "Sanciones",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "registre el valor total de las sanciones a que haya lugar por la presentación de esta declaración. Recuerde que la sanción a declarar no puede ser inferior a la sanción mínima equivalente a diez (10 UVT) vigente para el año de presentación en los casos de extemporaneidad. Cuando se trate de una sanción por corrección, la sanción mínima será la equivalente a 10 UVT del año",
+      "pagina_instructivo": 19,
+      "orden": 121
+    },
+    {
+      "casilla": 136,
+      "nombre": "Total saldo a pagar",
+      "formula": "129 + 133 + 135 - 130 - 131 - 132",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 129 (Total impuesto a cargo), 133 (Anticipo renta para el año gravable siguiente) y 135 (Sanciones), y de restar los valores de las casillas 130 (Anticipo renta liquidado año gravable anterior), 131 (Saldo a favor del año gravable anterior sin solicitud de devolución y/o compensación) y",
+      "pagina_instructivo": 19,
+      "orden": 122
+    },
+    {
+      "casilla": 137,
+      "nombre": "Total saldo a favor",
+      "formula": "130 + 131 + 132 - 129 - 133 - 135",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "es el resultado positivo de sumar los valores de las casillas 130 (Anticipo renta liquidado año gravable anterior), 131 (Saldo a favor del año gravable anterior sin solicitud de devolución y/o compensación) y 132 (Retenciones año gravable a declarar), y de restar los valores de las casillas 129 (Total impuesto a cargo), 133 (Anticipo renta para el",
+      "pagina_instructivo": 19,
+      "orden": 123
+    },
+    {
+      "casilla": 138,
+      "nombre": "Número de dependientes económicos",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "corresponde al número de dependientes económicos de acuerdo con la información registrada en la sección que el SI de Diligenciamiento haya dispuesto para el efecto.",
+      "pagina_instructivo": 19,
+      "orden": 124
+    },
+    {
+      "casilla": 139,
+      "nombre": "Adición por dependientes a la casilla 92",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "sin perjuicio de la deducción mensual de hasta el diez por ciento (10%) de los ingresos brutos provenientes de Rentas de trabajo por concepto de dependientes, el trabajador podrá deducir, en adición al límite establecido en el numeral 3° del artículo 336 del E.T., setenta y dos (72) UVT por dependiente hasta un máximo de cuatro (4) dependientes.",
+      "pagina_instructivo": 19,
+      "orden": 125
+    },
+    {
+      "casilla": 140,
+      "nombre": "Ud. superó tope indicativo art. 336-1 del E.T . marque X",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "para las Rentas de trabajo que no provengan de una relación laboral o legal y reglamentaria en las cuales procedan costos y gastos deducibles estos se estiman en sesenta por ciento (60%) de los ingresos brutos. Cuando el contribuyente exceda el tope indicativo de costos y gastos deducibles",
+      "pagina_instructivo": 19,
+      "orden": 126
+    },
+    {
+      "casilla": 141,
+      "nombre": "Aporte voluntario",
+      "formula": "",
+      "seccion": "SECCIÓN DESCUENTOS TRIBUTARIOS",
+      "descripcion": "los contribuyentes podrán realizar de manera libre un aporte voluntario, que se podrá liquidar como porcentaje del impuesto a pagar o como un valor en pesos.",
+      "pagina_instructivo": 19,
+      "orden": 127
+    }
+  ]
+}

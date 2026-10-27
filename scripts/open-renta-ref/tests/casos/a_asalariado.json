@@ -1,0 +1,21 @@
+{
+  "anio_gravable": 2025,
+  "contribuyente": { "alias": "caso-a", "nit_ultimos_2": "29", "residente": true,
+                     "obligado_contabilidad": false, "dependientes": 2 },
+  "rentas_trabajo": {
+    "ingresos_brutos": 180000000,
+    "aportes_obligatorios_salud": 7200000,
+    "aportes_obligatorios_pension": 7200000
+  },
+  "deducciones": {
+    "intereses_vivienda": 18000000,
+    "medicina_prepagada": 9600000,
+    "gmf_pagado": 1200000,
+    "compras_factura_electronica": 60000000
+  },
+  "rentas_exentas": {},
+  "patrimonio": { "bruto": 400000000, "deudas": 150000000 },
+  "retenciones": { "rentas_trabajo": 12000000 },
+  "anticipos": {},
+  "ano_anterior": { "impuesto_neto_renta": 6000000 }
+}

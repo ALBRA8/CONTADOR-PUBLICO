@@ -1,0 +1,443 @@
+{
+  "meta": {
+    "anio_gravable": 2025,
+    "anio_presentacion": 2026,
+    "formulario": "210",
+    "descripcion": "Parametros tributarios para la declaracion de renta de personas naturales residentes, ano gravable 2025 (se presenta en 2026).",
+    "fuentes": {
+      "uvt_2025": "Resolucion DIAN 000193 del 4 de diciembre de 2024",
+      "uvt_2026": "Resolucion DIAN 000238 de 2025",
+      "formulario_210": "Resolucion DIAN 000044 del 14 de marzo de 2024, instructivo modificado por Resolucion 000120 del 31 de julio de 2024",
+      "calendario": "Decreto 2229 de 2023 (calendario tributario)",
+      "tabla_241": "Articulo 241 ET (modificado por Ley 1943/2018 y Ley 2010/2019)",
+      "beneficio_auditoria": "Articulo 689-3 ET, prorrogado por el articulo 69 de la Ley 2294 de 2023"
+    },
+    "ultima_verificacion": "2026-09-02",
+    "advertencia": "Los valores marcados con verificar=true deben confirmarse contra la fuente oficial antes de usarse en una declaracion real."
+  },
+  "uvt": {
+    "anio_gravable": 49799,
+    "anio_presentacion": 52374
+  },
+  "obligacion_declarar": {
+    "comentario": "Basta cumplir UNA condicion. Los topes se miden en UVT del ano gravable.",
+    "condiciones": [
+      {
+        "id": "patrimonio_bruto",
+        "uvt": 4500,
+        "operador": ">",
+        "descripcion": "Patrimonio bruto a 31 de diciembre de 2025"
+      },
+      {
+        "id": "ingresos_brutos",
+        "uvt": 1400,
+        "operador": ">=",
+        "descripcion": "Ingresos brutos totales del ano (de cualquier origen)"
+      },
+      {
+        "id": "consumos_tarjeta",
+        "uvt": 1400,
+        "operador": ">",
+        "descripcion": "Consumos con tarjeta de credito"
+      },
+      {
+        "id": "compras_consumos",
+        "uvt": 1400,
+        "operador": ">",
+        "descripcion": "Compras y consumos totales"
+      },
+      {
+        "id": "consignaciones",
+        "uvt": 1400,
+        "operador": ">",
+        "descripcion": "Consignaciones bancarias, depositos o inversiones financieras"
+      },
+      {
+        "id": "responsable_iva",
+        "uvt": null,
+        "operador": "bool",
+        "descripcion": "Haber sido responsable de IVA a 31 de diciembre de 2025"
+      }
+    ]
+  },
+  "tabla_renta_241": {
+    "unidad": "UVT",
+    "rangos": [
+      {
+        "desde": 0,
+        "hasta": 1090,
+        "tarifa": 0.0,
+        "impuesto_base_uvt": 0
+      },
+      {
+        "desde": 1090,
+        "hasta": 1700,
+        "tarifa": 0.19,
+        "impuesto_base_uvt": 0
+      },
+      {
+        "desde": 1700,
+        "hasta": 4100,
+        "tarifa": 0.28,
+        "impuesto_base_uvt": 116
+      },
+      {
+        "desde": 4100,
+        "hasta": 8670,
+        "tarifa": 0.33,
+        "impuesto_base_uvt": 788
+      },
+      {
+        "desde": 8670,
+        "hasta": 18970,
+        "tarifa": 0.35,
+        "impuesto_base_uvt": 2296
+      },
+      {
+        "desde": 18970,
+        "hasta": 31000,
+        "tarifa": 0.37,
+        "impuesto_base_uvt": 5901
+      },
+      {
+        "desde": 31000,
+        "hasta": null,
+        "tarifa": 0.39,
+        "impuesto_base_uvt": 10352
+      }
+    ]
+  },
+  "limite_cedula_general": {
+    "porcentaje": 0.4,
+    "tope_uvt": 1340,
+    "norma": "Articulo 336 numeral 3 ET",
+    "comentario": "Se aplica al conjunto de rentas exentas y deducciones imputables de la cedula general. NO incluye la deduccion de 72 UVT por dependiente ni el 1% por factura electronica."
+  },
+  "beneficios": {
+    "renta_exenta_laboral_25": {
+      "nombre": "Renta exenta del 25% de rentas de trabajo",
+      "norma": "Articulo 206 numeral 10 ET",
+      "porcentaje": 0.25,
+      "tope_uvt_anual": 790,
+      "dentro_limite_40": true,
+      "base": "Ingresos de trabajo menos INCRNGO, deducciones y demas rentas exentas",
+      "soporte": "Certificado de ingresos y retenciones (formulario 220) o certificados de pago",
+      "aplica_honorarios": true,
+      "condicion_honorarios": "Solo si NO se imputan costos y gastos y no se vinculo a 2 o mas trabajadores por 90 dias o mas"
+    },
+    "dependientes_387": {
+      "nombre": "Deduccion por dependientes (tradicional)",
+      "norma": "Articulo 387 ET",
+      "porcentaje_ingreso_bruto_laboral": 0.1,
+      "tope_uvt_mensual": 32,
+      "tope_uvt_anual": 384,
+      "dentro_limite_40": true,
+      "soporte": "Registro civil, certificado medico o declaracion juramentada segun el tipo de dependiente",
+      "excluyente_con": null,
+      "comentario": "Es acumulable con dependientes_336 segun doctrina DIAN; ver referencia 03."
+    },
+    "dependientes_336": {
+      "nombre": "Deduccion de 72 UVT por dependiente",
+      "norma": "Articulo 336 numeral 3 ET (Ley 2277 de 2022)",
+      "uvt_por_dependiente": 72,
+      "max_dependientes": 4,
+      "tope_uvt_anual": 288,
+      "dentro_limite_40": false,
+      "soporte": "Prueba del vinculo y de la dependencia economica",
+      "comentario": "NO se somete al limite del 40%/1340 UVT. Es la palanca mas desaprovechada."
+    },
+    "factura_electronica_1": {
+      "nombre": "Deduccion del 1% por compras soportadas en factura electronica",
+      "norma": "Articulo 336 numeral 5 ET",
+      "porcentaje": 0.01,
+      "tope_uvt_anual": 240,
+      "dentro_limite_40": false,
+      "soporte": "Listado de facturas electronicas recibidas (portal DIAN) pagadas por medios electronicos",
+      "requisitos": [
+        "Factura electronica de venta con validacion previa donde el declarante figure como adquiriente",
+        "Pago por medios electronicos (tarjeta debito, credito o transferencia)",
+        "El bien o servicio no puede haberse tomado ya como costo, gasto, deduccion, impuesto descontable o descuento"
+      ],
+      "nota_futura": "Se ha anunciado un incremento del porcentaje para anos gravables posteriores. NO usar ese dato para planear sin confirmarlo antes contra la norma vigente: para el AG 2025 el porcentaje es 1%.",
+      "verificar_nota_futura": true
+    },
+    "intereses_vivienda": {
+      "nombre": "Intereses de credito de vivienda o leasing habitacional",
+      "norma": "Articulo 119 ET",
+      "tope_uvt_anual": 1200,
+      "dentro_limite_40": true,
+      "soporte": "Certificado anual del banco con los intereses efectivamente pagados en 2025"
+    },
+    "medicina_prepagada": {
+      "nombre": "Pagos por medicina prepagada y seguros de salud",
+      "norma": "Articulo 387 ET",
+      "tope_uvt_mensual": 16,
+      "tope_uvt_anual": 192,
+      "dentro_limite_40": true,
+      "soporte": "Certificado anual de la entidad de medicina prepagada o aseguradora"
+    },
+    "icetex": {
+      "nombre": "Intereses de creditos educativos Icetex",
+      "norma": "Articulo 119 ET",
+      "tope_uvt_anual": 100,
+      "dentro_limite_40": true,
+      "soporte": "Certificado del Icetex"
+    },
+    "gmf_4x1000": {
+      "nombre": "Gravamen a los movimientos financieros",
+      "norma": "Articulo 115 ET",
+      "porcentaje_deducible": 0.5,
+      "dentro_limite_40": true,
+      "requiere_relacion_causalidad": false,
+      "soporte": "Certificado bancario del GMF pagado en 2025"
+    },
+    "aportes_voluntarios_pensiones_afc": {
+      "nombre": "Aportes voluntarios a pensiones y cuentas AFC/AVC",
+      "norma": "Articulos 126-1 y 126-4 ET",
+      "porcentaje_ingreso": 0.3,
+      "tope_uvt_anual": 3800,
+      "dentro_limite_40": true,
+      "soporte": "Certificado del fondo o de la entidad financiera",
+      "comentario": "Renta exenta, no deduccion. Retirar los recursos sin cumplir los requisitos obliga a reintegrar el beneficio."
+    },
+    "cesantias_voluntarias": {
+      "nombre": "Aportes a fondos de cesantias de trabajadores independientes",
+      "norma": "Articulo 126-1 ET",
+      "tope_uvt_anual": 2500,
+      "dentro_limite_40": true,
+      "soporte": "Certificado del fondo de cesantias"
+    },
+    "aportes_obligatorios": {
+      "nombre": "Aportes obligatorios a salud y pension",
+      "norma": "Articulos 55 y 56 ET",
+      "tratamiento": "INCRNGO",
+      "dentro_limite_40": false,
+      "soporte": "Certificado del empleador o planillas PILA",
+      "comentario": "No son deduccion: restan como ingreso no constitutivo de renta antes del limite."
+    },
+    "cesantias_intereses_exentas": {
+      "nombre": "Cesantias e intereses sobre cesantias",
+      "norma": "Articulo 206 numeral 4 ET",
+      "dentro_limite_40": false,
+      "condicion": "Exentas solo si el ingreso mensual promedio de los ultimos 6 meses no excede 350 UVT",
+      "umbral_uvt_mensual": 350
+    },
+    "pension_exenta": {
+      "nombre": "Rentas de pensiones exentas",
+      "norma": "Articulo 206 numeral 5 ET",
+      "tope_uvt_mensual": 1000,
+      "tope_uvt_anual": 12000,
+      "dentro_limite_40": false,
+      "comentario": "Aplica a pensiones de jubilacion, invalidez, vejez, sobrevivientes y riesgos laborales de fuente nacional."
+    }
+  },
+  "ganancias_ocasionales": {
+    "tarifa_general": 0.15,
+    "tarifa_loterias_rifas": 0.2,
+    "norma_tarifa": "Articulos 313, 314 y 317 ET",
+    "regla_activos_fijos": "Solo hay ganancia ocasional si el activo se poseyo 2 anos o mas; de lo contrario es renta ordinaria.",
+    "exenciones": {
+      "vivienda_habitacion_311_1": {
+        "nombre": "Utilidad en venta de la casa o apartamento de habitacion",
+        "norma": "Articulo 311-1 ET",
+        "tope_uvt": 5000,
+        "requisitos": [
+          "Valor catastral o autoavaluo de la vivienda no superior a 15000 UVT",
+          "Los recursos deben depositarse en una cuenta AFC y destinarse a comprar otra vivienda o abonar a un credito hipotecario"
+        ],
+        "tope_valor_vivienda_uvt": 15000
+      },
+      "herencias_307": {
+        "nombre": "Exenciones en herencias, legados y donaciones",
+        "norma": "Articulo 307 ET",
+        "conceptos": [
+          {
+            "id": "inmueble_vivienda_urbana",
+            "uvt": 13000
+          },
+          {
+            "id": "inmueble_rural",
+            "uvt": 6500,
+            "excluye": "casas, quintas o fincas de recreo"
+          },
+          {
+            "id": "asignacion_conyuge_herederos",
+            "uvt": 3250
+          },
+          {
+            "id": "otros_bienes_20pct",
+            "uvt": 1625,
+            "porcentaje": 0.2,
+            "descripcion": "20% de los bienes y derechos recibidos por personas distintas a legitimarios o el conyuge, tope 1625 UVT"
+          }
+        ]
+      }
+    }
+  },
+  "dividendos": {
+    "comentario": "Tras la Ley 2277 de 2022 los dividendos de residentes se integran a la renta liquida gravable y tributan con la tabla del articulo 241, con el descuento del articulo 254-1.",
+    "no_gravados": {
+      "norma": "Articulo 242 ET",
+      "tratamiento": "Se suman a la renta liquida gravable y tributan con la tabla del articulo 241",
+      "retencion_en_la_fuente": {
+        "exento_hasta_uvt": 1090,
+        "tarifa_exceso": 0.15
+      }
+    },
+    "gravados": {
+      "norma": "Articulo 242 paragrafo / articulo 49 paragrafo 2 ET",
+      "tarifa_previa": 0.35,
+      "tratamiento": "Se les aplica primero la tarifa del 35% y el remanente se suma a la renta liquida gravable",
+      "verificar": true,
+      "alerta": "Caso poco frecuente en personas naturales asalariadas. Si aparece, la skill debe recomendar revision por contador."
+    },
+    "descuento_254_1": {
+      "nombre": "Descuento tributario por dividendos",
+      "norma": "Articulo 254-1 ET (Ley 2277 de 2022)",
+      "rangos_uvt": [
+        {
+          "desde": 0,
+          "hasta": 1090,
+          "tarifa": 0.0
+        },
+        {
+          "desde": 1090,
+          "hasta": null,
+          "tarifa": 0.19
+        }
+      ],
+      "comentario": "Se calcula sobre los dividendos en UVT que excedan 1090 UVT y se resta del impuesto sobre la renta."
+    }
+  },
+  "renta_presuntiva": {
+    "tarifa": 0.0,
+    "norma": "Articulo 188 ET (0% desde el ano gravable 2021)"
+  },
+  "anticipo": {
+    "porcentaje_general": 0.75,
+    "porcentaje_primer_ano": 0.25,
+    "porcentaje_segundo_ano": 0.5,
+    "norma": "Articulo 807 ET"
+  },
+  "comparacion_patrimonial": {
+    "norma": "Articulos 236 a 239-1 ET",
+    "comentario": "Si el aumento del patrimonio liquido supera la renta gravable mas los ingresos no gravados y las valorizaciones, la diferencia se toma como renta liquida gravable por comparacion patrimonial."
+  },
+  "sanciones": {
+    "minima": {
+      "uvt": 10,
+      "norma": "Articulo 639 ET",
+      "uvt_aplicable": "ano_presentacion"
+    },
+    "extemporaneidad": {
+      "norma": "Articulo 641 ET",
+      "con_impuesto_a_cargo": {
+        "porcentaje_mes": 0.05,
+        "tope": 1.0,
+        "base": "impuesto a cargo"
+      },
+      "sin_impuesto_con_ingresos": {
+        "porcentaje_mes": 0.005,
+        "tope": 0.05,
+        "base": "ingresos brutos",
+        "tope_alternativo_uvt": 2500
+      },
+      "sin_ingresos": {
+        "porcentaje_mes": 0.01,
+        "tope": 0.1,
+        "base": "patrimonio liquido del ano anterior",
+        "tope_alternativo_uvt": 2500
+      }
+    },
+    "correccion": {
+      "norma": "Articulo 644 ET",
+      "antes_emplazamiento": 0.1,
+      "despues_emplazamiento": 0.2,
+      "base": "mayor valor a pagar o menor saldo a favor"
+    },
+    "intereses_mora": {
+      "norma": "Articulo 635 ET",
+      "formula": "Tasa de interes bancario corriente para credito de consumo y ordinario certificada por la Superfinanciera, menos 2 puntos",
+      "tasa_efectiva_anual": null,
+      "verificar": true
+    }
+  },
+  "beneficio_auditoria": {
+    "norma": "Articulo 689-3 ET, prorrogado por el articulo 69 de la Ley 2294 de 2023",
+    "vigente_ag2025": true,
+    "niveles": [
+      {
+        "incremento_minimo": 0.35,
+        "firmeza_meses": 6
+      },
+      {
+        "incremento_minimo": 0.25,
+        "firmeza_meses": 12
+      }
+    ],
+    "requisitos": [
+      "El impuesto neto de renta del ano gravable anterior no puede ser inferior a 71 UVT",
+      "La declaracion debe presentarse en forma oportuna y pagarse dentro de los plazos",
+      "No aplica a quienes gocen de beneficios por su ubicacion en una zona geografica determinada",
+      "No aplica si la declaracion presenta perdida fiscal"
+    ],
+    "impuesto_neto_minimo_uvt_ano_base": 71
+  },
+  "calendario_vencimientos": {
+    "norma": "Decreto 2229 de 2023",
+    "verificar": true,
+    "formato": "Los dos ultimos digitos del NIT sin digito de verificacion",
+    "fechas": {
+      "01-02": "2026-08-12",
+      "03-04": "2026-08-13",
+      "05-06": "2026-08-14",
+      "07-08": "2026-08-18",
+      "09-10": "2026-08-19",
+      "11-12": "2026-08-20",
+      "13-14": "2026-08-21",
+      "15-16": "2026-08-24",
+      "17-18": "2026-08-25",
+      "19-20": "2026-08-26",
+      "21-22": "2026-08-27",
+      "23-24": "2026-08-28",
+      "25-26": "2026-08-31",
+      "27-28": "2026-09-01",
+      "29-30": "2026-09-02",
+      "31-32": "2026-09-03",
+      "33-34": "2026-09-04",
+      "35-36": "2026-09-07",
+      "37-38": "2026-09-08",
+      "39-40": "2026-09-09",
+      "41-42": "2026-09-10",
+      "43-44": "2026-09-11",
+      "45-46": "2026-09-14",
+      "47-48": "2026-09-15",
+      "49-50": "2026-09-16",
+      "51-52": "2026-09-17",
+      "53-54": "2026-09-18",
+      "55-56": "2026-09-21",
+      "57-58": "2026-09-22",
+      "59-60": "2026-09-23",
+      "61-62": "2026-09-24",
+      "63-64": "2026-09-25",
+      "65-66": "2026-09-28",
+      "67-68": "2026-10-01",
+      "69-70": "2026-10-02",
+      "71-72": "2026-10-05",
+      "73-74": "2026-10-06",
+      "75-76": "2026-10-07",
+      "77-78": "2026-10-08",
+      "79-80": "2026-10-09",
+      "81-82": "2026-10-13",
+      "83-84": "2026-10-14",
+      "85-86": "2026-10-15",
+      "87-88": "2026-10-16",
+      "89-90": "2026-10-19",
+      "91-92": "2026-10-20",
+      "93-94": "2026-10-21",
+      "95-96": "2026-10-22",
+      "97-98": "2026-10-23",
+      "99-00": "2026-10-26"
+    }
+  }
+}

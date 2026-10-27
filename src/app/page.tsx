@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, Building2, Github, Layers, Wrench, ListChecks } from "lucide-react";
+import { LayoutDashboard, Building2, Github, Layers, Wrench, ListChecks, Calculator } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlbraHeader } from "@/components/dashboard/header";
 import { KpiStrip } from "@/components/dashboard/kpi-strip";
@@ -20,17 +20,26 @@ export default function Home() {
       <main className="albra-grid-bg flex-1">
         <div className="mx-auto max-w-[1400px] space-y-6 px-4 py-6 sm:px-6">
           {/* Título de sección */}
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              CONTADOR PÚBLICO <span className="text-primary">ALBRA</span>
-              <span className="text-muted-foreground"> · Panel de proyecto</span>
-            </h2>
-            <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-              Chaleco de especialización contable para AGENTE-GENERAL, construido con el método de
-              CloneaKit. Fuentes reales del proyecto: Informe Maestro de Investigación (26-oct-2026),
-              Prompt Maestro del Constructor y repositorio ClonaKit v0.1.0. Prioridad: personas naturales
-              y Formulario 210 (DIAN / MUISCA).
-            </p>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                CONTADOR PÚBLICO <span className="text-primary">ALBRA</span>
+                <span className="text-muted-foreground"> · Panel de proyecto</span>
+              </h2>
+              <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                Chaleco de especialización contable para AGENTE-GENERAL, construido con el método de
+                CloneaKit. Fuentes reales del proyecto: Informe Maestro de Investigación (26-oct-2026),
+                Prompt Maestro del Constructor y repositorio ClonaKit v0.1.0. Prioridad: personas naturales
+                y Formulario 210 (DIAN / MUISCA).
+              </p>
+            </div>
+            <a
+              href="/albra"
+              className="inline-flex items-center gap-2 rounded-lg border border-primary/50 bg-primary/15 px-4 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/25"
+            >
+              <Calculator className="h-4 w-4" />
+              Sistema funcional v1 →
+            </a>
           </div>
 
           <KpiStrip />

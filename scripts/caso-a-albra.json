@@ -1,0 +1,135 @@
+{
+ "anioGravable": 2025,
+ "contribuyente": {
+  "alias": "caso-a-verificacion",
+  "nitUltimos2": "29",
+  "residente": true,
+  "obligadoContabilidad": false,
+  "dependientes": 2
+ },
+ "rentasTrabajo": {
+  "ingresosBrutos": {
+   "valor": 180000000,
+   "procedencia": "confirmado"
+  },
+  "aportesObligatoriosSalud": {
+   "valor": 7200000,
+   "procedencia": "confirmado"
+  },
+  "aportesObligatoriosPension": {
+   "valor": 7200000,
+   "procedencia": "confirmado"
+  },
+  "aportesFsp": {
+   "valor": null,
+   "procedencia": "desconocido"
+  }
+ },
+ "rentasIndependientes": {
+  "ingresosBrutos": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "aportesObligatoriosSalud": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "aportesObligatoriosPension": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "costosGastos": {
+   "valor": null,
+   "procedencia": "desconocido"
+  }
+ },
+ "deducciones": {
+  "interesesVivienda": {
+   "valor": 18000000,
+   "procedencia": "confirmado"
+  },
+  "medicinaPrepagada": {
+   "valor": 9600000,
+   "procedencia": "confirmado"
+  },
+  "icetex": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "gmfPagado": {
+   "valor": 1200000,
+   "procedencia": "confirmado"
+  },
+  "comprasFacturaElectronica": {
+   "valor": 60000000,
+   "procedencia": "confirmado"
+  }
+ },
+ "rentasExentas": {
+  "aportesVoluntariosPension": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "afc": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "cesantiasVoluntarias": {
+   "valor": null,
+   "procedencia": "desconocido"
+  }
+ },
+ "pensiones": {
+  "ingresosBrutos": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "aportesSalud": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "mesesRecibidos": 12
+ },
+ "patrimonio": {
+  "bruto": {
+   "valor": 400000000,
+   "procedencia": "confirmado"
+  },
+  "deudas": {
+   "valor": 150000000,
+   "procedencia": "confirmado"
+  }
+ },
+ "retenciones": {
+  "rentasTrabajo": {
+   "valor": 12000000,
+   "procedencia": "documento",
+   "origen": "certificado-220.csv"
+  },
+  "otras": {
+   "valor": null,
+   "procedencia": "desconocido"
+  }
+ },
+ "anticipos": {
+  "anticipoAnioAnterior": {
+   "valor": null,
+   "procedencia": "desconocido"
+  },
+  "saldoFavorAnioAnterior": {
+   "valor": null,
+   "procedencia": "desconocido"
+  }
+ },
+ "gananciasOcasionales": [],
+ "consumosTarjeta": {
+  "valor": 9000000,
+  "procedencia": "confirmado"
+ },
+ "consignaciones": {
+  "valor": 0,
+  "procedencia": "confirmado"
+ },
+ "impuestoNetoAnioAnterior": 6000000,
+ "primerAnioDeclarando": false
+}
