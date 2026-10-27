@@ -76,3 +76,60 @@ Para el contribuyente persona natural (y el contador que lo acompaña) durante l
 - [x] La implementación es original en TypeScript; de open-renta se adoptan reglas funcionales públicas (normativa ET) y parámetros oficiales (datos), bajo licencia MIT con atribución, validadas por paridad contra sus casos golden.
 - [x] El nombre y la identidad visual son propios (ALBRA).
 - [x] Ninguna función se salta pagos, licencias, logins o protecciones: no automatiza MUISCA ni pide credenciales DIAN.
+
+---
+
+## v1.1 — Rentas de capital, dividendos detallados, renta presuntiva e ingesta (2026-10-27)
+
+Ampliación del núcleo validada con el mismo método: paridad contra el motor real del
+referente + casillas oficiales del instructivo F210 v16 (mapa de casillas verificado de
+open-renta, extraído del PDF oficial de la DIAN).
+
+### Decisiones con evidencia
+
+1. **Corrección del mapeo de casillas de dividendos (hallazgo de auditoría).** En v1 los
+   dividendos no gravados iban a la casilla 104 y los gravados a la 107; el instructivo
+   oficial define: 104 = dividendos año 2016 y anteriores (fuera de alcance v1.1),
+   **107 = 1a. subcédula (num. 3 art. 49, no gravados)** y **108 = 2a. subcédula
+   (par. 2 art. 49, gravados al 35% → casilla 118)**. Corregido y cubierto por pruebas.
+2. **Casilla 111 con fórmula oficial.** «Renta líquida gravable (cédula general o renta
+   presuntiva, de pensiones y dividendos) base casillas **97 o 98 + 103 + 107 + 108 − 118**».
+   El remanente de los gravados (108 − 118) SÍ entra a la tabla del art. 241; los
+   dividendos del exterior NO (tributan 35% fijo en la casilla 120, art. 244).
+3. **Renta presuntiva (art. 189-5 ET).** 0,5% del patrimonio líquido del año anterior →
+   casilla 98; la base de la tabla usa la mayor entre 97 y 98. El exceso de presuntiva se
+   anuncia como compensación de los 5 años siguientes (casilla 95). Sin datos del año
+   anterior NO se inventa: la memoria lo deja «sin verificar» y entra a pendientes.
+4. **Divergencia documentada — descuento art. 254-1.** open-renta lo liquida sobre el
+   TOTAL de dividendos; aquí se aplica el texto del artículo (condición: gravados con la
+   tarifa del par. 2 art. 49 → base = casilla 108), con nota en la memoria de cálculo.
+   Además el descuento se resta desde la casilla 121 (instructivo: 126 = 121 − 125), y el
+   anticipo del art. 807 usa la casilla 126 completa. Diferencias materializadas en
+   pruebas (caso-e: open-renta $25.339.837 de neto vs. $40.726.464 con esta lectura).
+5. **Rentas de capital (casillas 58-73, art. 242).** Ingresos por rendimientos financieros
+   gravados (CDT, fondos, pagarés). Los intereses de cuentas de ahorro están exentos
+   (art. 206 num. 3) y NO se registran. v1.1 no pide exentas/deducciones imputadas al
+   bloque → casilla 69 = 0 y 73 = 61 (la limitación 40%/1.340 UVT opera por bloque y solo
+   procede con imputables). Pérdidas → casilla 71 con alerta de compensación 5 años.
+6. **Ingesta de documentos (Módulo 3).** PDF (certificado 220, pdf-parse en ruta de API),
+   XLSX (SheetJS en el navegador, agrupa por concepto tipo exógena Res. 1628) y CSV.
+   La ingesta SOLO PROPONE: cada dato se acepta, corrige o rechaza en la UI y entra al
+   expediente con procedencia «documento» y el archivo de origen. Sin cookies ni
+   persistencia en servidor.
+7. **Entrevista ampliada:** 6 preguntas nuevas (rendimientos financieros, 3 de
+   dividendos, patrimonio del año anterior ×2) y clasificador de documentos ampliado.
+
+### Paridad y pruebas (36 en total)
+
+- Golden-e creado ejecutando el motor Python real de open-renta con un caso propio de
+  dividendos (scripts/open-renta-ref/golden-e.json): cg 102.478.944, div_renta_liquida
+  69.500.000, RLG 171.978.944, impuesto 30.226.464 — paridad exacta en ALBRA.
+- Golden A/B intactos (21 pruebas originales). 15 pruebas nuevas: capital (2), dividendos
+  con paridad y divergencias (4), presuntiva (3), obligación (2), ingesta (3), fusión de
+  expedientes v1 (1).
+
+### Fuera de alcance v1.1 (sigue en la hoja de ruta)
+
+Dividendos año 2016 y anteriores (casillas 104/106/119), compensaciones de pérdidas de
+capital entre años (casilla 72), impuestos pagados en el exterior (122/128), exógena
+PDF con formatos arbitrarios (v1.1: 220 y etiquetas DIAN conocidas).

@@ -146,11 +146,27 @@ export const PARAMETROS_AG2025 = {
   },
 
   dividendos: {
+    /** Casilla 108 — 2a. subcédula (par. 2 art. 49 ET): utilidades exentas en la sociedad. */
     tarifaPreviaGravados: 0.35,
+    /** Casilla 120 — dividendos y participaciones recibidos del exterior (art. 244 ET).
+     *  No integran la base de la tabla del art. 241 (casilla 111 del instructivo F210 v16). */
+    tarifaExterior: 0.35,
     descuento2541: {
       desdeUvt: 1090,
       tarifa: 0.19,
+      /** Alcance del descuento (art. 254-1 ET): SOLO dividendos gravados con la tarifa
+       *  del inciso 1° del par. 2 art. 49 (casilla 108). Divergencia documentada con el
+       *  referente open-renta, que lo liquida sobre el total de dividendos (FICHA §v1.1). */
+      baseGravados108: true,
     },
+  },
+
+  /** Renta presuntiva (art. 189-5 ET): 0.5% del patrimonio líquido del año anterior.
+   *  Casilla 98 del F210 v16; el impuesto se liquida sobre la mayor entre la renta
+   *  líquida (casilla 97) y la presuntiva (casilla 98) — base de la casilla 111. */
+  rentaPresuntiva: {
+    porcentaje: 0.005,
+    norma: "Art. 189-5 ET",
   },
 
   /** Anticipo del año siguiente (art. 807 ET). */

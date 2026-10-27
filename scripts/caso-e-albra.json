@@ -1,0 +1,59 @@
+{
+  "anioGravable": 2025,
+  "contribuyente": {
+    "alias": "caso-e-v11",
+    "nitUltimos2": "29",
+    "residente": true,
+    "obligadoContabilidad": false,
+    "dependientes": 2
+  },
+  "rentasTrabajo": {
+    "ingresosBrutos": { "valor": 180000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "aportesObligatoriosSalud": { "valor": 7200000, "procedencia": "documento", "origen": "certificado-220.pdf", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "aportesObligatoriosPension": { "valor": 7200000, "procedencia": "documento", "origen": "certificado-220.pdf", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "aportesFsp": { "valor": null, "procedencia": "desconocido" }
+  },
+  "rentasCapital": {
+    "ingresosBrutos": { "valor": 8000000, "procedencia": "documento", "origen": "certificado-bancario.xlsx", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "incrngo": { "valor": null, "procedencia": "desconocido" },
+    "costosGastos": { "valor": null, "procedencia": "desconocido" }
+  },
+  "dividendos": {
+    "noGravados": { "valor": 50000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "gravados": { "valor": 30000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "delExterior": { "valor": null, "procedencia": "desconocido" },
+    "exentasExterior": { "valor": null, "procedencia": "desconocido" }
+  },
+  "deducciones": {
+    "interesesVivienda": { "valor": 18000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "medicinaPrepagada": { "valor": 9600000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "icetex": { "valor": null, "procedencia": "desconocido" },
+    "gmfPagado": { "valor": 1200000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "comprasFacturaElectronica": { "valor": 60000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" }
+  },
+  "rentasExentas": {
+    "aportesVoluntariosPension": { "valor": null, "procedencia": "desconocido" },
+    "afc": { "valor": null, "procedencia": "desconocido" },
+    "cesantiasVoluntarias": { "valor": null, "procedencia": "desconocido" }
+  },
+  "pensiones": { "ingresosBrutos": { "valor": null, "procedencia": "desconocido" }, "aportesSalud": { "valor": null, "procedencia": "desconocido" }, "mesesRecibidos": 12 },
+  "patrimonio": {
+    "bruto": { "valor": 400000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "deudas": { "valor": 150000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "anioAnteriorBruto": { "valor": 2000000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "anioAnteriorDeudas": { "valor": 0, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" }
+  },
+  "retenciones": {
+    "rentasTrabajo": { "valor": 12000000, "procedencia": "documento", "origen": "certificado-220.pdf", "actualizado": "2026-10-27T10:00:00.000Z" },
+    "otras": { "valor": null, "procedencia": "desconocido" }
+  },
+  "anticipos": {
+    "anticipoAnioAnterior": { "valor": null, "procedencia": "desconocido" },
+    "saldoFavorAnioAnterior": { "valor": null, "procedencia": "desconocido" }
+  },
+  "gananciasOcasionales": [],
+  "consumosTarjeta": { "valor": 25000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+  "consignaciones": { "valor": 300000000, "procedencia": "confirmado", "actualizado": "2026-10-27T10:00:00.000Z" },
+  "impuestoNetoAnioAnterior": 6000000,
+  "primerAnioDeclarando": false
+}

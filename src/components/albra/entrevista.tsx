@@ -181,6 +181,8 @@ function seccionNombre(s: Pregunta["seccion"]): string {
     identidad: "Identidad",
     "rentas-trabajo": "Rentas de trabajo",
     "rentas-independientes": "Honorarios",
+    "rentas-capital": "Rentas de capital",
+    dividendos: "Dividendos",
     deducciones: "Deducciones",
     "rentas-exentas": "Rentas exentas",
     patrimonio: "Patrimonio",

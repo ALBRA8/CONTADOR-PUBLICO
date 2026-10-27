@@ -100,11 +100,42 @@ export interface Pensiones {
   mesesRecibidos: number;
 }
 
+export interface RentasCapital {
+  /** Casilla 58 — intereses y rendimientos financieros GRAVADOS (art. 242 ET).
+   *  Los intereses de cuentas de ahorro de personas naturales están exentos
+   *  (art. 206 num. 3 ET) y NO se registran aquí. */
+  ingresosBrutos: Dato;
+  /** Casilla 59 — ingresos no constitutivos de renta de las rentas de capital. */
+  incrngo: Dato;
+  /** Casilla 60 — costos y deducciones procedentes de las rentas de capital. */
+  costosGastos: Dato;
+}
+
+export interface Dividendos {
+  /** Casilla 107 — 1a. subcédula años 2017 y siguientes (num. 3 art. 49 ET):
+   *  dividendos distribuidos con utilidades que SÍ tributaron en la sociedad.
+   *  Se suman a la renta líquida gravable y tributan con la tabla del art. 241. */
+  noGravados: Dato;
+  /** Casilla 108 — 2a. subcédula años 2017 y siguientes (par. 2 art. 49 ET):
+   *  dividendos distribuidos con utilidades exentas en la sociedad. Gravan al 35%
+   *  (casilla 118) y su remanente entra a la tabla vía casilla 111. */
+  gravados: Dato;
+  /** Casilla 109 — dividendos y participaciones recibidos del exterior (art. 244 ET). */
+  delExterior: Dato;
+  /** Casilla 110 — rentas exentas de los dividendos del exterior (no doble tributación). */
+  exentasExterior: Dato;
+}
+
 export interface Patrimonio {
-  /** Casilla 29 — patrimonio bruto a 31 de diciembre. */
+  /** Casilla 29 — patrimonio bruto a 31 de diciembre del AG. */
   bruto: Dato;
   /** Casilla 30 — deudas. */
   deudas: Dato;
+  /** Patrimonio bruto a 31 de diciembre del año ANTERIOR (declaración previa):
+   *  base de la renta presuntiva del art. 189-5 ET (casilla 98). */
+  anioAnteriorBruto: Dato;
+  /** Deudas del año anterior (para el patrimonio líquido de la presuntiva). */
+  anioAnteriorDeudas: Dato;
 }
 
 export interface Retenciones {
@@ -149,6 +180,10 @@ export interface Expediente {
   deducciones: Deducciones;
   rentasExentas: RentasExentas;
   pensiones: Pensiones;
+  /** Rentas de capital (casillas 58-73): rendimientos financieros gravados. */
+  rentasCapital: RentasCapital;
+  /** Cédula de dividendos y participaciones (casillas 104-111, 118, 124). */
+  dividendos: Dividendos;
   patrimonio: Patrimonio;
   retenciones: Retenciones;
   anticipos: Anticipos;
@@ -198,7 +233,9 @@ export function expedienteVacio(): Expediente {
       cesantiasVoluntarias: d(),
     },
     pensiones: { ingresosBrutos: d(), aportesSalud: d(), mesesRecibidos: 12 },
-    patrimonio: { bruto: d(), deudas: d() },
+    rentasCapital: { ingresosBrutos: d(), incrngo: d(), costosGastos: d() },
+    dividendos: { noGravados: d(), gravados: d(), delExterior: d(), exentasExterior: d() },
+    patrimonio: { bruto: d(), deudas: d(), anioAnteriorBruto: d(), anioAnteriorDeudas: d() },
     retenciones: { rentasTrabajo: d(), otras: d() },
     anticipos: { anticipoAnioAnterior: d(), saldoFavorAnioAnterior: d() },
     gananciasOcasionales: [],
@@ -231,6 +268,33 @@ export const ESTADOS: { id: EstadoProcedimiento; titulo: string; descripcion: st
   { id: "PRESENTADO", titulo: "Presentado", descripcion: "Existe evidencia verificable de la presentación oficial." },
   { id: "SOPORTADO", titulo: "Soportado", descripcion: "El comprobante y las evidencias quedaron archivadas en el expediente." },
 ];
+
+/**
+ * Fusiona un expediente guardado (v1 o parcial) sobre la estructura vigente.
+ * Garantiza que las secciones añadidas después (rentasCapital, dividendos,
+ * patrimonio del año anterior) existan aunque el JSON venga de la v1.
+ */
+export function fusionarExpediente(guardado: unknown): Expediente {
+  const base = expedienteVacio();
+  if (!guardado || typeof guardado !== "object") return base;
+  const g = guardado as Partial<Expediente>;
+  return {
+    ...base,
+    ...g,
+    contribuyente: { ...base.contribuyente, ...(g.contribuyente ?? {}) },
+    rentasTrabajo: { ...base.rentasTrabajo, ...(g.rentasTrabajo ?? {}) },
+    rentasIndependientes: { ...base.rentasIndependientes, ...(g.rentasIndependientes ?? {}) },
+    deducciones: { ...base.deducciones, ...(g.deducciones ?? {}) },
+    rentasExentas: { ...base.rentasExentas, ...(g.rentasExentas ?? {}) },
+    pensiones: { ...base.pensiones, ...(g.pensiones ?? {}) },
+    rentasCapital: { ...base.rentasCapital, ...(g.rentasCapital ?? {}) },
+    dividendos: { ...base.dividendos, ...(g.dividendos ?? {}) },
+    patrimonio: { ...base.patrimonio, ...(g.patrimonio ?? {}) },
+    retenciones: { ...base.retenciones, ...(g.retenciones ?? {}) },
+    anticipos: { ...base.anticipos, ...(g.anticipos ?? {}) },
+    gananciasOcasionales: Array.isArray(g.gananciasOcasionales) ? g.gananciasOcasionales : [],
+  };
+}
 
 /** Transición real (casilla 134/136/137): pagar no es lo mismo que quedar a favor. */
 export const REGLA_INNEGOCIABLE =

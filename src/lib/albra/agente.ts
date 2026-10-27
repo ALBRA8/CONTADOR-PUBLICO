@@ -21,7 +21,7 @@ import {
 
 export interface Pregunta {
   id: string;
-  seccion: "identidad" | "rentas-trabajo" | "rentas-independientes" | "deducciones" | "rentas-exentas" | "patrimonio" | "retenciones" | "obligacion";
+  seccion: "identidad" | "rentas-trabajo" | "rentas-independientes" | "rentas-capital" | "dividendos" | "deducciones" | "rentas-exentas" | "patrimonio" | "retenciones" | "obligacion";
   titulo: string;
   detalle: string;
   /** Ruta en formato "a.b.c" dentro del expediente. */
@@ -131,6 +131,48 @@ export const CATALOGO_PREGUNTAS: Pregunta[] = [
     referencia: "Casilla 44",
     condicion: { ruta: "rentasIndependientes.ingresosBrutos", operador: ">", valor: 0 },
   },
+  // Rentas de capital (casillas 58-73)
+  {
+    id: "rendimientos_financieros",
+    seccion: "rentas-capital",
+    titulo: "¿Recibiste rendimientos financieros GRAVADOS (CDT, fondos de inversión o deuda, pagarés)?",
+    detalle:
+      "Son rentas de capital (art. 242, casilla 58): tributan con la tabla del art. 241. OJO: los intereses de CUENTAS DE AHORRO de personas naturales están EXENTOS (art. 206 num. 3) y NO se declaran aquí. Si no tuviste rendimientos gravados, responde 0.",
+    ruta: "rentasCapital.ingresosBrutos",
+    tipo: "pesos",
+    referencia: "Casilla 58 · arts. 242 y 206 num. 3 ET",
+  },
+  // Cédula de dividendos (casillas 107-111, 118, 120, 124)
+  {
+    id: "dividendos_no_gravados",
+    seccion: "dividendos",
+    titulo: "¿Recibiste dividendos NO gravados de sociedades colombianas?",
+    detalle:
+      "El certificado de la sociedad lo indica: dividendos distribuidos con utilidades que SÍ tributaron en la sociedad (1a. subcédula, casilla 107). Estos se suman a tu renta líquida gravable y tributan con la tabla del art. 241. Si no recibiste dividendos, responde 0.",
+    ruta: "dividendos.noGravados",
+    tipo: "pesos",
+    referencia: "Casilla 107 · art. 49 num. 3 ET",
+  },
+  {
+    id: "dividendos_gravados",
+    seccion: "dividendos",
+    titulo: "¿Recibiste dividendos GRAVADOS (2a. subcédula) de sociedades colombianas?",
+    detalle:
+      "Son los distribuidos con utilidades EXENTAS en la sociedad (par. 2 art. 49, casilla 108): gravan al 35% (casilla 118) y su remanente entra a la tabla (casilla 111). Dan derecho al descuento del art. 254-1. Si no recibiste, responde 0.",
+    ruta: "dividendos.gravados",
+    tipo: "pesos",
+    referencia: "Casillas 108 y 118 · art. 49 par. 2 y art. 254-1 ET",
+  },
+  {
+    id: "dividendos_exterior",
+    seccion: "dividendos",
+    titulo: "¿Recibiste dividendos o participaciones del EXTERIOR?",
+    detalle:
+      "Gravan al 35% fijo (casilla 120, art. 244) y NO entran a la tabla del art. 241. Si parte fue exenta por convenio de no doble tributación, ajusta esa parte en el expediente (casilla 110). Si no recibiste, responde 0.",
+    ruta: "dividendos.delExterior",
+    tipo: "pesos",
+    referencia: "Casillas 109/120 · art. 244 ET",
+  },
   // Deducciones
   {
     id: "intereses_vivienda",
@@ -206,6 +248,26 @@ export const CATALOGO_PREGUNTAS: Pregunta[] = [
     ruta: "patrimonio.deudas",
     tipo: "pesos",
     referencia: "Casilla 30",
+  },
+  {
+    id: "patrimonio_anterior_bruto",
+    seccion: "patrimonio",
+    titulo: "¿Cuál fue tu patrimonio bruto a 31 de diciembre de 2024 (año anterior)?",
+    detalle:
+      "Se toma de tu declaración 2024 (casillas 29-30) y define la renta presuntiva: 0,5% del patrimonio líquido anterior (art. 189-5, casilla 98). Si NO declaraste en 2024, responde 0.",
+    ruta: "patrimonio.anioAnteriorBruto",
+    tipo: "pesos",
+    referencia: "Casilla 98 · art. 189-5 ET",
+  },
+  {
+    id: "patrimonio_anterior_deudas",
+    seccion: "patrimonio",
+    titulo: "¿Cuánto debías a 31 de diciembre de 2024?",
+    detalle:
+      "De la casilla 30 de tu declaración 2024. Con el patrimonio bruto anterior calcula el patrimonio líquido de la renta presuntiva. Si no declaraste, responde 0.",
+    ruta: "patrimonio.anioAnteriorDeudas",
+    tipo: "pesos",
+    referencia: "Casilla 98 · art. 189-5 ET",
   },
   // Retenciones
   {
@@ -347,6 +409,12 @@ export interface FilaImportada {
 }
 
 const MAPA_CSV: { patrones: RegExp; ruta: string; concepto: string }[] = [
+  // Los patrones más específicos van primero: el find devuelve el primero que coincida.
+  { patrones: /patrimonio.*anterior.*bruto|bruto.*anterior|presuntiva/i, ruta: "patrimonio.anioAnteriorBruto", concepto: "Patrimonio bruto del año anterior (casilla 98 · renta presuntiva)" },
+  { patrones: /deuda.*anterior/i, ruta: "patrimonio.anioAnteriorDeudas", concepto: "Deudas del año anterior (renta presuntiva)" },
+  { patrones: /dividendo.*gravad|subcedula.*2|2a.*subcedula/i, ruta: "dividendos.gravados", concepto: "Dividendos gravados 2a subcédula (casilla 108)" },
+  { patrones: /dividendo|participacion/i, ruta: "dividendos.noGravados", concepto: "Dividendos (verificar subcédula con el certificado de la sociedad; casilla 107)" },
+  { patrones: /cdt|rendimiento.*financier|interes.*financier|fondo.*inversion|pagare/i, ruta: "rentasCapital.ingresosBrutos", concepto: "Rendimientos financieros gravados (casilla 58)" },
   { patrones: /ingreso.*trabajo|salario|laboral/i, ruta: "rentasTrabajo.ingresosBrutos", concepto: "Ingresos brutos rentas de trabajo (casilla 32)" },
   { patrones: /aporte.*salud/i, ruta: "rentasTrabajo.aportesObligatoriosSalud", concepto: "Aportes obligatorios a salud (casilla 33)" },
   { patrones: /aporte.*pension/i, ruta: "rentasTrabajo.aportesObligatoriosPension", concepto: "Aportes obligatorios a pensión (casilla 33)" },

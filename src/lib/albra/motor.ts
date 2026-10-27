@@ -25,6 +25,7 @@ import { PARAMETROS_AG2025 } from "./parametros";
 import {
   Expediente,
   ItemGananciaOcasional,
+  Dividendos,
   monto,
   esDesconocido,
   DatoConOrigen,
@@ -408,63 +409,172 @@ function liquidarPensiones(e: Expediente, L: Liquidador): number {
 }
 
 // ---------------------------------------------------------------------------
-// Cédula de dividendos (arts. 331, 242, 49 y 254-1 ET)
+// Rentas de capital (casillas 58-73; arts. 242 y 336 ET)
+// ---------------------------------------------------------------------------
+
+interface ResultadoCapital {
+  rentaLiquidaOrdinaria73: number;
+  limitado69: number;
+}
+
+function liquidarCapital(e: Expediente, L: Liquidador): ResultadoCapital {
+  const S = "Rentas de capital";
+  const ing = monto(e.rentasCapital.ingresosBrutos);
+  const incr = monto(e.rentasCapital.incrngo);
+  const costos = monto(e.rentasCapital.costosGastos);
+  const todoDesconocido =
+    esDesconocido(e.rentasCapital.ingresosBrutos) &&
+    esDesconocido(e.rentasCapital.incrngo) &&
+    esDesconocido(e.rentasCapital.costosGastos);
+  // Sin datos ni ingresos: el bloque queda en cero y no ocupa casillas.
+  if (todoDesconocido && ing <= 0 && incr <= 0 && costos <= 0) {
+    return { rentaLiquidaOrdinaria73: 0, limitado69: 0 };
+  }
+
+  L.registrar(S, "Ingresos brutos de las rentas de capital (casilla 58)", ing,
+    "intereses y rendimientos financieros GRAVADOS (CDT, fondos, pagarés)",
+    "Art. 242 ET",
+    "Los intereses de cuentas de ahorro de personas naturales están EXENTOS (art. 206 num. 3 ET): no se registran aquí.");
+  L.fijarCasilla(58, ing);
+  if (incr > 0) {
+    L.registrar(S, "Ingresos no constitutivos de renta de las rentas de capital (casilla 59)", incr, "", "Arts. 55 y 56 ET");
+    L.fijarCasilla(59, incr);
+  }
+  if (costos > 0) {
+    L.registrar(S, "Costos y deducciones procedentes de las rentas de capital (casilla 60)", costos, "", "Art. 336 ET");
+    L.fijarCasilla(60, costos);
+  }
+
+  const rentaLiquida = ing - incr - costos;
+  L.registrar(S, "Renta líquida de las rentas de capital (casilla 61)", rentaLiquida,
+    `${fmt(ing)} − ${fmt(incr)} − ${fmt(costos)}`, "Art. 242 ET", "", "cap_renta_liquida");
+  L.fijarCasilla(61, Math.max(0, rentaLiquida));
+
+  if (rentaLiquida < 0) {
+    const perdida = -rentaLiquida;
+    L.registrar(S, "Pérdida líquida del ejercicio de las rentas de capital (casilla 71)", perdida,
+      "", "Art. 336 ET",
+      `La pérdida de ${fmt(perdida)} NO es deducible este año: se compensa con las rentas de capital de los 5 años siguientes (casilla 72).`);
+    L.alertas.push(
+      `Las rentas de capital arrojan una pérdida de ${fmt(perdida)} (costos superiores a los ingresos). El motor la trata como renta líquida cero este año y deja el exceso como compensación para los 5 años siguientes (casillas 71/72).`,
+    );
+    L.fijarCasilla(71, perdida);
+    L.fijarCasilla(70, 0);
+    L.fijarCasilla(73, 0);
+    return { rentaLiquidaOrdinaria73: 0, limitado69: 0 };
+  }
+
+  // v1.1: sin rentas exentas ni deducciones imputadas al bloque de capital →
+  // casilla 69 (limitadas) en 0 y 70 = 61. La limitación del 40%/1.340 UVT opera
+  // por bloque y solo procede cuando el bloque tiene imputables (FICHA §v1.1).
+  L.registrar(S, "RENTA LÍQUIDA ORDINARIA DE LAS RENTAS DE CAPITAL (casilla 73)", rentaLiquida,
+    "61 − 69 (69 = 0 en v1.1)", "Art. 242 ET", "", "cap_renta_ordinaria");
+  L.fijarCasilla(70, rentaLiquida);
+  L.fijarCasilla(73, rentaLiquida);
+  return { rentaLiquidaOrdinaria73: rentaLiquida, limitado69: 0 };
+}
+
+// ---------------------------------------------------------------------------
+// Cédula de dividendos y participaciones (casillas 107-111, 118, 120, 124)
+// Arts. 49 par. 2, 242, 244, 254-1 y 331 ET · instructivo F210 v16
 // ---------------------------------------------------------------------------
 
 interface ResultadoDividendos {
-  rentaLiquida: number;
-  impuesto35: number;
+  /** 107 + (108 − 118): lo que integra la base de la tabla (casilla 111). */
+  base111: number;
+  /** Casilla 118: 35% sobre los dividendos gravados (casilla 108). */
+  impuesto118: number;
+  /** Casilla 120: 35% sobre los dividendos del exterior netos (109 − 110). */
+  impuesto120: number;
+  /** Casilla 124: descuento del art. 254-1 sobre los dividendos GRAVADOS. */
   descuento2541: number;
 }
 
-function liquidarDividendos(
-  dividendosNoGravados: number,
-  dividendosGravados: number,
-  L: Liquidador,
-): ResultadoDividendos {
-  const S = "Cédula de dividendos";
-  const noGrav = pesos(dividendosNoGravados);
-  const grav = pesos(dividendosGravados);
-  if (noGrav <= 0 && grav <= 0) return { rentaLiquida: 0, impuesto35: 0, descuento2541: 0 };
-
-  let impuesto35 = 0;
-  L.fijarCasilla(104, noGrav);
-  L.fijarCasilla(107, grav);
-  if (noGrav > 0) {
-    L.registrar(S, "Dividendos no gravados (art. 49 num. 3)", noGrav,
-      "se suman a la renta líquida gravable y tributan con la tabla del art. 241",
-      "Art. 242 ET");
+function liquidarDividendos(div: Dividendos, L: Liquidador): ResultadoDividendos {
+  const S = "Cédula de dividendos y participaciones";
+  const noGrav = monto(div.noGravados);
+  const grav = monto(div.gravados);
+  const exterior = monto(div.delExterior);
+  const exentasExt = monto(div.exentasExterior);
+  const todoDesconocido =
+    esDesconocido(div.noGravados) &&
+    esDesconocido(div.gravados) &&
+    esDesconocido(div.delExterior) &&
+    esDesconocido(div.exentasExterior);
+  if (todoDesconocido && noGrav <= 0 && grav <= 0 && exterior <= 0 && exentasExt <= 0) {
+    return { base111: 0, impuesto118: 0, impuesto120: 0, descuento2541: 0 };
   }
+
+  const P = PARAMETROS_AG2025.dividendos;
+
+  if (noGrav > 0) {
+    L.registrar(S, "Dividendos no gravados — 1a. subcédula (casilla 107)", noGrav,
+      "distribuidos con utilidades que SÍ tributaron en la sociedad",
+      "Art. 49 num. 3 ET",
+      "Se suman a la renta líquida gravable (casilla 111) y tributan con la tabla del art. 241.");
+    L.fijarCasilla(107, noGrav);
+  }
+
+  let impuesto118 = 0;
   if (grav > 0) {
-    impuesto35 = pesos(grav * PARAMETROS_AG2025.dividendos.tarifaPreviaGravados);
-    L.registrar(S, "Dividendos gravados", grav,
-      `tarifa previa del 35% = ${fmt(impuesto35)}; el remanente pasa a la renta líquida gravable`,
-      "Art. 49 par. 2 ET");
+    impuesto118 = pesos(grav * P.tarifaPreviaGravados);
+    L.registrar(S, "Dividendos gravados — 2a. subcédula (casilla 108)", grav,
+      "distribuidos con utilidades exentas en la sociedad",
+      "Art. 49 par. 2 ET", "");
+    L.fijarCasilla(108, grav);
+    L.registrar(S, "Impuesto del 35% sobre dividendos gravados (casilla 118)", impuesto118,
+      `${fmt(grav)} × 35%`, "Art. 242 ET · instructivo F210 (casilla 118)", "");
+    L.fijarCasilla(118, impuesto118);
     L.alertas.push(
-      "Hay dividendos GRAVADOS. El tratamiento combinado (35% + tabla del art. 241 + descuento del art. 254-1) es técnico: haga revisar esta parte por un contador.",
+      "Hay dividendos GRAVADOS (2a. subcédula). El tratamiento combinado (35% + tabla del art. 241 sobre el remanente + descuento del art. 254-1) es técnico: conserve el certificado de la sociedad y haga revisar esta parte por un contador.",
     );
   }
-  L.fijarCasilla(118, impuesto35);
 
-  const rentaLiquida = noGrav + Math.max(0, grav - impuesto35);
-  L.registrar(S, "RENTA LÍQUIDA DE DIVIDENDOS", rentaLiquida,
-    `${fmt(noGrav)} + (${fmt(grav)} − ${fmt(impuesto35)})`, "Art. 331 ET", "",
-    "div_renta_liquida");
-  L.fijarCasilla(111, rentaLiquida);
-
-  // Descuento art. 254-1: 19% del exceso de 1.090 UVT sobre el total de dividendos.
-  const totalUvt = (noGrav + grav) / PARAMETROS_AG2025.uvtAnioGravable;
-  let descuento = 0;
-  const desdeUvt = PARAMETROS_AG2025.dividendos.descuento2541.desdeUvt;
-  const tarifa = PARAMETROS_AG2025.dividendos.descuento2541.tarifa;
-  if (totalUvt > desdeUvt) {
-    descuento = pesos((totalUvt - desdeUvt) * tarifa * PARAMETROS_AG2025.uvtAnioGravable);
-    L.registrar(S, "Descuento tributario por dividendos (art. 254-1)", descuento,
-      `${(tarifa * 100).toFixed(0)}% de (${totalUvt.toFixed(2)} UVT − ${desdeUvt} UVT)`,
-      "Art. 254-1 ET", "", "div_descuento_254_1");
-    L.fijarCasilla(124, descuento);
+  let impuesto120 = 0;
+  if (exterior > 0 || exentasExt > 0) {
+    L.registrar(S, "Dividendos y participaciones recibidos del exterior (casilla 109)", exterior,
+      "", "Art. 244 ET", "");
+    L.fijarCasilla(109, exterior);
+    if (exentasExt > 0) {
+      L.registrar(S, "Rentas exentas de los dividendos del exterior (casilla 110)", exentasExt,
+        "no doble tributación (arts. 25 y 254 ET) u otros convenios", "Art. 244 ET");
+      L.fijarCasilla(110, exentasExt);
+    }
+    const baseExt = Math.max(0, exterior - exentasExt);
+    impuesto120 = pesos(baseExt * P.tarifaExterior);
+    L.registrar(S, "Impuesto del 35% sobre dividendos del exterior (casilla 120)", impuesto120,
+      `(${fmt(exterior)} − ${fmt(exentasExt)}) × 35%`,
+      "Art. 244 ET · instructivo F210 (casilla 120: «base casillas 109 - 110»)",
+      "NO integran la base de la tabla del art. 241 (casilla 111 del instructivo).");
+    L.fijarCasilla(120, impuesto120);
   }
-  return { rentaLiquida, impuesto35, descuento2541: descuento };
+
+  const base111 = noGrav + Math.max(0, grav - impuesto118);
+  if (noGrav > 0 || grav > 0) {
+    L.registrar(S, "Renta líquida de dividendos que integra la casilla 111", base111,
+      `107 (${fmt(noGrav)}) + (108 ${fmt(grav)} − 118 ${fmt(impuesto118)})`,
+      "Instructivo F210 v16, casilla 111: «base casillas 97 o 98 + 103 + 107 + 108 − 118»",
+      exterior > 0 ? "Los dividendos del exterior tributan aparte (casilla 120) y no entran a la tabla." : "",
+      "div_base_111");
+  }
+
+  // Descuento del art. 254-1: 19% de la parte de los dividendos GRAVADOS que exceda
+  // de 1.090 UVT (condición del art. 254-1: gravados con la tarifa del par. 2 art. 49).
+  // DIVERGENCIA DOCUMENTADA con el referente open-renta (MIT), que liquida el
+  // descuento sobre el TOTAL de dividendos; aquí se aplica el texto del artículo.
+  let descuento = 0;
+  const totalGravUvt = grav / PARAMETROS_AG2025.uvtAnioGravable;
+  const desdeUvt = P.descuento2541.desdeUvt;
+  const tarifaD = P.descuento2541.tarifa;
+  if (grav > 0 && totalGravUvt > desdeUvt) {
+    descuento = pesos((totalGravUvt - desdeUvt) * tarifaD * PARAMETROS_AG2025.uvtAnioGravable);
+    L.registrar(S, "Descuento tributario por dividendos gravados (casilla 124)", descuento,
+      `${(tarifaD * 100).toFixed(0)}% de (${totalGravUvt.toFixed(2)} UVT de dividendos GRAVADOS − ${desdeUvt} UVT)`,
+      "Art. 254-1 ET",
+      "Divergencia con open-renta documentada: el referente usa el total de dividendos; el art. 254-1 exige la tarifa del par. 2 art. 49 (gravados).",
+      "div_descuento_254_1");
+  }
+  return { base111, impuesto118, impuesto120, descuento2541: descuento };
 }
 
 // ---------------------------------------------------------------------------
@@ -566,7 +676,13 @@ export interface EvaluacionObligacion {
 export function evaluarObligacion(e: Expediente): EvaluacionObligacion {
   const patrimonio = monto(e.patrimonio.bruto);
   const ingresos =
-    monto(e.rentasTrabajo.ingresosBrutos) + monto(e.rentasIndependientes.ingresosBrutos) + monto(e.pensiones.ingresosBrutos);
+    monto(e.rentasTrabajo.ingresosBrutos) +
+    monto(e.rentasIndependientes.ingresosBrutos) +
+    monto(e.pensiones.ingresosBrutos) +
+    monto(e.rentasCapital.ingresosBrutos) +
+    monto(e.dividendos.noGravados) +
+    monto(e.dividendos.gravados) +
+    monto(e.dividendos.delExterior);
   const condiciones: EvaluacionObligacion["condiciones"] = [
     {
       id: "patrimonio_bruto",
@@ -645,24 +761,16 @@ export function liquidar(e: Expediente): ResultadoLiquidacion {
     );
   }
 
-  // ── Cédulas ──
-  const rlGeneral = liquidarCedulaGeneral(e, L);
+  // ── Cédulas (sus resultados quedan registrados en casillas 34/41/42/46/53/57 y 58-73) ──
+  liquidarCedulaGeneral(e, L);
+  liquidarCapital(e, L);
   const rlPension = liquidarPensiones(e, L);
-  const div = liquidarDividendos(0, 0, L); // v1: dividendos se llenan por la entrevista avanzada; por defecto 0
-
-  const rlg = rlGeneral + rlPension + div.rentaLiquida;
-  L.registrar(S, "RENTA LÍQUIDA GRAVABLE TOTAL", rlg,
-    `cédula general ${fmt(rlGeneral)} + pensiones ${fmt(rlPension)} + dividendos ${fmt(div.rentaLiquida)}`,
-    "Art. 331 ET", "", "renta_liquida_gravable");
-
-  const { impuesto, formula } = impuestoTabla241(rlg);
-  L.registrar(S, "Impuesto sobre la renta líquida gravable", impuesto, formula, "Art. 241 ET", "", "impuesto_renta");
-  L.fijarCasilla(116, impuesto);
+  const div = liquidarDividendos(e.dividendos, L);
 
   // ── Casillas cedulares con las fórmulas oficiales del instructivo F210 v16 ──
-  // 91 = 41 + 42 + 53 + 57 + 69 + 73 + 86 + 90 (v1: capital y no laborales en 0)
+  // 91 = 41 + 42 + 53 + 57 + 69 + 73 + 86 + 90 (69/73: rentas de capital)
   // 92 = 28 + 41 + 53 + 69 + 86 + 139
-  // 93 = 91 − 92 · 97 = 93 + 96 − 94 − 95 (v1: 94/95/96 en 0)
+  // 93 = 91 − 92 · 97 = 93 + 96 − 94 − 95 (v1.1: 94/95/96 en 0)
   const cas = (n: number) => L.casillas[n] ?? 0;
   const c91 = cas(41) + cas(42) + cas(53) + cas(57) + cas(69) + cas(73) + cas(86) + cas(90);
   L.fijarCasilla(91, c91);
@@ -675,7 +783,7 @@ export function liquidar(e: Expediente): ResultadoLiquidacion {
   const c93 = Math.max(0, c91 - c92);
   if (c91 - c92 < 0) {
     L.alertas.push(
-      "Las casillas cedulares arrojan un exceso de beneficios sobre la renta líquida: verificar el reparto de deducciones entre bloques (v1 los imputa al bloque de salarios primero).",
+      "Las casillas cedulares arrojan un exceso de beneficios sobre la renta líquida: verificar el reparto de deducciones entre bloques (v1.1 los imputa al bloque de salarios primero).",
     );
   }
   L.fijarCasilla(93, c93);
@@ -687,30 +795,93 @@ export function liquidar(e: Expediente): ResultadoLiquidacion {
   L.fijarCasilla(97, c93);
   L.registrar(S, "Renta líquida gravable cédula general (casilla 97)", c93,
     "93 + 96 − 94 − 95", "Instructivo F210, Res. DIAN 000044/2024", "", "cg_rlg_casilla_97");
-  L.fijarCasilla(98, 0); // renta presuntiva: no calculada en v1 (requiere patrimonio del año anterior)
 
-  // ── Descuentos tributarios (limitados al impuesto) ──
-  let descuentos = div.descuento2541;
-  descuentos = Math.min(descuentos, impuesto);
-  if (div.descuento2541 > 0) {
-    L.registrar(S, "Total descuentos tributarios", descuentos,
-      `limitados al impuesto sobre la renta (${fmt(impuesto)})`, "Arts. 259-ET y 254-1 ET", "", "descuentos");
-    L.fijarCasilla(125, descuentos);
+  // ── Renta presuntiva (casilla 98, art. 189-5 ET): 0,5% del patrimonio líquido anterior ──
+  const brutoAnt = e.patrimonio.anioAnteriorBruto;
+  const deudasAnt = e.patrimonio.anioAnteriorDeudas;
+  let presuntiva: number | null = null;
+  if (!esDesconocido(brutoAnt) || !esDesconocido(deudasAnt)) {
+    const patLiquidoAnterior = Math.max(0, monto(brutoAnt) - monto(deudasAnt));
+    presuntiva = pesos(patLiquidoAnterior * P.rentaPresuntiva.porcentaje);
+    L.registrar("Renta presuntiva", "Renta presuntiva del año gravable (casilla 98)", presuntiva,
+      `0,5% × patrimonio líquido del año anterior (${fmt(patLiquidoAnterior)})`,
+      P.rentaPresuntiva.norma, "", "renta_presuntiva");
+  } else {
+    L.registrar(S, "Casilla 98 (renta presuntiva) sin verificar", 0,
+      "requiere el patrimonio líquido de la declaración del año anterior",
+      P.rentaPresuntiva.norma,
+      "Sin ese dato el motor NO puede confirmar si la presuntiva supera la renta líquida (art. 189-5 ET).");
+  }
+  L.fijarCasilla(98, presuntiva ?? 0);
+
+  // ── Base total de la tabla: casilla 111 del instructivo ──
+  // «Renta líquida gravable (cédula general o renta presuntiva, de pensiones y de
+  //  dividendos y participaciones art. 241 E.T.) base casillas 97 o 98 + 103 + 107 + 108 − 118»
+  const baseGeneral111 = Math.max(c93, presuntiva ?? 0);
+  if (presuntiva !== null && presuntiva > c93) {
+    const exceso = presuntiva - c93;
+    L.registrar(S, "El impuesto se liquida sobre la renta presuntiva (casilla 98)", presuntiva,
+      `mayor entre casilla 97 (${fmt(c93)}) y casilla 98 (${fmt(presuntiva)})`,
+      "Arts. 189-5 y 331 ET · instructivo F210 (casilla 111: «97 o 98»)",
+      `El exceso de ${fmt(exceso)} puede compensarse en los 5 años siguientes (casilla 95, «compensaciones por exceso de renta presuntiva»).`,
+      "base_general_111");
+    L.alertas.push(
+      `La renta presuntiva (${fmt(presuntiva)}) supera la renta líquida ordinaria (${fmt(c93)}): el impuesto del año se liquida sobre la presuntiva y el exceso de ${fmt(exceso)} queda como compensación para los 5 años siguientes (casilla 95).`,
+    );
+  } else {
+    L.registrar(S, "Base de la cédula general para la casilla 111", baseGeneral111,
+      presuntiva !== null
+        ? `mayor entre casilla 97 (${fmt(c93)}) y casilla 98 (${fmt(presuntiva)})`
+        : "casilla 97 (la renta presuntiva no se verificó: falta el patrimonio del año anterior)",
+      "Art. 331 ET · instructivo F210 (casilla 111)", "", "base_general_111");
   }
 
-  const impuestoNeto = Math.max(0, impuesto - descuentos);
-  L.registrar(S, "IMPUESTO NETO DE RENTA", impuestoNeto, `${fmt(impuesto)} − ${fmt(descuentos)}`,
-    "", "", "impuesto_neto_renta");
+  const rlg = baseGeneral111 + rlPension + div.base111;
+  L.registrar(S, "RENTA LÍQUIDA GRAVABLE TOTAL (casilla 111)", rlg,
+    `cédula general o presuntiva ${fmt(baseGeneral111)} + pensiones ${fmt(rlPension)} + dividendos ${fmt(div.base111)}`,
+    "Instructivo F210 v16, casilla 111: «base casillas 97 o 98 + 103 + 107 + 108 − 118»", "", "renta_liquida_gravable");
+  L.fijarCasilla(111, rlg);
+
+  const { impuesto, formula } = impuestoTabla241(rlg);
+  L.registrar(S, "Impuesto sobre la renta líquida gravable (casilla 116)", impuesto, formula, "Art. 241 ET",
+    "El instructivo separa el impuesto con base en la presuntiva en la casilla 117; el total del impuesto es idéntico.", "impuesto_renta");
+  L.fijarCasilla(116, impuesto);
+  L.fijarCasilla(117, 0);
+  L.fijarCasilla(119, 0); // dividendos año 2016 y anteriores: fuera de alcance v1.1 (FICHA §v1.1)
+
+  // ── Descuentos tributarios (casillas 124/125, limitados al impuesto de la tabla) ──
+  const descuentos = Math.min(div.descuento2541, impuesto);
+  if (div.descuento2541 > 0) {
+    L.registrar(S, "Total descuentos tributarios (casilla 125)", descuentos,
+      div.descuento2541 > descuentos
+        ? `art. 254-1 ${fmt(div.descuento2541)} limitado al impuesto de la tabla (${fmt(impuesto)})`
+        : "casilla 124 sin límite aplicable",
+      "Art. 254-1 ET · instructivo F210 (125 = 122 + 123 + 124)", "", "descuentos");
+  }
+  L.fijarCasilla(122, 0);
+  L.fijarCasilla(123, 0);
+  L.fijarCasilla(124, descuentos);
+  L.fijarCasilla(125, descuentos);
+
+  // 121 = 116 + 117 + 118 + 119 + 120 (total impuesto sobre las rentas líquidas gravables)
+  const c121 = impuesto + div.impuesto118 + div.impuesto120;
+  L.registrar(S, "Total impuesto sobre las rentas líquidas gravables (casilla 121)", c121,
+    "116 + 117 + 118 + 119 + 120", "Instructivo F210 v16", "", "total_impuesto_rlg");
+  L.fijarCasilla(121, c121);
+
+  const impuestoNeto = Math.max(0, c121 - descuentos);
+  L.registrar(S, "IMPUESTO NETO DE RENTA (casilla 126)", impuestoNeto, `${fmt(c121)} − ${fmt(descuentos)}`,
+    "Instructivo F210 v16 (126 = 121 − 125)", "", "impuesto_neto_renta");
   L.fijarCasilla(126, impuestoNeto);
 
   // ── Ganancias ocasionales (casilla 127) ──
   const impGO = liquidarGananciasOcasionales(e.gananciasOcasionales ?? [], L);
+  L.fijarCasilla(128, 0);
 
-  const totalCargo = impuestoNeto + impGO + div.impuesto35;
-  L.registrar(S, "TOTAL IMPUESTO A CARGO", totalCargo,
-    `impuesto neto ${fmt(impuestoNeto)} + ganancias ocasionales ${fmt(impGO)}` +
-      (div.impuesto35 > 0 ? ` + 35% dividendos gravados ${fmt(div.impuesto35)}` : ""),
-    "", "", "total_impuesto_cargo");
+  const totalCargo = impuestoNeto + impGO;
+  L.registrar(S, "TOTAL IMPUESTO A CARGO (casilla 129)", totalCargo,
+    `126 ${fmt(impuestoNeto)} + 127 ${fmt(impGO)} − 128 0`,
+    "Instructivo F210 v16 (129 = 126 + 127 − 128)", "", "total_impuesto_cargo");
   L.fijarCasilla(129, totalCargo);
 
   // ── Retenciones, anticipos y saldos ──
@@ -815,6 +986,12 @@ export function listarPendientes(e: Expediente): string[] {
     ["Deducciones · compras con factura electrónica", e.deducciones.comprasFacturaElectronica],
     ["Rentas exentas · aportes voluntarios a pensión (casilla 35)", e.rentasExentas.aportesVoluntariosPension],
     ["Rentas exentas · AFC", e.rentasExentas.afc],
+    ["Rentas de capital · rendimientos financieros gravados (casilla 58)", e.rentasCapital.ingresosBrutos],
+    ["Dividendos · no gravados 1a subcédula (casilla 107)", e.dividendos.noGravados],
+    ["Dividendos · gravados 2a subcédula (casilla 108)", e.dividendos.gravados],
+    ["Dividendos · recibidos del exterior (casilla 109)", e.dividendos.delExterior],
+    ["Patrimonio del año anterior · patrimonio bruto (casilla 98 · renta presuntiva art. 189-5)", e.patrimonio.anioAnteriorBruto],
+    ["Patrimonio del año anterior · deudas (renta presuntiva art. 189-5)", e.patrimonio.anioAnteriorDeudas],
     ["Patrimonio · patrimonio bruto (casilla 29)", e.patrimonio.bruto],
     ["Patrimonio · deudas (casilla 30)", e.patrimonio.deudas],
     ["Retenciones en la fuente (casilla 132)", e.retenciones.rentasTrabajo],

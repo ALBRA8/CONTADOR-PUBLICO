@@ -20,8 +20,9 @@ import {
   pesos,
   enPesos,
 } from "../src/lib/albra/motor";
-import { expedienteVacio, Expediente } from "../src/lib/albra/tipos";
+import { expedienteVacio, fusionarExpediente, Expediente } from "../src/lib/albra/tipos";
 import { PARAMETROS_AG2025 } from "../src/lib/albra/parametros";
+import { ingestarCsv, ingestarTextoPdf, aplicarSugeridos, parseNumero } from "../src/lib/albra/ingesta";
 
 // ---------------------------------------------------------------------------
 // Casos golden (idénticos a tests/casos/a_asalariado.json y b_independiente.json
@@ -53,6 +54,8 @@ function casoA(): Expediente {
   e.patrimonio = {
     bruto: { valor: 400_000_000, procedencia: "confirmado" },
     deudas: { valor: 150_000_000, procedencia: "confirmado" },
+    anioAnteriorBruto: { valor: null, procedencia: "desconocido" },
+    anioAnteriorDeudas: { valor: null, procedencia: "desconocido" },
   };
   e.retenciones = {
     rentasTrabajo: { valor: 12_000_000, procedencia: "documento" },
@@ -87,6 +90,8 @@ function casoB(): Expediente {
   e.patrimonio = {
     bruto: { valor: 210_000_000, procedencia: "confirmado" },
     deudas: { valor: 40_000_000, procedencia: "confirmado" },
+    anioAnteriorBruto: { valor: null, procedencia: "desconocido" },
+    anioAnteriorDeudas: { valor: null, procedencia: "desconocido" },
   };
   e.retenciones = {
     rentasTrabajo: { valor: 11_400_000, procedencia: "documento" },
@@ -356,5 +361,194 @@ describe("Ganancias ocasionales", () => {
     // Grava el exceso: (350M − tope) × 15%
     expect(r.valores["go_impuesto"]).toBe(pesos((350_000_000 - topeExencion) * 0.15));
     expect(r.alertas.some((a) => a.includes("cuenta AFC"))).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 6. v1.1 — Rentas de capital, dividendos y renta presuntiva
+// ---------------------------------------------------------------------------
+
+function datoC(valor: number | null): { valor: number | null; procedencia: "confirmado" | "desconocido" } {
+  return valor === null ? { valor: null, procedencia: "desconocido" } : { valor, procedencia: "confirmado" };
+}
+
+describe("v1.1 · Rentas de capital (casillas 58-73)", () => {
+  test("los rendimientos financieros gravados fluyen 58 → 61 → 73 → 91 y tributan con la tabla", () => {
+    const e = expedienteVacio();
+    e.contribuyente = { alias: "c", nitUltimos2: "11", residente: true, obligadoContabilidad: false, dependientes: 0 };
+    e.rentasCapital = { ingresosBrutos: datoC(12_000_000), incrngo: datoC(null), costosGastos: datoC(null) } as never;
+    const r = liquidar(e);
+    expect(r.casillas[58]).toBe(12_000_000);
+    expect(r.casillas[61]).toBe(12_000_000);
+    expect(r.casillas[73]).toBe(12_000_000);
+    expect(r.casillas[91]).toBe(12_000_000); // la casilla 73 entra en la 91
+    expect(r.valores["renta_liquida_gravable"]).toBe(12_000_000);
+  });
+
+  test("pérdida de capital: casilla 71, renta líquida cero y alerta de compensación 5 años", () => {
+    const e = expedienteVacio();
+    e.contribuyente = { alias: "c2", nitUltimos2: "11", residente: true, obligadoContabilidad: false, dependientes: 0 };
+    e.rentasCapital = { ingresosBrutos: datoC(5_000_000), incrngo: datoC(null), costosGastos: datoC(8_000_000) } as never;
+    const r = liquidar(e);
+    expect(r.casillas[71]).toBe(3_000_000);
+    expect(r.casillas[73]).toBe(0);
+    expect(r.casillas[91]).toBe(0);
+    expect(r.alertas.some((a) => a.includes("compensación"))).toBe(true);
+  });
+});
+
+describe("v1.1 · Cédula de dividendos — paridad golden-e (motor open-renta ejecutado)", () => {
+  function casoE(): Expediente {
+    const e = casoA();
+    e.contribuyente.dependientes = 0; // caso-e de open-renta: sin dependientes
+    e.dividendos = { noGravados: datoC(50_000_000), gravados: datoC(30_000_000), delExterior: datoC(null), exentasExterior: datoC(null) } as never;
+    return e;
+  }
+  const r = liquidar(casoE());
+
+  test("paridad con scripts/open-renta-ref/golden-e.json (su motor Python real)", () => {
+    expect(r.valores["cg_renta_liquida_gravable"]).toBe(102_478_944);
+    expect(r.valores["div_base_111"]).toBe(69_500_000); // open-renta: div_renta_liquida = 50M + (30M − 10,5M)
+    expect(r.valores["renta_liquida_gravable"]).toBe(171_978_944); // casilla 111
+    expect(r.valores["impuesto_renta"]).toBe(30_226_464); // tabla 241 sobre la 111
+  });
+
+  test("casillas oficiales 107/108/118 y fórmula de la casilla 111 del instructivo", () => {
+    expect(r.casillas[107]).toBe(50_000_000); // 1a. subcédula (num. 3 art. 49)
+    expect(r.casillas[108]).toBe(30_000_000); // 2a. subcédula (par. 2 art. 49)
+    expect(r.casillas[118]).toBe(10_500_000); // 35% × 30M
+    expect(r.casillas[111]).toBe(171_978_944); // max(97, 98) + 103 + 107 + (108 − 118)
+    expect(r.casillas[121]).toBe(40_726_464); // 116 + 118
+  });
+
+  test("divergencia documentada del 254-1: SOLO los dividendos GRAVADOS dan descuento", () => {
+    // open-renta liquida el descuento sobre el TOTAL (80M → $4.886.627). El art. 254-1
+    // exige dividendos gravados con la tarifa del par. 2 art. 49: gravados 30M =
+    // 602,43 UVT < 1.090 UVT → descuento 0. Divergencia registrada en FICHA §v1.1.
+    expect(r.casillas[124]).toBe(0);
+
+    const e80 = casoA();
+    e80.dividendos = { noGravados: datoC(0), gravados: datoC(80_000_000), delExterior: datoC(null), exentasExterior: datoC(null) } as never;
+    const r80 = liquidar(e80);
+    expect(r80.casillas[118]).toBe(28_000_000);
+    expect(r80.casillas[111]).toBe(143_588_944); // 91.588.944 + (80M − 28M)
+    expect(r80.casillas[116]).toBe(22_277_264);
+    expect(r80.casillas[124]).toBe(4_886_627); // 19% de (1.606,46 − 1.090) UVT de GRAVADOS
+    expect(r80.casillas[126]).toBe(45_390_637); // instructivo: 126 = 121 − 125
+  });
+
+  test("dividendos del exterior: 35% en la casilla 120 y NO integran la casilla 111", () => {
+    const e = casoA();
+    e.dividendos = { noGravados: datoC(null), gravados: datoC(null), delExterior: datoC(20_000_000), exentasExterior: datoC(5_000_000) } as never;
+    const rExt = liquidar(e);
+    expect(rExt.casillas[109]).toBe(20_000_000);
+    expect(rExt.casillas[110]).toBe(5_000_000);
+    expect(rExt.casillas[120]).toBe(5_250_000); // (20M − 5M) × 35%
+    expect(rExt.casillas[111]).toBe(91_588_944); // el exterior no entra a la tabla
+    expect(rExt.casillas[121]).toBe(12_967_264); // 7.717.264 + 5.250.000
+  });
+});
+
+describe("v1.1 · Renta presuntiva (casilla 98, art. 189-5 ET)", () => {
+  test("0,5% del patrimonio líquido anterior; el impuesto usa la mayor (casilla 111)", () => {
+    const e = expedienteVacio();
+    e.contribuyente = { alias: "p", nitUltimos2: "10", residente: true, obligadoContabilidad: false, dependientes: 0 };
+    e.patrimonio = {
+      bruto: datoC(null), deudas: datoC(null),
+      anioAnteriorBruto: datoC(300_000_000), anioAnteriorDeudas: datoC(50_000_000),
+    } as never;
+    const r = liquidar(e);
+    expect(r.casillas[98]).toBe(1_250_000); // 0,5% × 250M
+    expect(r.casillas[111]).toBe(1_250_000); // la presuntiva supera la renta líquida (0)
+    expect(r.alertas.some((a) => a.includes("presuntiva") && a.includes("compensación"))).toBe(true);
+  });
+
+  test("si la renta líquida supera la presuntiva, la base no cambia y no hay alerta", () => {
+    const e = casoA();
+    e.patrimonio.anioAnteriorBruto = datoC(300_000_000) as never;
+    e.patrimonio.anioAnteriorDeudas = datoC(50_000_000) as never;
+    const r = liquidar(e);
+    expect(r.casillas[98]).toBe(1_250_000);
+    expect(r.valores["renta_liquida_gravable"]).toBe(91_588_944); // sigue siendo la 97
+    expect(r.alertas.filter((a) => a.includes("presuntiva"))).toHaveLength(0);
+  });
+
+  test("sin datos del año anterior la presuntiva NO se inventa (queda sin verificar)", () => {
+    const r = liquidar(casoA());
+    expect(r.casillas[98]).toBe(0);
+    expect(r.memoria.some((p) => p.concepto.includes("sin verificar"))).toBe(true);
+  });
+});
+
+describe("v1.1 · Obligación a declarar con rentas de capital y dividendos", () => {
+  test("los rendimientos de capital cuentan para los 1.400 UVT", () => {
+    const e = expedienteVacio();
+    e.rentasCapital = { ingresosBrutos: datoC(enPesos(1400)), incrngo: datoC(null), costosGastos: datoC(null) } as never;
+    expect(evaluarObligacion(e).obligado).toBe(true);
+  });
+  test("los dividendos cuentan para los 1.400 UVT", () => {
+    const e = expedienteVacio();
+    e.dividendos = { noGravados: datoC(enPesos(1400)), gravados: datoC(null), delExterior: datoC(null), exentasExterior: datoC(null) } as never;
+    expect(evaluarObligacion(e).obligado).toBe(true);
+  });
+});
+
+describe("v1.1 · Ingesta de documentos (Módulo 3, trazabilidad)", () => {
+  test("CSV: clasifica y deja los no reconocidos para revisión humana; aplica con procedencia documento", () => {
+    const res = ingestarCsv(
+      "Salarios;180.000.000\nAportes obligatorios a salud;7.200.000\nIntereses de vivienda;18.000.000\nRetención en la fuente;12.000.000\nConcepto raro;123\n",
+      "certificado.csv",
+    );
+    expect(res.sugeridos).toHaveLength(4);
+    expect(res.sugeridos[0]).toMatchObject({ ruta: "rentasTrabajo.ingresosBrutos", valor: 180_000_000 });
+    expect(res.sugeridos[3]).toMatchObject({ ruta: "retenciones.rentasTrabajo", valor: 12_000_000 });
+    expect(res.noClasificados).toHaveLength(1);
+    const e2 = aplicarSugeridos(expedienteVacio(), res.sugeridos, "certificado.csv");
+    expect(e2.rentasTrabajo.ingresosBrutos).toMatchObject({ valor: 180_000_000, procedencia: "documento", origen: "certificado.csv" });
+    expect(e2.deducciones.interesesVivienda.procedencia).toBe("documento");
+  });
+
+  test("parseNumero tolera formatos colombianos e internacionales", () => {
+    expect(parseNumero("1.234.567")).toBe(1_234_567);
+    expect(parseNumero("$ 180.000.000")).toBe(180_000_000);
+    expect(parseNumero("1,234,567.89")).toBe(1_234_567.89);
+    expect(parseNumero("1.234.567,89")).toBe(1_234_567.89);
+    expect(parseNumero("(150)")).toBe(-150);
+    expect(parseNumero("abc")).toBeNull();
+  });
+
+  test("PDF 220: los reconocedores de etiquetas DIAN extraen los datos del certificado", () => {
+    const res = ingestarTextoPdf(
+      [
+        "CERTIFICADO DE INGRESOS Y RETENCIONES POR SALARIOS - 2025",
+        "Ingresos brutos $ 180.000.000",
+        "Aportes obligatorios a salud $ 7.200.000",
+        "Aportes obligatorios a pensión $ 7.200.000",
+        "Aportes a cuentas AFC $ 5.000.000",
+        "Intereses de crédito de vivienda $ 18.000.000",
+        "Retención en la fuente $ 12.000.000",
+      ].join("\n"),
+      "certificado-220.pdf",
+    );
+    const porRuta = new Map(res.sugeridos.map((s) => [s.ruta, s.valor]));
+    expect(porRuta.get("rentasTrabajo.ingresosBrutos")).toBe(180_000_000);
+    expect(porRuta.get("rentasTrabajo.aportesObligatoriosSalud")).toBe(7_200_000);
+    expect(porRuta.get("rentasTrabajo.aportesObligatoriosPension")).toBe(7_200_000);
+    expect(porRuta.get("rentasExentas.afc")).toBe(5_000_000);
+    expect(porRuta.get("deducciones.interesesVivienda")).toBe(18_000_000);
+    expect(porRuta.get("retenciones.rentasTrabajo")).toBe(12_000_000);
+  });
+});
+
+describe("v1.1 · Compatibilidad de expedientes v1", () => {
+  test("fusionarExpediente completa las secciones nuevas sin perder las v1", () => {
+    const v1 = { contribuyente: { alias: "viejo", nitUltimos2: "29" }, rentasTrabajo: { ingresosBrutos: { valor: 1, procedencia: "confirmado" } } };
+    const f = fusionarExpediente(v1);
+    expect(f.contribuyente.alias).toBe("viejo");
+    expect(f.rentasTrabajo.ingresosBrutos.valor).toBe(1);
+    expect(f.rentasCapital.ingresosBrutos.procedencia).toBe("desconocido");
+    expect(f.dividendos.noGravados.procedencia).toBe("desconocido");
+    expect(f.patrimonio.anioAnteriorBruto.procedencia).toBe("desconocido");
+    expect(Array.isArray(f.gananciasOcasionales)).toBe(true);
   });
 });

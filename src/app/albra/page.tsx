@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import {
   expedienteVacio,
+  fusionarExpediente,
   ESTADOS,
   EstadoProcedimiento,
   Expediente,
@@ -29,6 +30,7 @@ import { Entrevista } from "@/components/albra/entrevista";
 import { VistaExpediente } from "@/components/albra/expediente";
 import { BorradorF210 } from "@/components/albra/borrador";
 import { VistaEvidencias } from "@/components/albra/evidencias";
+import { IngestaPanel } from "@/components/albra/ingesta";
 
 const STORAGE_KEY = "albra-expediente-v1";
 const ESTADO_KEY = "albra-estado-v1";
@@ -47,7 +49,7 @@ export default function AlbraPage() {
       // la regla de setState-en-efecto porque el estado inicial no puede leer
       // localStorage durante el render de servidor sin romper el hidratado.
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (raw) setExpediente(JSON.parse(raw) as Expediente);
+      if (raw) setExpediente(fusionarExpediente(JSON.parse(raw)));
       const est = localStorage.getItem(ESTADO_KEY);
       if (est) setEstado(est as EstadoProcedimiento);
       if (localStorage.getItem("albra-aprobacion-v1") === "1") setAprobacionHumanos(true);
@@ -92,9 +94,9 @@ export default function AlbraPage() {
   const cargarExpediente = (archivo: File) => {
     archivo.text().then((txt) => {
       try {
-        const datos = JSON.parse(txt) as Expediente;
+        const datos = JSON.parse(txt);
         if (datos && typeof datos === "object" && datos.contribuyente) {
-          setExpediente(datos);
+          setExpediente(fusionarExpediente(datos));
           setEstado("INCOMPLETO");
         } else alert("El archivo no parece un expediente ALBRA.");
       } catch {
@@ -139,10 +141,10 @@ export default function AlbraPage() {
             <div>
               <h1 className="text-sm font-bold tracking-tight sm:text-base">
                 CONTADOR PÚBLICO <span className="text-primary">ALBRA</span>
-                <span className="ml-2 text-muted-foreground">· Sistema funcional v1</span>
+                <span className="ml-2 text-muted-foreground">· Sistema funcional v1.1</span>
               </h1>
               <p className="text-[11px] text-muted-foreground">
-                Formulario 210 · Año gravable 2025 · UVT $49.799 · Motor determinista validado por paridad (21 pruebas)
+                Formulario 210 · Año gravable 2025 · UVT $49.799 · Motor determinista validado por paridad · rentas de capital, dividendos y renta presuntiva incluidos
               </p>
             </div>
           </div>
@@ -264,7 +266,8 @@ export default function AlbraPage() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="entrevista" className="mt-5">
+            <TabsContent value="entrevista" className="mt-5 space-y-5">
+              <IngestaPanel expediente={expediente} onAplicar={setExpediente} />
               <Entrevista
                 expediente={expediente}
                 onResponder={(p, r) => setExpediente(responder(expediente, p, r))}

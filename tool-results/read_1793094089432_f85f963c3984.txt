@@ -1,0 +1,840 @@
+     1→     1→/**
+     2→     2→ * MOTOR TRIBUTARIO DETERMINISTA — Formulario 210 (Colombia, AG 2025)
+     3→     3→ * ===================================================================
+     4→     4→ * Implementación original en TypeScript del núcleo funcional CONTADOR PÚBLICO ALBRA,
+     5→     5→ * construida con el método de sala limpia CloneaKit a partir de la FICHA.md
+     6→     6→ * (clones/albra/FICHA.md) y de las reglas funcionales verificadas del referente
+     7→     7→ * open-renta (MIT) — decisiones registradas en la matriz de aprovechamiento
+     8→     8→ * (ADOPTAR con auditoría y paridad contra sus casos golden).
+     9→     9→ *
+    10→    10→ * Principios (Prompt Maestro §7 Módulo 5):
+    11→    11→ *  - La misma entrada, con la misma versión de reglas, produce el mismo resultado.
+    12→    12→ *  - Cada cifra importante se reconstruye desde sus entradas y operaciones (memoria).
+    13→    13→ *  - Cada paso cita la norma que lo sustenta.
+    14→    14→ *  - Ningún valor se inventa: los datos desconocidos quedan como pendientes.
+    15→    15→ *
+    16→    16→ * Reglas de redondeo (idénticas a las verificadas en el motor de referencia):
+    17→    17→ *  - La DIAN no maneja centavos: todo se redondea a peso (ROUND_HALF_UP).
+    18→    18→ *  - Las declaraciones se aproximan al múltiplo de mil más cercano (art. 577 ET)
+    19→    19→ *    solo en los saldos finales (casillas 134/136/137).
+    20→    20→ *  - La tabla del art. 241 opera en UVT: base/UVT sin redondear internamente,
+    21→    21→ *    impuesto final redondeado a peso.
+    22→    22→ */
+    23→    23→
+    24→    24→import { PARAMETROS_AG2025 } from "./parametros";
+    25→    25→import {
+    26→    26→  Expediente,
+    27→    27→  ItemGananciaOcasional,
+    28→    28→  monto,
+    29→    29→  esDesconocido,
+    30→    30→  DatoConOrigen,
+    31→    31→} from "./tipos";
+    32→    32→
+    33→    33→// ---------------------------------------------------------------------------
+    34→    34→// Utilidades de redondeo
+    35→    35→// ---------------------------------------------------------------------------
+    36→    36→
+    37→    37→/** Redondea a peso entero (la DIAN no maneja centavos). */
+    38→    38→export function pesos(valor: number): number {
+    39→    39→  return Math.round(valor);
+    40→    40→}
+    41→    41→
+    42→    42→/** Aproxima al múltiplo de mil más cercano (art. 577 ET). */
+    43→    43→export function aproxMil(valor: number): number {
+    44→    44→  return Math.round(valor / 1000) * 1000;
+    45→    45→}
+    46→    46→
+    47→    47→/** Convierte pesos a UVT con 2 decimales. */
+    48→    48→export function aUvt(valor: number, uvt = PARAMETROS_AG2025.uvtAnioGravable): number {
+    49→    49→  return Math.round((valor / uvt) * 100) / 100;
+    50→    50→}
+    51→    51→
+    52→    52→/** Convierte UVT a pesos redondeados. */
+    53→    53→export function enPesos(uvts: number, uvt = PARAMETROS_AG2025.uvtAnioGravable): number {
+    54→    54→  return pesos(uvts * uvt);
+    55→    55→}
+    56→    56→
+    57→    57→// ---------------------------------------------------------------------------
+    58→    58→// Tipos del resultado
+    59→    59→// ---------------------------------------------------------------------------
+    60→    60→
+    61→    61→export interface Paso {
+    62→    62→  seccion: string;
+    63→    63→  concepto: string;
+    64→    64→  valor: number;
+    65→    65→  formula: string;
+    66→    66→  norma: string;
+    67→    67→  nota: string;
+    68→    68→}
+    69→    69→
+    70→    70→export interface ResultadoLiquidacion {
+    71→    71→  /** Valores por clave del motor (paridad con casos golden). */
+    72→    72→  valores: Record<string, number>;
+    73→    73→  /** Casillas del Formulario 210 v16 (AG2025) con su valor en pesos. */
+    74→    74→  casillas: Record<number, number>;
+    75→    75→  /** Memoria de cálculo trazable, en orden de ejecución. */
+    76→    76→  memoria: Paso[];
+    77→    77→  /** Alertas del auditor de riesgos. */
+    78→    78→  alertas: string[];
+    79→    79→  /** Datos desconocidos que impiden o afectan la liquidación. */
+    80→    80→  pendientes: string[];
+    81→    81→  /** Desenlace del procedimiento (R1–R7 del referente). */
+    82→    82→  desenlace: "R1_no_obligado" | "R2_saldo_a_pagar" | "R3_saldo_a_favor" | "R4_impuesto_cero" | "R7_fuera_de_alcance";
+    83→    83→  /** Casilla 140: costos de honorarios superan el 60% del art. 336-1 ET. */
+    84→    84→  casilla140: boolean;
+    85→    85→  pctCostos336_1: number | null;
+    86→    86→  /** Fecha de vencimiento según los 2 dígitos del NIT (Decreto 2229 de 2023). */
+    87→    87→  vencimiento: string | null;
+    88→    88→}
+    89→    89→
+    90→    90→class Liquidador {
+    91→    91→  valores: Record<string, number> = {};
+    92→    92→  casillas: Record<number, number> = {};
+    93→    93→  memoria: Paso[] = [];
+    94→    94→  alertas: string[] = [];
+    95→    95→  casilla140 = false;
+    96→    96→  pctCostos336_1: number | null = null;
+    97→    97→
+    98→    98→  registrar(
+    99→    99→    seccion: string,
+   100→   100→    concepto: string,
+   101→   101→    valor: number,
+   102→   102→    formula = "",
+   103→   103→    norma = "",
+   104→   104→    nota = "",
+   105→   105→    clave?: string,
+   106→   106→  ): number {
+   107→   107→    const v = pesos(valor);
+   108→   108→    this.memoria.push({ seccion, concepto, valor: v, formula, norma, nota });
+   109→   109→    if (clave) this.valores[clave] = v;
+   110→   110→    return v;
+   111→   111→  }
+   112→   112→  v(clave: string): number {
+   113→   113→    return this.valores[clave] ?? 0;
+   114→   114→  }
+   115→   115→  fijarCasilla(n: number, valor: number): number {
+   116→   116→    this.casillas[n] = pesos(valor);
+   117→   117→    return this.casillas[n];
+   118→   118→  }
+   119→   119→}
+   120→   120→
+   121→   121→// ---------------------------------------------------------------------------
+   122→   122→// Tabla del artículo 241 ET
+   123→   123→// ---------------------------------------------------------------------------
+   124→   124→
+   125→   125→export function impuestoTabla241(
+   126→   126→  base: number,
+   127→   127→): { impuesto: number; formula: string } {
+   128→   128→  const p = PARAMETROS_AG2025;
+   129→   129→  const baseUvt = base / p.uvtAnioGravable;
+   130→   130→  for (const rango of p.tabla241) {
+   131→   131→    const hasta = rango.hasta;
+   132→   132→    if (baseUvt > rango.desde && (hasta === null || baseUvt <= hasta)) {
+   133→   133→      const impuestoUvt = (baseUvt - rango.desde) * rango.tarifa + rango.impuestoBaseUvt;
+   134→   134→      return {
+   135→   135→        impuesto: pesos(impuestoUvt * p.uvtAnioGravable),
+   136→   136→        formula: `(${baseUvt.toFixed(2)} UVT − ${rango.desde} UVT) × ${(rango.tarifa * 100).toFixed(0)}% + ${rango.impuestoBaseUvt} UVT = ${impuestoUvt.toFixed(2)} UVT`,
+   137→   137→      };
+   138→   138→    }
+   139→   139→  }
+   140→   140→  return {
+   141→   141→    impuesto: 0,
+   142→   142→    formula: `${baseUvt.toFixed(2)} UVT está en el rango exento (0 a 1.090 UVT): tarifa 0%`,
+   143→   143→  };
+   144→   144→}
+   145→   145→
+   146→   146→// ---------------------------------------------------------------------------
+   147→   147→// Cédula general (arts. 335-336 ET)
+   148→   148→// ---------------------------------------------------------------------------
+   149→   149→
+   150→   150→interface BloqueLimitado {
+   151→   151→  etiqueta: string;
+   152→   152→  valor: number;
+   153→   153→  nota: string;
+   154→   154→}
+   155→   155→
+   156→   156→function liquidarCedulaGeneral(e: Expediente, L: Liquidador): number {
+   157→   157→  const S = "Cédula general";
+   158→   158→  const P = PARAMETROS_AG2025;
+   159→   159→  const p = P.beneficios;
+   160→   160→
+   161→   161→  // ── Ingresos brutos por fuente ──
+   162→   162→  const ingSalarios = monto(e.rentasTrabajo.ingresosBrutos);
+   163→   163→  const ingHonorarios = monto(e.rentasIndependientes.ingresosBrutos);
+   164→   164→  const ingCapital = 0; // v1: rentas de capital se registran pero el expediente no las pide aparte
+   165→   165→  const ingNoLaborales = 0;
+   166→   166→  const ingTotal = ingSalarios + ingHonorarios + ingCapital + ingNoLaborales;
+   167→   167→  L.registrar(S, "Ingresos brutos de la cédula general", ingTotal,
+   168→   168→    `trabajo ${fmt(ingSalarios)} + honorarios ${fmt(ingHonorarios)} + capital ${fmt(ingCapital)} + no laborales ${fmt(ingNoLaborales)}`,
+   169→   169→    "Art. 335 ET", "", "cg_ingresos_brutos");
+   170→   170→  L.valores["cg_trabajo_ingresos"] = ingSalarios;
+   171→   171→  L.valores["cg_capital_ingresos"] = ingCapital;
+   172→   172→  L.valores["cg_no_laborales_ingresos"] = ingNoLaborales;
+   173→   173→  L.fijarCasilla(32, ingSalarios);
+   174→   174→  L.fijarCasilla(43, ingHonorarios);
+   175→   175→
+   176→   176→  // ── Ingresos no constitutivos de renta (arts. 55 y 56 ET) ──
+   177→   177→  const incrSalarios =
+   178→   178→    monto(e.rentasTrabajo.aportesObligatoriosSalud) +
+   179→   179→    monto(e.rentasTrabajo.aportesObligatoriosPension) +
+   180→   180→    monto(e.rentasTrabajo.aportesFsp);
+   181→   181→  const incrHonorarios =
+   182→   182→    monto(e.rentasIndependientes.aportesObligatoriosSalud) +
+   183→   183→    monto(e.rentasIndependientes.aportesObligatoriosPension);
+   184→   184→  const incr = incrSalarios + incrHonorarios;
+   185→   185→  L.registrar(S, "Ingresos no constitutivos de renta ni ganancia ocasional", incr,
+   186→   186→    `aportes obligatorios: salarios ${fmt(incrSalarios)} + honorarios ${fmt(incrHonorarios)}`,
+   187→   187→    "Arts. 55 y 56 ET", "", "cg_incrngo");
+   188→   188→  L.valores["cg_trabajo_incrngo"] = incrSalarios;
+   189→   189→  L.valores["cg_capital_incrngo"] = 0;
+   190→   190→  L.valores["cg_no_laborales_incrngo"] = 0;
+   191→   191→  L.fijarCasilla(33, incrSalarios);
+   192→   192→  L.fijarCasilla(44, incrHonorarios);
+   193→   193→
+   194→   194→  // ── Costos y gastos (art. 336 num. 2 ET) ──
+   195→   195→  const costosHonorarios = monto(e.rentasIndependientes.costosGastos);
+   196→   196→  const costos = costosHonorarios;
+   197→   197→  if (costosHonorarios > 0 && ingHonorarios > 0) {
+   198→   198→    L.pctCostos336_1 = costosHonorarios / ingHonorarios;
+   199→   199→    if (L.pctCostos336_1 > P.topeCostosTrabajo336_1) {
+   200→   200→      L.casilla140 = true;
+   201→   201→      L.alertas.push(
+   202→   202→        `Los costos imputados a rentas de trabajo sin relación laboral son el ${(L.pctCostos336_1 * 100).toFixed(1)}% de los ingresos brutos y superan el tope indicativo del 60% del art. 336-1 ET. Hay que marcar la casilla 140 del formulario 210 y tener el soporte de cada costo listo.`,
+   203→   203→      );
+   204→   204→    }
+   205→   205→    L.alertas.push(
+   206→   206→      "Se imputaron costos y gastos a rentas de trabajo: eso excluye la renta exenta del 25% sobre esos honorarios (art. 206 num. 10, parágrafo).",
+   207→   207→    );
+   208→   208→  }
+   209→   209→  L.registrar(S, "Costos y gastos procedentes", costos,
+   210→   210→    "solo rentas de trabajo sin relación laboral (honorarios con costos)",
+   211→   211→    "Art. 336 num. 2 ET", "", "cg_costos");
+   212→   212→  L.valores["cg_trabajo_costos"] = costosHonorarios;
+   213→   213→  L.fijarCasilla(45, costosHonorarios);
+   214→   214→
+   215→   215→  // ── Renta líquida de cada bloque de trabajo (casillas del formulario) ──
+   216→   216→  const rentaLiquidaSalarios = ingSalarios - incrSalarios;
+   217→   217→  const rentaLiquidaHonorarios = ingHonorarios - incrHonorarios - costosHonorarios;
+   218→   218→  L.fijarCasilla(34, rentaLiquidaSalarios);
+   219→   219→  L.fijarCasilla(46, rentaLiquidaHonorarios);
+   220→   220→
+   221→   221→  // ── Renta líquida: base del límite del 40% ──
+   222→   222→  const baseLimite = Math.max(0, ingTotal - incr - costos);
+   223→   223→  L.registrar(S, "Renta líquida de la cédula general (base del límite)", baseLimite,
+   224→   224→    `${fmt(ingTotal)} − ${fmt(incr)} − ${fmt(costos)}`,
+   225→   225→    "Art. 336 ET", "", "cg_base_limite");
+   226→   226→
+   227→   227→  // ── Bloque sujeto al límite 40% / 1.340 UVT ──
+   228→   228→  const limitados: BloqueLimitado[] = [];
+   229→   229→
+   230→   230→  const agregar = (
+   231→   231→    claveBeneficio: keyof typeof P.beneficios,
+   232→   232→    valorBruto: number,
+   233→   233→    etiqueta: string,
+   234→   234→  ) => {
+   235→   235→    if (valorBruto <= 0) return;
+   236→   236→    const b = P.beneficios[claveBeneficio];
+   237→   237→    const tope = b.topeUvtAnual ? enPesos(b.topeUvtAnual) : 0;
+   238→   238→    const valor = tope > 0 ? Math.min(valorBruto, tope) : valorBruto;
+   239→   239→    const nota =
+   240→   240→      tope > 0 && valorBruto > tope
+   241→   241→        ? `limitado al tope de ${b.topeUvtAnual} UVT (${fmt(tope)}); se pierden ${fmt(valorBruto - tope)}`
+   242→   242→        : "";
+   243→   243→    limitados.push({ etiqueta, valor, nota });
+   244→   244→    L.registrar(S, `  ${etiqueta}`, valor, `declarado ${fmt(valorBruto)}`, b.norma, nota);
+   245→   245→  };
+   246→   246→
+   247→   247→  const ded = e.deducciones;
+   248→   248→  agregar("interesesVivienda", monto(ded.interesesVivienda), "Intereses de crédito de vivienda");
+   249→   249→  agregar("medicinaPrepagada", monto(ded.medicinaPrepagada), "Medicina prepagada y seguros de salud");
+   250→   250→  agregar("icetex", monto(ded.icetex), "Intereses Icetex");
+   251→   251→
+   252→   252→  const gmfPagado = monto(ded.gmfPagado);
+   253→   253→  if (gmfPagado > 0) {
+   254→   254→    const val = pesos(gmfPagado * 0.5);
+   255→   255→    limitados.push({ etiqueta: "GMF (4x1000) deducible", valor: val, nota: "" });
+   256→   256→    L.registrar(S, "  GMF (4x1000) deducible", val, `50% de ${fmt(gmfPagado)} certificado`, p.gmf4x1000.norma);
+   257→   257→  }
+   258→   258→
+   259→   259→  // Dependientes art. 387: 10% del ingreso bruto de trabajo, tope 384 UVT.
+   260→   260→  const nDep = e.contribuyente.dependientes ?? 0;
+   261→   261→  const ingTrabajoTotal = ingSalarios + ingHonorarios;
+   262→   262→  if (nDep > 0 && ingTrabajoTotal > 0) {
+   263→   263→    const topePct = pesos(ingTrabajoTotal * 0.1);
+   264→   264→    const topeAbs = enPesos(p.dependientes387.topeUvtAnual ?? 384);
+   265→   265→    const val = Math.min(topePct, topeAbs);
+   266→   266→    limitados.push({ etiqueta: "Dependientes (art. 387)", valor: val, nota: "" });
+   267→   267→    L.registrar(S, "  Dependientes (art. 387)", val,
+   268→   268→      `menor entre 10% de ${fmt(ingTrabajoTotal)} = ${fmt(topePct)} y 384 UVT = ${fmt(topeAbs)}`,
+   269→   269→      p.dependientes387.norma);
+   270→   270→  }
+   271→   271→
+   272→   272→  const exe = e.rentasExentas;
+   273→   273→  const aportesVoluntarios = monto(exe.aportesVoluntariosPension) + monto(exe.afc);
+   274→   274→  agregar("aportesVoluntariosPensionesAfc", aportesVoluntarios, "Aportes voluntarios a pensión y AFC");
+   275→   275→  agregar("cesantiasVoluntarias", monto(exe.cesantiasVoluntarias), "Aportes voluntarios a cesantías");
+   276→   276→
+   277→   277→  // Renta exenta del 25% (art. 206 num. 10) sobre la base depurada.
+   278→   278→  let exenta25 = 0;
+   279→   279→  const honorariosConCostos = costosHonorarios > 0;
+   280→   280→  if (ingTrabajoTotal > 0 && !honorariosConCostos) {
+   281→   281→    const base25 = Math.max(0, ingTrabajoTotal - incr - otrasImputables(limitados));
+   282→   282→    const bruto25 = pesos(base25 * 0.25);
+   283→   283→    const tope25 = enPesos(p.rentaExentaLaboral25.topeUvtAnual ?? 790);
+   284→   284→    exenta25 = Math.min(bruto25, tope25);
+   285→   285→    const nota = bruto25 > tope25 ? `limitada al tope de 790 UVT (${fmt(tope25)})` : "";
+   286→   286→    limitados.push({ etiqueta: "Renta exenta 25% de rentas de trabajo", valor: exenta25, nota });
+   287→   287→    L.registrar(S, "  Renta exenta 25% de rentas de trabajo", exenta25,
+   288→   288→      `25% de (ingresos de trabajo ${fmt(ingTrabajoTotal)} − INCRNGO ${fmt(incr)} − deducciones y exentas ya imputadas ${fmt(otrasImputables(limitados))}) = ${fmt(bruto25)}`,
+   289→   289→      p.rentaExentaLaboral25.norma, nota);
+   290→   290→  }
+   291→   291→
+   292→   292→  // ── Aplicación del límite (art. 336 num. 3 ET) ──
+   293→   293→  const sumaLimitados = limitados.reduce((acc, x) => acc + x.valor, 0);
+   294→   294→  const topePct = pesos(baseLimite * P.limiteCedulaGeneral.porcentaje);
+   295→   295→  const topeUvt = enPesos(P.limiteCedulaGeneral.topeUvt);
+   296→   296→  const limite = Math.min(topePct, topeUvt);
+   297→   297→  L.registrar(S, "Límite a rentas exentas y deducciones", limite,
+   298→   298→    `menor entre 40% de ${fmt(baseLimite)} = ${fmt(topePct)} y ${P.limiteCedulaGeneral.topeUvt} UVT = ${fmt(topeUvt)}`,
+   299→   299→    "Art. 336 num. 3 ET", "", "cg_limite");
+   300→   300→
+   301→   301→  const aplicado = Math.min(sumaLimitados, limite);
+   302→   302→  const exceso = Math.max(0, sumaLimitados - limite);
+   303→   303→  L.registrar(S, "Rentas exentas y deducciones imputables (aplicadas)", aplicado,
+   304→   304→    `solicitadas ${fmt(sumaLimitados)}, límite ${fmt(limite)}`,
+   305→   305→    "Art. 336 num. 3 ET",
+   306→   306→    exceso > 0 ? `RECHAZADAS por exceso: ${fmt(exceso)}` : "",
+   307→   307→    "cg_exentas_deducciones");
+   308→   308→  if (exceso > 0) {
+   309→   309→    L.alertas.push(
+   310→   310→      `Las rentas exentas y deducciones solicitadas superan el límite del 40%/1.340 UVT en ${fmt(exceso)}. Ese exceso NO es aprovechable en este año gravable.`,
+   311→   311→    );
+   312→   312→  }
+   313→   313→
+   314→   314→  // ── Beneficios FUERA del límite ──
+   315→   315→  let fuera = 0;
+   316→   316→
+   317→   317→  if (nDep > 0) {
+   318→   318→    const nEfectivo = Math.min(nDep, 4);
+   319→   319→    const val = enPesos(72 * nEfectivo);
+   320→   320→    fuera += val;
+   321→   321→    const nota = nDep > 4 ? `se declararon ${nDep} dependientes; la norma reconoce máximo 4` : "";
+   322→   322→    L.registrar(S, `Deducción de 72 UVT por ${nEfectivo} dependiente(s)`, val,
+   323→   323→      `${nEfectivo} × 72 UVT × ${fmt(P.uvtAnioGravable)}`, p.dependientes336.norma, nota,
+   324→   324→      "cg_dependientes_336");
+   325→   325→    L.fijarCasilla(138, nDep);
+   326→   326→    L.fijarCasilla(139, val);
+   327→   327→  }
+   328→   328→
+   329→   329→  const comprasFe = monto(ded.comprasFacturaElectronica);
+   330→   330→  if (comprasFe > 0) {
+   331→   331→    const brutoFe = pesos(comprasFe * 0.01);
+   332→   332→    const topeFe = enPesos(p.facturaElectronica1.topeUvtAnual ?? 240);
+   333→   333→    const val = Math.min(brutoFe, topeFe);
+   334→   334→    fuera += val;
+   335→   335→    L.registrar(S, "Deducción del 1% por compras con factura electrónica", val,
+   336→   336→      `1% de ${fmt(comprasFe)} = ${fmt(brutoFe)}`, p.facturaElectronica1.norma,
+   337→   337→      brutoFe > topeFe ? `limitada al tope de 240 UVT (${fmt(topeFe)})` : "",
+   338→   338→      "cg_factura_electronica");
+   339→   339→    L.fijarCasilla(28, val);
+   340→   340→  }
+   341→   341→
+   342→   342→  // ── Reparto de lo aplicado entre los bloques del formulario ──
+   343→   343→  // Regla v1 (documentada en la FICHA): las deducciones se imputan primero al bloque
+   344→   344→  // de rentas de trabajo con relación laboral (casillas 35-42); el excedente va al
+   345→   345→  // bloque de rentas de trabajo sin relación laboral (casillas 47-57). Así la suma
+   346→   346→  // 41 + 42 + 53 + 57 siempre reconstruye la base del límite.
+   347→   347→  if (aplicado > 0) {
+   348→   348→    const parteSalarios = Math.min(aplicado, Math.max(0, rentaLiquidaSalarios));
+   349→   349→    const parteHonorarios = aplicado - parteSalarios;
+   350→   350→    if (parteSalarios > 0) {
+   351→   351→      L.fijarCasilla(37, parteSalarios);
+   352→   352→      L.fijarCasilla(41, parteSalarios);
+   353→   353→      L.fijarCasilla(42, rentaLiquidaSalarios - parteSalarios);
+   354→   354→    }
+   355→   355→    if (parteHonorarios > 0) {
+   356→   356→      L.fijarCasilla(53, parteHonorarios);
+   357→   357→      L.fijarCasilla(57, Math.max(0, rentaLiquidaHonorarios - parteHonorarios));
+   358→   358→    }
+   359→   359→  } else {
+   360→   360→    if (rentaLiquidaSalarios > 0) L.fijarCasilla(42, rentaLiquidaSalarios);
+   361→   361→    if (rentaLiquidaHonorarios > 0) L.fijarCasilla(57, rentaLiquidaHonorarios);
+   362→   362→  }
+   363→   363→
+   364→   364→  const rentaLiquidaGravableGeneral = Math.max(0, baseLimite - aplicado - fuera);
+   365→   365→  L.registrar(S, "RENTA LÍQUIDA GRAVABLE DE LA CÉDULA GENERAL", rentaLiquidaGravableGeneral,
+   366→   366→    `${fmt(baseLimite)} − ${fmt(aplicado)} − ${fmt(fuera)}`,
+   367→   367→    "Art. 336 ET", "", "cg_renta_liquida_gravable");
+   368→   368→  return rentaLiquidaGravableGeneral;
+   369→   369→}
+   370→   370→
+   371→   371→function otrasImputables(limitados: BloqueLimitado[]): number {
+   372→   372→  return limitados.reduce((acc, x) => acc + x.valor, 0);
+   373→   373→}
+   374→   374→
+   375→   375→// ---------------------------------------------------------------------------
+   376→   376→// Cédula de pensiones (art. 337 ET)
+   377→   377→// ---------------------------------------------------------------------------
+   378→   378→
+   379→   379→function liquidarPensiones(e: Expediente, L: Liquidador): number {
+   380→   380→  const S = "Cédula de pensiones";
+   381→   381→  const ing = monto(e.pensiones.ingresosBrutos);
+   382→   382→  if (ing <= 0) return 0;
+   383→   383→
+   384→   384→  const incr = monto(e.pensiones.aportesSalud);
+   385→   385→  const neto = Math.max(0, ing - incr);
+   386→   386→  L.registrar(S, "Ingresos por pensiones", ing, "", "Art. 337 ET");
+   387→   387→  L.fijarCasilla(99, ing);
+   388→   388→  if (incr > 0) {
+   389→   389→    L.registrar(S, "Aportes obligatorios a salud", incr, "", "Art. 56 ET");
+   390→   390→    L.fijarCasilla(100, incr);
+   391→   391→  }
+   392→   392→  L.fijarCasilla(101, neto);
+   393→   393→
+   394→   394→  const meses = Math.max(1, Math.min(12, e.pensiones.mesesRecibidos || 12));
+   395→   395→  const tope = enPesos(1000 * meses);
+   396→   396→  const exenta = Math.min(neto, tope);
+   397→   397→  L.registrar(S, "Renta exenta de pensiones", exenta,
+   398→   398→    `1.000 UVT × ${meses} mes(es) = ${fmt(tope)}`,
+   399→   399→    "Art. 206 num. 5 ET",
+   400→   400→    neto > tope ? `excede el tope en ${fmt(neto - tope)}` : "");
+   401→   401→  L.fijarCasilla(102, exenta);
+   402→   402→
+   403→   403→  const rl = Math.max(0, neto - exenta);
+   404→   404→  L.registrar(S, "RENTA LÍQUIDA GRAVABLE DE PENSIONES", rl,
+   405→   405→    `${fmt(neto)} − ${fmt(exenta)}`, "Art. 337 ET", "", "pen_renta_liquida_gravable");
+   406→   406→  L.fijarCasilla(103, rl);
+   407→   407→  return rl;
+   408→   408→}
+   409→   409→
+   410→   410→// ---------------------------------------------------------------------------
+   411→   411→// Cédula de dividendos (arts. 331, 242, 49 y 254-1 ET)
+   412→   412→// ---------------------------------------------------------------------------
+   413→   413→
+   414→   414→interface ResultadoDividendos {
+   415→   415→  rentaLiquida: number;
+   416→   416→  impuesto35: number;
+   417→   417→  descuento2541: number;
+   418→   418→}
+   419→   419→
+   420→   420→function liquidarDividendos(
+   421→   421→  dividendosNoGravados: number,
+   422→   422→  dividendosGravados: number,
+   423→   423→  L: Liquidador,
+   424→   424→): ResultadoDividendos {
+   425→   425→  const S = "Cédula de dividendos";
+   426→   426→  const noGrav = pesos(dividendosNoGravados);
+   427→   427→  const grav = pesos(dividendosGravados);
+   428→   428→  if (noGrav <= 0 && grav <= 0) return { rentaLiquida: 0, impuesto35: 0, descuento2541: 0 };
+   429→   429→
+   430→   430→  let impuesto35 = 0;
+   431→   431→  L.fijarCasilla(104, noGrav);
+   432→   432→  L.fijarCasilla(107, grav);
+   433→   433→  if (noGrav > 0) {
+   434→   434→    L.registrar(S, "Dividendos no gravados (art. 49 num. 3)", noGrav,
+   435→   435→      "se suman a la renta líquida gravable y tributan con la tabla del art. 241",
+   436→   436→      "Art. 242 ET");
+   437→   437→  }
+   438→   438→  if (grav > 0) {
+   439→   439→    impuesto35 = pesos(grav * PARAMETROS_AG2025.dividendos.tarifaPreviaGravados);
+   440→   440→    L.registrar(S, "Dividendos gravados", grav,
+   441→   441→      `tarifa previa del 35% = ${fmt(impuesto35)}; el remanente pasa a la renta líquida gravable`,
+   442→   442→      "Art. 49 par. 2 ET");
+   443→   443→    L.alertas.push(
+   444→   444→      "Hay dividendos GRAVADOS. El tratamiento combinado (35% + tabla del art. 241 + descuento del art. 254-1) es técnico: haga revisar esta parte por un contador.",
+   445→   445→    );
+   446→   446→  }
+   447→   447→  L.fijarCasilla(118, impuesto35);
+   448→   448→
+   449→   449→  const rentaLiquida = noGrav + Math.max(0, grav - impuesto35);
+   450→   450→  L.registrar(S, "RENTA LÍQUIDA DE DIVIDENDOS", rentaLiquida,
+   451→   451→    `${fmt(noGrav)} + (${fmt(grav)} − ${fmt(impuesto35)})`, "Art. 331 ET", "",
+   452→   452→    "div_renta_liquida");
+   453→   453→  L.fijarCasilla(111, rentaLiquida);
+   454→   454→
+   455→   455→  // Descuento art. 254-1: 19% del exceso de 1.090 UVT sobre el total de dividendos.
+   456→   456→  const totalUvt = (noGrav + grav) / PARAMETROS_AG2025.uvtAnioGravable;
+   457→   457→  let descuento = 0;
+   458→   458→  const desdeUvt = PARAMETROS_AG2025.dividendos.descuento2541.desdeUvt;
+   459→   459→  const tarifa = PARAMETROS_AG2025.dividendos.descuento2541.tarifa;
+   460→   460→  if (totalUvt > desdeUvt) {
+   461→   461→    descuento = pesos((totalUvt - desdeUvt) * tarifa * PARAMETROS_AG2025.uvtAnioGravable);
+   462→   462→    L.registrar(S, "Descuento tributario por dividendos (art. 254-1)", descuento,
+   463→   463→      `${(tarifa * 100).toFixed(0)}% de (${totalUvt.toFixed(2)} UVT − ${desdeUvt} UVT)`,
+   464→   464→      "Art. 254-1 ET", "", "div_descuento_254_1");
+   465→   465→    L.fijarCasilla(124, descuento);
+   466→   466→  }
+   467→   467→  return { rentaLiquida, impuesto35, descuento2541: descuento };
+   468→   468→}
+   469→   469→
+   470→   470→// ---------------------------------------------------------------------------
+   471→   471→// Ganancias ocasionales (arts. 313, 314, 317 y 311-1 ET)
+   472→   472→// ---------------------------------------------------------------------------
+   473→   473→
+   474→   474→function liquidarGananciasOcasionales(
+   475→   475→  items: ItemGananciaOcasional[],
+   476→   476→  L: Liquidador,
+   477→   477→): number {
+   478→   478→  const S = "Ganancias ocasionales";
+   479→   479→  if (!items || items.length === 0) return 0;
+   480→   480→  const P = PARAMETROS_AG2025.gananciasOcasionales;
+   481→   481→  let baseGeneral = 0;
+   482→   482→  let baseLoterias = 0;
+   483→   483→  let imp = 0;
+   484→   484→  let ingresosGO = 0;
+   485→   485→  let costosGO = 0;
+   486→   486→  let exentasGO = 0;
+   487→   487→
+   488→   488→  for (const it of items) {
+   489→   489→    const ingreso = pesos(it.ingreso);
+   490→   490→    const costo = pesos(it.costoFiscal ?? 0);
+   491→   491→    const desc = it.descripcion || it.tipo;
+   492→   492→
+   493→   493→    if (it.tipo === "venta_activo_fijo" && it.aniosPosesion != null && it.aniosPosesion < 2) {
+   494→   494→      L.alertas.push(
+   495→   495→        `'${desc}': el activo se poseyó menos de 2 años, así que la utilidad es RENTA ORDINARIA, no ganancia ocasional. Debe reclasificarse.`,
+   496→   496→      );
+   497→   497→      continue;
+   498→   498→    }
+   499→   499→
+   500→   500→    ingresosGO += ingreso;
+   501→   501→    costosGO += costo;
+   502→   502→    const utilidad = Math.max(0, ingreso - costo);
+   503→   503→    L.registrar(S, `Utilidad en ${desc}`, utilidad,
+   504→   504→      `ingreso ${fmt(ingreso)} − costo fiscal ${fmt(costo)}`, "Arts. 313 y 314 ET");
+   505→   505→
+   506→   506→    let exenta = 0;
+   507→   507→    if (it.exencion === "vivienda_habitacion_311_1") {
+   508→   508→      const topeViv = enPesos(P.viviendaValorCatastralTopeUvt);
+   509→   509→      const valorCatastral = pesos(it.valorCatastral ?? 0);
+   510→   510→      if (valorCatastral > topeViv) {
+   511→   511→        L.alertas.push(
+   512→   512→          `'${desc}': el valor catastral (${fmt(valorCatastral)}) supera 15.000 UVT (${fmt(topeViv)}); NO procede la exención del art. 311-1.`,
+   513→   513→        );
+   514→   514→      } else {
+   515→   515→        exenta = Math.min(utilidad, enPesos(P.exencionViviendaTopeUvt));
+   516→   516→        L.registrar(S, "  Exención por venta de vivienda de habitación", exenta,
+   517→   517→          `tope 5.000 UVT = ${fmt(enPesos(P.exencionViviendaTopeUvt))}`, "Art. 311-1 ET",
+   518→   518→          "Exige depositar los recursos en cuenta AFC y destinarlos a otra vivienda o a abonar el crédito hipotecario.");
+   519→   519→        const costoExencion = pesos(exenta * P.tarifaGeneral);
+   520→   520→        L.alertas.push(
+   521→   521→          `'${desc}': la exención del art. 311-1 por ${fmt(exenta)} SOLO procede si los recursos de la venta se depositaron en una cuenta AFC y se destinaron a otra vivienda o a abonar el crédito hipotecario. Sin ese depósito la exención se pierde y el impuesto sube ${fmt(costoExencion)}.`,
+   522→   522→        );
+   523→   523→      }
+   524→   524→    }
+   525→   525→
+   526→   526→    exentasGO += exenta;
+   527→   527→    const gravable = Math.max(0, utilidad - exenta);
+   528→   528→    if (it.tipo === "loteria" || it.tipo === "rifa" || it.tipo === "premio") {
+   529→   529→      baseLoterias += pesos(ingreso);
+   530→   530→    } else {
+   531→   531→      baseGeneral += gravable;
+   532→   532→    }
+   533→   533→  }
+   534→   534→
+   535→   535→  if (baseGeneral > 0) {
+   536→   536→    const val = pesos(baseGeneral * P.tarifaGeneral);
+   537→   537→    imp += val;
+   538→   538→    L.registrar(S, "Impuesto de ganancias ocasionales", val,
+   539→   539→      `${fmt(baseGeneral)} × 15%`, "Arts. 313 y 314 ET", "", "go_impuesto_general");
+   540→   540→  }
+   541→   541→  if (baseLoterias > 0) {
+   542→   542→    const val = pesos(baseLoterias * P.tarifaLoteriasRifas);
+   543→   543→    imp += val;
+   544→   544→    L.registrar(S, "Impuesto de loterías, rifas y premios", val,
+   545→   545→      `${fmt(baseLoterias)} × 20%`, "Art. 317 ET", "", "go_impuesto_loterias");
+   546→   546→  }
+   547→   547→
+   548→   548→  L.registrar(S, "Ingresos por ganancias ocasionales", ingresosGO);
+   549→   549→  L.fijarCasilla(112, ingresosGO);
+   550→   550→  L.fijarCasilla(113, costosGO);
+   551→   551→  L.fijarCasilla(114, exentasGO);
+   552→   552→  L.registrar(S, "TOTAL IMPUESTO DE GANANCIAS OCASIONALES", imp, "", "", "", "go_impuesto");
+   553→   553→  L.fijarCasilla(127, imp);
+   554→   554→  return imp;
+   555→   555→}
+   556→   556→
+   557→   557→// ---------------------------------------------------------------------------
+   558→   558→// Obligación a declarar (art. 594-3 ET): basta una condición
+   559→   559→// ---------------------------------------------------------------------------
+   560→   560→
+   561→   561→export interface EvaluacionObligacion {
+   562→   562→  obligado: boolean;
+   563→   563→  condiciones: { id: string; descripcion: string; umbral: string; valor: number | null; cumple: boolean | null }[];
+   564→   564→}
+   565→   565→
+   566→   566→export function evaluarObligacion(e: Expediente): EvaluacionObligacion {
+   567→   567→  const patrimonio = monto(e.patrimonio.bruto);
+   568→   568→  const ingresos =
+   569→   569→    monto(e.rentasTrabajo.ingresosBrutos) + monto(e.rentasIndependientes.ingresosBrutos) + monto(e.pensiones.ingresosBrutos);
+   570→   570→  const condiciones: EvaluacionObligacion["condiciones"] = [
+   571→   571→    {
+   572→   572→      id: "patrimonio_bruto",
+   573→   573→      descripcion: "Patrimonio bruto a 31 de diciembre de 2025",
+   574→   574→      umbral: `> 4.500 UVT (${fmt(enPesos(4500))})`,
+   575→   575→      valor: patrimonio,
+   576→   576→      cumple: patrimonio > enPesos(4500),
+   577→   577→    },
+   578→   578→    {
+   579→   579→      id: "ingresos_brutos",
+   580→   580→      descripcion: "Ingresos brutos totales del año",
+   581→   581→      umbral: `≥ 1.400 UVT (${fmt(enPesos(1400))})`,
+   582→   582→      valor: ingresos,
+   583→   583→      cumple: ingresos >= enPesos(1400),
+   584→   584→    },
+   585→   585→    {
+   586→   586→      id: "consumos_tarjeta",
+   587→   587→      descripcion: "Consumos con tarjeta de crédito",
+   588→   588→      umbral: `> 1.400 UVT (${fmt(enPesos(1400))})`,
+   589→   589→      valor: esDesconocido(e.consumosTarjeta) ? null : monto(e.consumosTarjeta),
+   590→   590→      cumple: esDesconocido(e.consumosTarjeta) ? null : monto(e.consumosTarjeta) > enPesos(1400),
+   591→   591→    },
+   592→   592→    {
+   593→   593→      id: "consignaciones",
+   594→   594→      descripcion: "Consignaciones bancarias, depósitos o inversiones",
+   595→   595→      umbral: `> 1.400 UVT (${fmt(enPesos(1400))})`,
+   596→   596→      valor: esDesconocido(e.consignaciones) ? null : monto(e.consignaciones),
+   597→   597→      cumple: esDesconocido(e.consignaciones) ? null : monto(e.consignaciones) > enPesos(1400),
+   598→   598→    },
+   599→   599→  ];
+   600→   600→  const obligado = condiciones.some((c) => c.cumple === true);
+   601→   601→  return { obligado, condiciones };
+   602→   602→}
+   603→   603→
+   604→   604→/** Vencimiento según los dos últimos dígitos del NIT (Decreto 2229 de 2023). */
+   605→   605→export function vencimientoPorNit(nitUltimos2: string): string | null {
+   606→   606→  const cal = PARAMETROS_AG2025.calendarioVencimientos;
+   607→   607→  const n = nitUltimos2.trim();
+   608→   608→  if (!/^\d{2}$/.test(n)) return null;
+   609→   609→  if (n === "00") return cal["99-00"] ?? null;
+   610→   610→  const par = Number(n) % 2 === 0 ? `${Number(n) - 1}-${n}` : `${n}-${Number(n) + 1}`;
+   611→   611→  return cal[par] ?? null;
+   612→   612→}
+   613→   613→
+   614→   614→// ---------------------------------------------------------------------------
+   615→   615→// Liquidación privada completa
+   616→   616→// ---------------------------------------------------------------------------
+   617→   617→
+   618→   618→export function liquidar(e: Expediente): ResultadoLiquidacion {
+   619→   619→  const L = new Liquidador();
+   620→   620→  const S = "Liquidación privada";
+   621→   621→  const P = PARAMETROS_AG2025;
+   622→   622→
+   623→   623→  // Guardas de alcance (desenlace R7): casos que requieren contador.
+   624→   624→  if (!e.contribuyente.residente || e.contribuyente.obligadoContabilidad) {
+   625→   625→    L.alertas.push(
+   626→   626→      !e.contribuyente.residente
+   627→   627→        ? "El declarante no es residente fiscal: su tratamiento sale del alcance de este flujo F210 v1. Derivar a contador con el expediente armado."
+   628→   628→        : "El declarante está obligado a llevar contabilidad: sale del alcance del flujo F210 v1. Derivar a contador con el expediente armado.",
+   629→   629→    );
+   630→   630→  }
+   631→   631→
+   632→   632→  // ── Patrimonio (casillas 29-31) ──
+   633→   633→  const bruto = monto(e.patrimonio.bruto);
+   634→   634→  const deudas = monto(e.patrimonio.deudas);
+   635→   635→  L.registrar("Patrimonio", "Total patrimonio bruto a 31 de diciembre", bruto, "", "", "", "patrimonio_bruto");
+   636→   636→  L.registrar("Patrimonio", "Deudas", deudas, "", "", "", "patrimonio_deudas");
+   637→   637→  L.registrar("Patrimonio", "Total patrimonio líquido", Math.max(0, bruto - deudas),
+   638→   638→    `${fmt(bruto)} − ${fmt(deudas)}`, "", "", "patrimonio_liquido");
+   639→   639→  L.fijarCasilla(29, bruto);
+   640→   640→  L.fijarCasilla(30, deudas);
+   641→   641→  L.fijarCasilla(31, Math.max(0, bruto - deudas));
+   642→   642→  if (deudas > bruto && bruto > 0) {
+   643→   643→    L.alertas.push(
+   644→   644→      `Las deudas (${fmt(deudas)}) superan el patrimonio bruto (${fmt(bruto)}): verificar certificados de deuda y valorización de activos.`,
+   645→   645→    );
+   646→   646→  }
+   647→   647→
+   648→   648→  // ── Cédulas ──
+   649→   649→  const rlGeneral = liquidarCedulaGeneral(e, L);
+   650→   650→  const rlPension = liquidarPensiones(e, L);
+   651→   651→  const div = liquidarDividendos(0, 0, L); // v1: dividendos se llenan por la entrevista avanzada; por defecto 0
+   652→   652→
+   653→   653→  const rlg = rlGeneral + rlPension + div.rentaLiquida;
+   654→   654→  L.registrar(S, "RENTA LÍQUIDA GRAVABLE TOTAL", rlg,
+   655→   655→    `cédula general ${fmt(rlGeneral)} + pensiones ${fmt(rlPension)} + dividendos ${fmt(div.rentaLiquida)}`,
+   656→   656→    "Art. 331 ET", "", "renta_liquida_gravable");
+   657→   657→
+   658→   658→  const { impuesto, formula } = impuestoTabla241(rlg);
+   659→   659→  L.registrar(S, "Impuesto sobre la renta líquida gravable", impuesto, formula, "Art. 241 ET", "", "impuesto_renta");
+   660→   660→  L.fijarCasilla(116, impuesto);
+   661→   661→
+   662→   662→  // ── Casillas cedulares con las fórmulas oficiales del instructivo F210 v16 ──
+   663→   663→  // 91 = 41 + 42 + 53 + 57 + 69 + 73 + 86 + 90 (v1: capital y no laborales en 0)
+   664→   664→  // 92 = 28 + 41 + 53 + 69 + 86 + 139
+   665→   665→  // 93 = 91 − 92 · 97 = 93 + 96 − 94 − 95 (v1: 94/95/96 en 0)
+   666→   666→  const cas = (n: number) => L.casillas[n] ?? 0;
+   667→   667→  const c91 = cas(41) + cas(42) + cas(53) + cas(57) + cas(69) + cas(73) + cas(86) + cas(90);
+   668→   668→  L.fijarCasilla(91, c91);
+   669→   669→  L.registrar(S, "Renta líquida cédula general (casilla 91)", c91,
+   670→   670→    "41 + 42 + 53 + 57 + 69 + 73 + 86 + 90", "Instructivo F210, Res. DIAN 000044/2024");
+   671→   671→  const c92 = cas(28) + cas(41) + cas(53) + cas(69) + cas(86) + cas(139);
+   672→   672→  L.fijarCasilla(92, c92);
+   673→   673→  L.registrar(S, "Rentas exentas y deducciones imputables limitadas (casilla 92)", c92,
+   674→   674→    "28 + 41 + 53 + 69 + 86 + 139", "Instructivo F210, Res. DIAN 000044/2024");
+   675→   675→  const c93 = Math.max(0, c91 - c92);
+   676→   676→  if (c91 - c92 < 0) {
+   677→   677→    L.alertas.push(
+   678→   678→      "Las casillas cedulares arrojan un exceso de beneficios sobre la renta líquida: verificar el reparto de deducciones entre bloques (v1 los imputa al bloque de salarios primero).",
+   679→   679→    );
+   680→   680→  }
+   681→   681→  L.fijarCasilla(93, c93);
+   682→   682→  L.registrar(S, "Renta líquida ordinaria cédula general (casilla 93)", c93, "91 − 92",
+   683→   683→    "Instructivo F210, Res. DIAN 000044/2024", "", "cg_renta_liquida_casilla_93");
+   684→   684→  L.fijarCasilla(96, 0);
+   685→   685→  L.fijarCasilla(94, 0);
+   686→   686→  L.fijarCasilla(95, 0);
+   687→   687→  L.fijarCasilla(97, c93);
+   688→   688→  L.registrar(S, "Renta líquida gravable cédula general (casilla 97)", c93,
+   689→   689→    "93 + 96 − 94 − 95", "Instructivo F210, Res. DIAN 000044/2024", "", "cg_rlg_casilla_97");
+   690→   690→  L.fijarCasilla(98, 0); // renta presuntiva: no calculada en v1 (requiere patrimonio del año anterior)
+   691→   691→
+   692→   692→  // ── Descuentos tributarios (limitados al impuesto) ──
+   693→   693→  let descuentos = div.descuento2541;
+   694→   694→  descuentos = Math.min(descuentos, impuesto);
+   695→   695→  if (div.descuento2541 > 0) {
+   696→   696→    L.registrar(S, "Total descuentos tributarios", descuentos,
+   697→   697→      `limitados al impuesto sobre la renta (${fmt(impuesto)})`, "Arts. 259-ET y 254-1 ET", "", "descuentos");
+   698→   698→    L.fijarCasilla(125, descuentos);
+   699→   699→  }
+   700→   700→
+   701→   701→  const impuestoNeto = Math.max(0, impuesto - descuentos);
+   702→   702→  L.registrar(S, "IMPUESTO NETO DE RENTA", impuestoNeto, `${fmt(impuesto)} − ${fmt(descuentos)}`,
+   703→   703→    "", "", "impuesto_neto_renta");
+   704→   704→  L.fijarCasilla(126, impuestoNeto);
+   705→   705→
+   706→   706→  // ── Ganancias ocasionales (casilla 127) ──
+   707→   707→  const impGO = liquidarGananciasOcasionales(e.gananciasOcasionales ?? [], L);
+   708→   708→
+   709→   709→  const totalCargo = impuestoNeto + impGO + div.impuesto35;
+   710→   710→  L.registrar(S, "TOTAL IMPUESTO A CARGO", totalCargo,
+   711→   711→    `impuesto neto ${fmt(impuestoNeto)} + ganancias ocasionales ${fmt(impGO)}` +
+   712→   712→      (div.impuesto35 > 0 ? ` + 35% dividendos gravados ${fmt(div.impuesto35)}` : ""),
+   713→   713→    "", "", "total_impuesto_cargo");
+   714→   714→  L.fijarCasilla(129, totalCargo);
+   715→   715→
+   716→   716→  // ── Retenciones, anticipos y saldos ──
+   717→   717→  const totalRet = monto(e.retenciones.rentasTrabajo) + monto(e.retenciones.otras);
+   718→   718→  L.registrar(S, "Total retenciones en la fuente del año", totalRet, "", "", "", "retenciones");
+   719→   719→  L.fijarCasilla(132, totalRet);
+   720→   720→
+   721→   721→  const antAnterior = monto(e.anticipos.anticipoAnioAnterior);
+   722→   722→  const saldoFavorAnterior = monto(e.anticipos.saldoFavorAnioAnterior);
+   723→   723→  if (antAnterior > 0) {
+   724→   724→    L.registrar(S, "Anticipo liquidado en la declaración del año anterior", antAnterior, "", "", "", "anticipo_anterior");
+   725→   725→    L.fijarCasilla(130, antAnterior);
+   726→   726→  }
+   727→   727→  if (saldoFavorAnterior > 0) {
+   728→   728→    L.registrar(S, "Saldo a favor del año anterior sin solicitud de devolución", saldoFavorAnterior, "", "", "", "saldo_favor_anterior");
+   729→   729→    L.fijarCasilla(131, saldoFavorAnterior);
+   730→   730→  }
+   731→   731→
+   732→   732→  // Anticipo del año siguiente (art. 807 ET): opción más favorable permitida.
+   733→   733→  const pct = e.primerAnioDeclarando
+   734→   734→    ? P.anticipo.porcentajePrimerAnio
+   735→   735→    : P.anticipo.porcentajeGeneral;
+   736→   736→  const opcionA = Math.max(0, pesos(impuestoNeto * pct) - totalRet);
+   737→   737→  let anticipo = opcionA;
+   738→   738→  let formulaAnticipo = `opción impuesto del año: ${(pct * 100).toFixed(0)}% de ${fmt(impuestoNeto)} − retenciones = ${fmt(opcionA)}`;
+   739→   739→  if (e.impuestoNetoAnioAnterior != null && !e.primerAnioDeclarando) {
+   740→   740→    const promedio = (impuestoNeto + e.impuestoNetoAnioAnterior) / 2;
+   741→   741→    const opcionB = Math.max(0, pesos(promedio * P.anticipo.porcentajeGeneral) - totalRet);
+   742→   742→    formulaAnticipo += `; opción promedio de dos años: 75% de ${fmt(promedio)} − retenciones = ${fmt(opcionB)}`;
+   743→   743→    anticipo = Math.min(opcionA, opcionB);
+   744→   744→  }
+   745→   745→  L.registrar(S, "Anticipo del impuesto para el año siguiente", anticipo, formulaAnticipo,
+   746→   746→    "Art. 807 ET", "Se toma la opción más favorable permitida por la norma.", "anticipo_siguiente");
+   747→   747→  L.fijarCasilla(133, anticipo);
+   748→   748→
+   749→   749→  const saldo = totalCargo + anticipo - totalRet - antAnterior - saldoFavorAnterior;
+   750→   750→  let desenlace: ResultadoLiquidacion["desenlace"];
+   751→   751→  if (saldo >= 0) {
+   752→   752→    const pagar = aproxMil(saldo);
+   753→   753→    L.registrar(S, "SALDO A PAGAR", pagar,
+   754→   754→      `impuesto a cargo ${fmt(totalCargo)} + anticipo ${fmt(anticipo)} − retenciones ${fmt(totalRet)} − anticipo anterior ${fmt(antAnterior)} − saldo a favor anterior ${fmt(saldoFavorAnterior)}`,
+   755→   755→      "Art. 577 ET (aproximación al mil más cercano)", "", "saldo_a_pagar");
+   756→   756→    L.valores["saldo_a_favor"] = 0;
+   757→   757→    L.fijarCasilla(134, pagar);
+   758→   758→    L.fijarCasilla(136, pagar);
+   759→   759→    L.fijarCasilla(137, 0);
+   760→   760→    desenlace = pagar === 0 ? "R4_impuesto_cero" : "R2_saldo_a_pagar";
+   761→   761→  } else {
+   762→   762→    const favor = aproxMil(-saldo);
+   763→   763→    L.registrar(S, "SALDO A FAVOR", favor,
+   764→   764→      "retenciones y anticipos superan el impuesto a cargo más el anticipo",
+   765→   765→      "Art. 577 ET (aproximación al mil más cercano)", "", "saldo_a_favor");
+   766→   766→    L.valores["saldo_a_pagar"] = 0;
+   767→   767→    L.fijarCasilla(134, 0);
+   768→   768→    L.fijarCasilla(136, 0);
+   769→   769→    L.fijarCasilla(137, favor);
+   770→   770→    desenlace = "R3_saldo_a_favor";
+   771→   771→  }
+   772→   772→
+   773→   773→  // Obligación a declarar (R1): si no obligado y sin saldo a pagar → informe.
+   774→   774→  const obligacion = evaluarObligacion(e);
+   775→   775→  if (!obligacion.obligado && desenlace === "R4_impuesto_cero") {
+   776→   776→    desenlace = "R1_no_obligado";
+   777→   777→    L.alertas.push(
+   778→   778→      "Con los datos actuales no se cumple ninguna condición de obligación a declarar (art. 594-3 ET). Puede declarar voluntariamente (art. 6 ET): evaluate conveniencia con un contador.",
+   779→   779→    );
+   780→   780→  }
+   781→   781→
+   782→   782→  // Datos desconocidos → pendientes (jamás se rellenan con ceros).
+   783→   783→  const pendientes = listarPendientes(e);
+   784→   784→  if (!e.contribuyente.residente || e.contribuyente.obligadoContabilidad) {
+   785→   785→    desenlace = "R7_fuera_de_alcance";
+   786→   786→  }
+   787→   787→
+   788→   788→  return {
+   789→   789→    valores: L.valores,
+   790→   790→    casillas: L.casillas,
+   791→   791→    memoria: L.memoria,
+   792→   792→    alertas: L.alertas,
+   793→   793→    pendientes,
+   794→   794→    desenlace,
+   795→   795→    casilla140: L.casilla140,
+   796→   796→    pctCostos336_1: L.pctCostos336_1,
+   797→   797→    vencimiento: vencimientoPorNit(e.contribuyente.nitUltimos2),
+   798→   798→  };
+   799→   799→}
+   800→   800→
+   801→   801→// ---------------------------------------------------------------------------
+   802→   802→// Auditor de pendientes: lista explícita de lo desconocido (nunca se asume)
+   803→   803→// ---------------------------------------------------------------------------
+   804→   804→
+   805→   805→export function listarPendientes(e: Expediente): string[] {
+   806→   806→  const p: string[] = [];
+   807→   807→  const ruta: [string, DatoConOrigen<number>][] = [
+   808→   808→    ["Rentas de trabajo · ingresos brutos (casilla 32)", e.rentasTrabajo.ingresosBrutos],
+   809→   809→    ["Rentas de trabajo · aportes obligatorios a salud (casilla 33)", e.rentasTrabajo.aportesObligatoriosSalud],
+   810→   810→    ["Rentas de trabajo · aportes obligatorios a pensión (casilla 33)", e.rentasTrabajo.aportesObligatoriosPension],
+   811→   811→    ["Rentas de trabajo sin relación laboral · ingresos brutos (casilla 43)", e.rentasIndependientes.ingresosBrutos],
+   812→   812→    ["Deducciones · intereses de vivienda (casilla 38)", e.deducciones.interesesVivienda],
+   813→   813→    ["Deducciones · medicina prepagada", e.deducciones.medicinaPrepagada],
+   814→   814→    ["Deducciones · GMF 4x1000 pagado", e.deducciones.gmfPagado],
+   815→   815→    ["Deducciones · compras con factura electrónica", e.deducciones.comprasFacturaElectronica],
+   816→   816→    ["Rentas exentas · aportes voluntarios a pensión (casilla 35)", e.rentasExentas.aportesVoluntariosPension],
+   817→   817→    ["Rentas exentas · AFC", e.rentasExentas.afc],
+   818→   818→    ["Patrimonio · patrimonio bruto (casilla 29)", e.patrimonio.bruto],
+   819→   819→    ["Patrimonio · deudas (casilla 30)", e.patrimonio.deudas],
+   820→   820→    ["Retenciones en la fuente (casilla 132)", e.retenciones.rentasTrabajo],
+   821→   821→    ["Consumos con tarjeta de crédito (obligación a declarar)", e.consumosTarjeta],
+   822→   822→    ["Consignaciones bancarias (obligación a declarar)", e.consignaciones],
+   823→   823→  ];
+   824→   824→  for (const [nombre, dato] of ruta) {
+   825→   825→    if (esDesconocido(dato)) p.push(nombre);
+   826→   826→  }
+   827→   827→  if (e.contribuyente.nitUltimos2.trim().length !== 2) {
+   828→   828→    p.push("Identidad · dos últimos dígitos del NIT (vencimiento y calendario)");
+   829→   829→  }
+   830→   830→  return p;
+   831→   831→}
+   832→   832→
+   833→   833→// ---------------------------------------------------------------------------
+   834→   834→// Formato legible de pesos
+   835→   835→// ---------------------------------------------------------------------------
+   836→   836→
+   837→   837→export function fmt(valor: number): string {
+   838→   838→  return `$${Math.round(valor).toLocaleString("es-CO")}`;
+   839→   839→}
+   840→   840→
