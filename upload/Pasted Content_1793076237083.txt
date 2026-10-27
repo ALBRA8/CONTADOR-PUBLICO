@@ -1,0 +1,1265 @@
+# INFORME MAESTRO DE INVESTIGACIÓN
+# AGENTE CONTADOR DIGITAL CON IA — ECOSISTEMA ALBRA
+
+**Mercado objetivo:** Colombia  
+**Área:** Contabilidad personal, declaración de renta, Formulario 210, DIAN/MUISCA y automatización tributaria mediante agentes de inteligencia artificial.  
+**Fecha del informe:** 26 de octubre de 2026.  
+**Objetivo:** identificar competidores, proyectos de código abierto, tecnologías reutilizables, licencias, riesgos y oportunidades para diseñar un agente contador digital dentro del ecosistema ALBRA.
+
+---
+
+# 1. RESUMEN EJECUTIVO
+
+La investigación encontró soluciones comerciales colombianas, proyectos de GitHub y referentes internacionales que automatizan diferentes partes de una declaración de renta.
+
+Las soluciones identificadas se distribuyen en cinco categorías:
+
+1. Plataformas que preparan declaraciones de renta para personas naturales.
+2. Copilotos de inteligencia artificial para contadores.
+3. Motores deterministas para calcular el Formulario 210.
+4. Agentes que procesan documentos, exógena y certificados tributarios.
+5. Herramientas que automatizan o asisten el diligenciamiento de formularios mediante navegador.
+
+Los competidores colombianos más relevantes identificados son:
+
+- Justi.
+- Tributi y su agente conversacional Clara.
+- Taxon.
+- Contadia.
+- Counti.
+- TribAI.
+
+Entre los proyectos de código abierto, los candidatos más interesantes son:
+
+- `open-renta`, por su enfoque en el cálculo determinista del Formulario 210.
+- `finance-substrate`, por su enfoque en finanzas personales, proyección tributaria y automatización de MUISCA.
+- `renta-facil`, por su flujo conversacional y procesamiento de documentos.
+- `renta-declaracion`, por su arquitectura de aplicación para gestión y liquidación de declarantes.
+- `asesor-dian-claude`, como referencia de agente tributario.
+
+También se encontraron proyectos internacionales que sirven como referencia para diseñar sistemas tributarios deterministas, agentes conectados mediante MCP, automatización de navegador y flujos de aprobación.
+
+## Dictamen principal
+
+**La oportunidad de ALBRA consiste en construir un agente contador personal integral, no simplemente otro chatbot tributario o una calculadora del Formulario 210.**
+
+El producto debería ayudar a mantener organizada la situación financiera del contribuyente durante todo el año, conciliar documentos y movimientos, preparar declaraciones, encontrar beneficios legalmente aplicables, proyectar impuestos, detectar inconsistencias y asistir en la presentación ante la DIAN.
+
+No se ha demostrado que alguno de los proyectos examinados reúna todas esas capacidades con cobertura general, exactitud tributaria validada de manera independiente y seguridad certificada de extremo a extremo.
+
+La investigación tampoco equivale a una certificación de producción de los competidores o repositorios. Las capacidades comerciales se describen según sus propias publicaciones; las capacidades técnicas se basan en la documentación y el código que fue posible examinar.
+
+---
+
+# 2. COMPETENCIA COMERCIAL COLOMBIANA
+
+## 2.1. Justi
+
+**Sitio:** https://justitax.com/  
+**Precios:** https://justitax.com/pricing
+
+### Funcionalidades anunciadas
+
+- Lectura de certificados tributarios mediante IA.
+- Procesamiento de certificados 220, información exógena y facturación electrónica.
+- Preparación del Formulario 210.
+- Optimización de deducciones y beneficios.
+- Explicación de las casillas.
+- Auditoría de riesgos.
+- Generación de un borrador de la declaración.
+- Acompañamiento mediante un agente conversacional.
+- Modalidad con experto tributario.
+
+### Precios publicados
+
+- Plan estándar: $120.000 COP.
+- Plan exprés: $200.000 COP.
+- Plan con experto: $220.000 COP.
+
+Los precios corresponden a las modalidades publicadas para el año gravable 2025 y la temporada 2026; deben confirmarse antes de una comparación comercial definitiva.
+
+### Observación importante
+
+La página comercial anuncia que Justi puede presentar la declaración ante la DIAN. Sin embargo, se identificó una discrepancia con términos contractuales previamente examinados que describían la entrega de un borrador y asignaban la presentación al usuario.
+
+Antes de atribuirle capacidad de presentación automática, hay que solicitar confirmación escrita de sus condiciones contractuales vigentes.
+
+### Enlaces
+
+- Sitio: https://justitax.com/
+- Precios: https://justitax.com/pricing
+- Términos y condiciones: https://justitax.com/terms
+
+### Valor para ALBRA
+
+Referencia para la experiencia de usuario, lectura de documentos, entrevista conversacional, explicación tributaria y optimización de deducciones.
+
+---
+
+## 2.2. Tributi y Clara
+
+**Sitio:** https://www.tributi.com/
+
+### Funcionalidades anunciadas
+
+- Preparación de declaraciones de renta.
+- Importación de información tributaria.
+- Asistencia conversacional mediante Clara.
+- Integración de Clara con ChatGPT o Claude.
+- Recolección de información mediante preguntas adaptativas.
+- Solicitud de documentos necesarios.
+- Cálculo mediante tecnología tributaria propia.
+- Modalidad de preparación con un experto.
+- Presentación de declaraciones en las modalidades que lo incluyen.
+
+### Precios publicados
+
+**Clara:**
+- Gratis si la declaración tiene impuesto a pagar.
+- $170.000 COP si queda en cero o con saldo a favor.
+
+**Aplicación:**
+- $170.000 COP en la modalidad sin afán.
+- $470.000 COP en la modalidad exprés.
+
+**Con experto:**
+- $250.000 COP sin afán.
+- $550.000 COP exprés.
+
+### Integración MCP
+
+Tributi ha publicado una integración conversacional de Clara mediante MCP:
+
+https://mcp.tributi.com/mcp
+
+La disponibilidad, los permisos y las condiciones actuales de esta integración deben verificarse directamente con el proveedor.
+
+### Valor para ALBRA
+
+Es uno de los referentes más importantes para separar el agente conversacional del motor tributario. El agente puede entrevistar al contribuyente y recopilar información mientras la tecnología fiscal especializada realiza los cálculos.
+
+---
+
+## 2.3. Taxon
+
+**Sitio:** https://taxon.co/
+
+### Funcionalidades anunciadas
+
+- Importación de información exógena.
+- Preparación del Formulario 210.
+- Cálculos por casilla.
+- Explicación de fórmulas y normas.
+- Optimización tributaria.
+- Gestión de clientes.
+- Extensión de Chrome para escribir valores en MUISCA.
+- Verificación de los valores introducidos.
+
+### Precios localizados durante la investigación
+
+- Plan gratuito limitado.
+- Plan estándar: aproximadamente $90.000 COP por temporada.
+- Plan completo: aproximadamente $160.000 COP por temporada.
+
+Es necesario comprobar los precios y condiciones de la temporada vigente.
+
+### Limitaciones relevantes
+
+La documentación examinada indica que la extensión puede escribir y verificar campos, pero no firma, presenta ni paga automáticamente. El usuario debe revisar y presentar.
+
+### Enlaces
+
+- Sitio: https://taxon.co/
+- Extensión de Chrome: https://chromewebstore.google.com/
+- Condiciones: consultar los términos vigentes del proveedor.
+
+### Valor para ALBRA
+
+Es una referencia especialmente útil para la integración futura entre el motor tributario y las manos de navegador del ecosistema ALBRA.
+
+---
+
+## 2.4. Contadia
+
+**Sitio:** https://www.contadia.com/
+
+### Funcionalidades anunciadas
+
+- Gestión de declarantes.
+- Procesamiento de información exógena.
+- Lectura de certificados tributarios.
+- Conexión automatizada con MUISCA.
+- Preparación del Formulario 210.
+- Comprobaciones tributarias.
+- Presentación directa en MUISCA.
+- Soporte de expertos.
+- Gestión de múltiples declaraciones.
+
+### Precio localizado
+
+Plan ilimitado para el año gravable 2025: $270.000 COP por año gravable.
+
+La web anuncia una primera declaración gratuita y otras condiciones promocionales que deben confirmarse.
+
+### Observación
+
+La presentación directa es una capacidad anunciada por el proveedor. No se realizó una presentación real de prueba y, por tanto, no se verificaron independientemente el mecanismo técnico, las autorizaciones, el tratamiento de errores ni la recuperación ante fallos.
+
+### Valor para ALBRA
+
+Referencia para la gestión de carteras de clientes, expedientes fiscales y automatización operativa para contadores.
+
+---
+
+## 2.5. Counti
+
+**Sitio:** https://counti.co/
+
+### Funcionalidades anunciadas
+
+- Copiloto de IA para contadores colombianos.
+- Lectura de certificados 220.
+- Procesamiento de información exógena.
+- Lectura de facturación electrónica.
+- Motor tributario para el Formulario 210.
+- Auditoría de riesgos.
+- Consultas de normativa tributaria.
+- Gestión de clientes.
+- Calendario tributario.
+- Calculadoras de IVA y retención en la fuente.
+- Generación de informes para contadores.
+
+### Precio localizado
+
+El sitio promociona declaraciones desde $5.000 COP y una prueba gratuita de siete días. Debe confirmarse qué representa el precio de entrada, qué plan lo incluye y cuáles son los límites.
+
+### Valor para ALBRA
+
+Referencia para integrar gestión de clientes, consultas tributarias, preparación de declaraciones y herramientas auxiliares en una misma estación de trabajo.
+
+Las cifras de usuarios, afirmaciones de precisión y declaraciones de seguridad publicadas por el proveedor no han sido auditadas de forma independiente.
+
+---
+
+## 2.6. TribAI
+
+**Sitio:** https://tribai.co/declaracion
+
+### Funcionalidades anunciadas
+
+- Análisis de documentos.
+- OCR y extracción mediante IA.
+- Preparación del Formulario 210.
+- Exportación a PDF, Excel y CSV.
+- Generación de XML para DIAN.
+- Sugerencias de optimización.
+- Comparación de escenarios.
+- Consulta tributaria con recuperación de información y referencias normativas.
+- Análisis de riesgos de fiscalización.
+- Guardado de información tributaria en determinados planes.
+
+### Precios publicados
+
+- Plan gratuito: análisis limitado de documentos y vista parcial del F210.
+- Declaración PN: $79.900 COP.
+- Declaración Pro: $149.900 COP.
+
+Los planes y precios deben verificarse directamente antes de una comparación comercial final.
+
+### Limitación
+
+La generación de XML para DIAN no demuestra por sí sola que la plataforma pueda presentar automáticamente la declaración en MUISCA.
+
+### Valor para ALBRA
+
+Es un competidor adicional relevante porque combina preparación del F210, extracción documental, optimización y consultas de normativa.
+
+---
+
+## 2.7. Otros proveedores colombianos para investigar
+
+### Tributa Bien
+https://www.tributa.com.co/
+
+Referencia de servicios tributarios que combinan IA y asistencia humana. No se verificó un precio público comparable.
+
+### Finantic
+https://finantic.com.co/
+
+Referencia de soluciones financieras y contables.
+
+### Finark
+https://www.finark.net/
+
+Referencia para herramientas financieras y contables.
+
+### Siigo
+https://www.siigo.com/
+
+Plataforma de software contable y de gestión empresarial.
+
+### NETSOLIN
+https://www.netsolin.com/
+
+Proveedor de soluciones contables y tecnológicas.
+
+Estos proveedores no deben considerarse equivalentes directos de un agente contador personal sin verificar primero su cobertura de F210, sus funciones de IA y sus capacidades de presentación.
+
+---
+
+# 3. COMPARACIÓN DE LOS COMPETIDORES COLOMBIANOS
+
+| Producto | Mercado principal | F210 | Documentos y exógena | IA conversacional | Automatización MUISCA |
+|---|---|---|---|---|---|
+| Justi | Personas naturales | Sí | Sí, anunciado | Sí | La presentación anunciada requiere aclaración contractual |
+| Tributi/Clara | Personas naturales | Sí | Sí | Sí | Depende de la modalidad |
+| Taxon | Contadores | Sí | Sí | Asistencia y optimización | Extensión de escritura/verificación |
+| Contadia | Contadores | Sí | Sí | Automatización asistida | Anuncia presentación directa |
+| Counti | Contadores | Sí | Sí | Sí | No debe suponerse presentación automática |
+| TribAI | Personas naturales y profesionales | Sí | Sí | Sí | Genera XML; presentación no verificada |
+
+### Conclusión comercial
+
+Cada proveedor resuelve una parte del problema:
+
+- Justi: experiencia para el contribuyente.
+- Tributi/Clara: agente conversacional conectado a tecnología tributaria.
+- Taxon: motor de cálculo y automatización de navegador.
+- Contadia: gestión operativa de declaraciones.
+- Counti: estación de trabajo de IA para contadores.
+- TribAI: preparación documental, declaración y optimización.
+
+La oportunidad consiste en integrar esas capacidades en un sistema financiero y tributario permanente.
+
+---
+
+# 4. AUDITORÍA DE PROYECTOS DE GITHUB EN COLOMBIA
+
+## 4.1. open-renta
+
+**Repositorio:** https://github.com/Riskbreaker2077/open-renta  
+**README:** https://github.com/Riskbreaker2077/open-renta/blob/main/README.md  
+**Licencia:** https://github.com/Riskbreaker2077/open-renta/blob/main/LICENSE
+
+### Descripción
+
+Proyecto de código abierto orientado a preparar declaraciones de renta de personas naturales residentes en Colombia mediante el Formulario 210.
+
+### Funcionalidades documentadas
+
+- Procesamiento de información exógena.
+- Organización del expediente tributario.
+- Cálculo determinista en Python.
+- Memoria de cálculo trazable.
+- Generación de informes.
+- Réplica visual del F210.
+- Hoja de digitación.
+- Parámetros tributarios por año.
+- Validación de datos.
+- Optimización de beneficios tributarios.
+- Pruebas automatizadas.
+
+El README declara 56 pruebas sobre cinco casos de referencia y otras comprobaciones.
+
+### Arquitectura relevante
+
+El modelo de lenguaje no debe realizar las operaciones aritméticas fiscales. El código Python determinista realiza los cálculos; la IA puede asistir en la interpretación, recopilación y explicación.
+
+El proyecto declara que no solicita ni almacena credenciales DIAN y que no automatiza MUISCA.
+
+### Licencia
+
+MIT, verificada en el archivo LICENSE. En principio permite uso comercial, modificación y distribución bajo las condiciones de la licencia, incluyendo la conservación de los avisos correspondientes.
+
+### Riesgos pendientes
+
+- La existencia de pruebas no demuestra cobertura completa de todas las situaciones fiscales.
+- Los parámetros de cada año deben contrastarse con las normas y publicaciones oficiales.
+- Debe comprobarse la cobertura de casos complejos.
+- Hay que auditar las dependencias y las licencias transitivas.
+- Se deben ejecutar pruebas de paridad contra declaraciones revisadas por un contador.
+
+### Dictamen
+
+**Primer candidato para una auditoría técnica y fiscal profunda como posible base del motor F210 de ALBRA.**
+
+No debe integrarse directamente en producción sin pruebas independientes.
+
+---
+
+## 4.2. Finance Substrate — broomva/skills
+
+**Repositorio:** https://github.com/broomva/skills  
+**Skill:** https://github.com/broomva/skills/tree/main/skills/finance/finance-substrate  
+**Script de diligenciamiento:** https://github.com/broomva/skills/blob/main/skills/finance/finance-substrate/scripts/fill_form210.py  
+**Script de proyección:** https://github.com/broomva/skills/blob/main/skills/finance/finance-substrate/scripts/tax_projection.py  
+**Licencia del repositorio:** https://github.com/broomva/skills/blob/main/LICENSE
+
+### Descripción
+
+Proyecto más amplio que un liquidador. Intenta organizar información financiera personal y conectarla con la preparación tributaria.
+
+### Capacidades documentadas
+
+- Registro y organización de movimientos.
+- Gestión de documentos financieros.
+- Lectura de certificados.
+- Procesamiento de información DIAN.
+- Historial tributario.
+- Proyección de impuestos.
+- Generación de planes de diligenciamiento.
+- Automatización del navegador mediante herramientas externas.
+- Navegación por un asistente de MUISCA de 15 pasos.
+
+### Hallazgos de código
+
+El script `fill_form210.py` genera comandos para diligenciar casillas a partir de una proyección.
+
+Se encontraron riesgos que impiden recomendar su uso sin modificaciones:
+
+1. El código asigna automáticamente respuestas «No» a determinadas preguntas fiscales, como la residencia fiscal, la obligación de llevar contabilidad, la aplicación de convenios tributarios y una condición personal específica. Estas respuestas deben confirmarse explícitamente con el contribuyente.
+2. La casilla de deudas no está incorporada plenamente en la proyección examinada y aparece con valor predeterminado cero.
+3. El mapeo de campos no demuestra cobertura completa del formulario.
+4. La automatización utiliza un navegador autenticado y puede manejar sesiones sensibles.
+5. La cobertura real del flujo de firma y presentación requiere una auditoría adicional.
+
+### Licencia
+
+El repositorio padre declara licencia MIT. Antes de reutilizar componentes, deben revisarse sus dependencias y los avisos de licencia correspondientes.
+
+### Dictamen
+
+**Segundo candidato prioritario**, especialmente como inspiración para un agente contador con finanzas personales longitudinales.
+
+No debe copiarse su flujo de diligenciamiento sin eliminar las respuestas asumidas y ampliar la validación fiscal.
+
+---
+
+## 4.3. renta-facil
+
+**Repositorio:** https://github.com/emunozd/renta-facil
+
+### Descripción
+
+Bot de Telegram para guiar al contribuyente a través del Formulario 210.
+
+### Funcionalidades documentadas
+
+- Análisis de exógena.
+- Recopilación de documentos.
+- Extracción de datos mediante IA visual.
+- Preguntas sobre dependientes, vivienda, aportes y otras circunstancias.
+- Cálculos implementados en Python.
+- Uso de un modelo de lenguaje local y recuperación de información sobre documentos de la DIAN.
+- Generación de un borrador del Formulario 210 en Excel.
+
+### Arquitectura
+
+La IA ayuda a extraer datos, explicar y guiar. La lógica tributaria se implementa en código.
+
+### Riesgos
+
+- No se encontró un archivo LICENSE en la raíz del repositorio durante la revisión.
+- El README señala que el contribuyente debe verificar y presentar la declaración en el sistema oficial.
+- El proyecto documenta el uso de permisos amplios en determinadas instrucciones de instalación; deben revisarse antes de desplegarlo.
+- Solo contempla el año gravable configurado y requiere actualizar parámetros y documentos oficiales.
+
+### Dictamen
+
+Referencia útil para la entrevista conversacional y el procesamiento documental.
+
+**No reutilizar código comercialmente sin aclarar la licencia con el titular.**
+
+---
+
+## 4.4. renta-declaracion
+
+**Repositorio:** https://github.com/estebanduse-ai-data/renta-declaracion  
+**Estado del proyecto:** https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/ESTADO_ACTUAL.md  
+**Matriz de riesgos:** https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/docs/RIESGOS.md  
+**Plan de trabajo:** https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/docs/PLAN_DE_TRABAJO.md
+
+### Descripción
+
+Aplicación para administrar declarantes, capturar información tributaria, calcular liquidaciones y mantener resultados.
+
+### Componentes documentados
+
+- Backend FastAPI.
+- Frontend React.
+- PostgreSQL y migraciones.
+- Gestión de declarantes.
+- Wizard de captura de información.
+- Liquidación tributaria.
+- Persistencia de resultados.
+- Importación masiva de declarantes.
+- Panel de administración.
+- Parámetros tributarios separados por año.
+
+### Hallazgos
+
+La documentación del proyecto reconoce riesgos relacionados con:
+
+- Diferencias entre el nuevo sistema y el Excel contable existente.
+- Actualización de las normas fiscales.
+- Protección de NIT y datos patrimoniales.
+- Necesidad de probar copias de seguridad.
+- Riesgo de presentar declaraciones antes de demostrar paridad.
+
+### Licencia
+
+El README indica que la licencia formal está pendiente y que el código no se ofrece como software de libre reutilización comercial.
+
+### Dictamen
+
+Referencia de arquitectura para un sistema de gestión tributaria completo.
+
+**No reutilizar código sin autorización escrita del titular.** La existencia de un motor y una interfaz no demuestra que el proyecto esté listo para producción fiscal.
+
+---
+
+## 4.5. asesor-dian-claude
+
+**Repositorio:** https://github.com/juandiegoandres/asesor-dian-claude  
+**Licencia:** https://github.com/juandiegoandres/asesor-dian-claude/blob/main/LICENSE
+
+### Descripción
+
+Ayudante tributario colombiano diseñado para utilizarse con Claude Code.
+
+### Valor
+
+Puede servir como referencia para:
+
+- Instrucciones de un agente tributario.
+- Organización de herramientas.
+- Consultas sobre declaración de renta.
+- Interacción entre modelo y herramientas especializadas.
+
+### Licencia
+
+MIT reportada en el repositorio.
+
+### Dictamen
+
+Candidato secundario. Requiere revisar código, pruebas, actividad y cobertura fiscal antes de integrar componentes.
+
+---
+
+## 4.6. Declaracion-Renta-Automated
+
+**Repositorio:** https://github.com/nicolasdcubillos/Declaracion-Renta-Automated
+
+Proyecto relacionado con automatización de formularios tributarios colombianos, incluyendo F210, F160 y F490.
+
+La licencia MIT se reportó en la investigación inicial. Deben verificarse el estado actual del repositorio, la cobertura de pruebas y la licencia en la versión exacta que se pretenda utilizar.
+
+---
+
+## 4.7. calculadora-declaracion-renta
+
+**Repositorio:** https://github.com/jsowl044/calculadora-declaracion-renta
+
+Proyecto orientado a calcular el Formulario 210 fuera de línea, con importación de exógena y hojas de cálculo.
+
+Se reportó una licencia MIT y actividad reciente durante octubre de 2026, pero no se ha demostrado madurez productiva ni paridad fiscal independiente.
+
+---
+
+## 4.8. contaia-colombia
+
+**Repositorio:** https://github.com/Jhonnymgx115/contaia-colombia
+
+Asistente contable colombiano con funciones tributarias, exógena y calendario DIAN.
+
+Se reportó una licencia MIT, aunque debe revisarse el archivo LICENSE vigente, las dependencias y la cobertura del motor antes de utilizar código.
+
+---
+
+## 4.9. Matriz de decisión de repositorios colombianos
+
+| Proyecto | Principal aporte | Licencia / situación | Recomendación |
+|---|---|---|---|
+| open-renta | Motor F210 determinista | MIT verificada | Auditar primero |
+| Finance Substrate | Finanzas personales y automatización | MIT en el repositorio padre | Estudiar y corregir supuestos |
+| renta-facil | Bot conversacional y Excel | Sin licencia raíz verificada | No copiar sin permiso |
+| renta-declaracion | Aplicación de gestión y liquidación | Derechos reservados/licencia pendiente | No reutilizar sin permiso |
+| asesor-dian-claude | Instrucciones de agente | MIT reportada | Referencia secundaria |
+| Declaracion-Renta-Automated | Formularios tributarios | MIT reportada | Auditar antes de adoptar |
+| calculadora-declaracion-renta | Cálculo offline F210 | MIT reportada | Auditar antes de adoptar |
+| contaia-colombia | Asistente contable | MIT reportada | Auditar antes de adoptar |
+
+**Advertencia:** una licencia abierta no certifica exactitud tributaria, seguridad ni preparación para producción.
+
+---
+
+# 5. PROYECTOS INTERNACIONALES DE CÓDIGO ABIERTO
+
+Estos proyectos sirven como referencias arquitectónicas. No se deben trasladar reglas fiscales de Estados Unidos, Reino Unido, India, España, Australia o Brasil a Colombia.
+
+## 5.1. Terminal Tax MCP Server
+
+**Repositorio:** https://github.com/terminaltax/terminal-tax-mcp-server  
+**Licencia:** https://github.com/terminaltax/terminal-tax-mcp-server/blob/main/LICENSE
+
+Servidor MCP asociado a un servicio de preparación tributaria estadounidense.
+
+### Interés técnico
+
+- Interfaz MCP.
+- Separación entre el agente y el servicio tributario.
+- Flujo de revisión y aprobación.
+- Presentación mediante un proceso controlado.
+
+La licencia del servidor público es MIT. Esto no significa que el servicio completo, la plataforma de presentación ni su infraestructura sean de código abierto.
+
+**Uso recomendado:** estudiar su patrón de integración y aprobación, no su lógica tributaria como base de F210.
+
+---
+
+## 5.2. Taxfill MCP
+
+**Repositorio:** https://github.com/Ryanczj0306/taxfill-mcp
+
+Proyecto de preparación tributaria estadounidense con entrevista, cálculos deterministas y generación de documentos.
+
+**Uso recomendado:** estudiar el flujo de recolección de datos, cálculo y generación de formularios. La cobertura fiscal es estadounidense y no debe reutilizarse para calcular impuestos colombianos.
+
+---
+
+## 5.3. FreeTaxUSA MCP
+
+**Repositorio:** https://github.com/schwarztim/freetaxusa-mcp
+
+Proyecto orientado a automatizar tareas en FreeTaxUSA mediante navegador.
+
+### Riesgos
+
+- Manejo de sesión autenticada.
+- Dependencia de cambios en la interfaz web.
+- Necesidad de detenerse ante errores.
+- Varias funciones descritas en su documentación estaban en desarrollo.
+
+**Uso recomendado:** referencia para automatización de navegador, con revisión del código antes de adoptar cualquier patrón.
+
+---
+
+## 5.4. OpenTax
+
+**Sitio:** https://opentax.filed.com/
+
+Motor de preparación tributaria estadounidense.
+
+### Interés
+
+- Separación de reglas fiscales y datos.
+- Cálculo determinista.
+- Preparación estructurada de declaraciones.
+
+Se reporta licencia AGPL-3.0, por lo que debe revisarse su impacto antes de integrar código en un servicio comercial.
+
+---
+
+## 5.5. OpenAccountants
+
+**Repositorio:** https://github.com/openaccountants/openaccountants
+
+Proyecto de conocimiento contable y tributario estructurado, con guías y herramientas para agentes.
+
+### Interés
+
+- Base de conocimiento tributario.
+- Recuperación de información.
+- Fuentes y guías.
+- Herramientas para agentes.
+
+### Licencias
+
+El código se reporta bajo AGPL-3.0, pero las guías y el contenido pueden tener una licencia distinta que imponga restricciones comerciales.
+
+**No copiar su corpus tributario a un RAG comercial sin revisar y resolver las condiciones de licencia del contenido.**
+
+---
+
+## 5.6. OpenAccountant Skills
+
+**Repositorio:** https://github.com/openaccountant/skills
+
+Biblioteca de habilidades financieras y contables para agentes.
+
+Útil como referencia para organizar herramientas, pero se debe revisar la licencia de la versión y los archivos que se pretendan reutilizar.
+
+---
+
+## 5.7. India ITR Prep Skill
+
+**Repositorio:** https://github.com/NidheeshJain/itr-prep-skill
+
+Referencia de preparación tributaria mediante agente para India.
+
+---
+
+## 5.8. AU Tax Return
+
+**Repositorio:** https://github.com/kiwizznz/au-tax-return
+
+Referencia de flujo de preparación de declaraciones australianas.
+
+---
+
+## 5.9. Spain IRPF Helper
+
+**Repositorio:** https://github.com/antonioibars/irpf-declaration-helper
+
+Ayudante relacionado con el IRPF español.
+
+---
+
+## 5.10. Brazil MCP Fiscal
+
+**Repositorio:** https://github.com/DeHor-Labs/mcp-fiscal-brasil
+
+Proyecto orientado a herramientas fiscales de Brasil mediante MCP.
+
+---
+
+# 6. PRODUCTOS COMERCIALES INTERNACIONALES
+
+## Instead
+
+**Sitio:** https://www.instead.com/
+
+Producto de automatización tributaria estadounidense. Se presenta como una plataforma de agentes para preparación, investigación y operaciones fiscales.
+
+Precio localizado: desde US$30 por crédito, según la modalidad comercial publicada.
+
+**Valor para ALBRA:** referencia de arquitectura de agentes tributarios especializados.
+
+## Filed
+
+**Sitio:** https://www.filed.com/
+
+Plataforma tributaria para profesionales, centrada en automatizar preparación, extracción de datos y revisión.
+
+**Valor:** trazabilidad de datos, revisión profesional y conexión con flujos de trabajo existentes.
+
+## Black Ore
+
+**Sitio:** https://blackore.ai/
+
+Empresa de automatización de procesos tributarios mediante IA.
+
+**Valor:** estudiar la automatización de tareas de alto volumen y la supervisión profesional.
+
+## TaxGPT
+
+**Sitio:** https://www.taxgpt.com/
+
+Herramientas de IA para profesionales fiscales, incluyendo consulta normativa y flujos de preparación.
+
+**Valor:** investigación tributaria asistida y soporte a profesionales.
+
+## Dezu
+
+**Sitio:** https://www.dezu.ai/
+
+Producto del mercado internacional de automatización tributaria.
+
+## UpTax
+
+**Sitio:** https://uptax.ai/
+
+Referencia internacional para herramientas tributarias digitales.
+
+## E2E Compliance
+
+**Sitio:** https://e2ecomply.com/
+
+Referencia del mercado británico de cumplimiento tributario.
+
+## TaxGo
+
+**Sitio:** https://taxgo.uk/pricing
+
+Producto británico de preparación tributaria. Precio localizado: £79 en una modalidad publicada y £149 con revisión completa; debe confirmarse la oferta vigente.
+
+## Valarix
+
+**Sitio:** https://valarix.com/
+
+Referencia del mercado mexicano.
+
+## Avalara
+
+**Sitio:** https://www.avalara.com/
+
+Plataforma internacional de automatización de impuestos y cumplimiento fiscal, especialmente relevante para empresas.
+
+## Fonoa
+
+**Sitio:** https://www.fonoa.com/
+
+Plataforma internacional de automatización fiscal, cumplimiento y procesos relacionados con impuestos indirectos.
+
+Estos productos son referencias de mercado, no equivalentes directos de una declaración colombiana de persona natural.
+
+---
+
+# 7. OTROS REPOSITORIOS FINANCIEROS Y CONTABLES INTERNACIONALES
+
+Los siguientes repositorios pueden servir para investigar patrones de arquitectura, herramientas, controles y organización de agentes. Su inclusión no significa que todos se hayan auditado línea por línea.
+
+- Cynco MCP: https://github.com/cynco-labs/cynco-mcp
+- AI Accounting Skills: https://github.com/cynco-labs/ai-accounting-skills
+- Klaudia: https://github.com/Yudhyy/Klaudia
+- Norman MCP Server: https://github.com/norman-finance/norman-mcp-server
+- Jaz: https://github.com/teamtinvio/jaz-ai
+- FinGuard: https://github.com/WilliamAlexanderWilson/Finguard
+- Awesome Finance Agents: https://github.com/aowang-ai/awesome-finance-agents
+- FoundrySoft Agent for Accounting: https://github.com/FoundrySoftHQ/agent-for-accounting
+- Franken Accounting: https://github.com/Dicklesworthstone/franken_accounting
+- FinOps MCP Server: https://github.com/Chezhira/finops-mcp-server
+- Osome Skills: https://github.com/OsomePteLtd/skills
+
+### Patrones técnicos que conviene estudiar
+
+- No delegar aritmética fiscal al modelo de lenguaje.
+- Representar dinero con tipos y reglas de redondeo controlados.
+- Mantener libros y registros auditables.
+- Usar herramientas específicas para operaciones contables.
+- Exigir aprobación para operaciones sensibles.
+- Separar consulta normativa, cálculo y ejecución.
+- Mantener evidencia de cada modificación.
+
+---
+
+# 8. JVZOO: RESULTADO DE LA INVESTIGACIÓN
+
+**Sitio:** https://www.jvzoo.com/
+
+Se realizaron búsquedas públicas relacionadas con:
+
+- AI tax agent.
+- AI accountant.
+- Tax preparation software.
+- Tax return automation.
+- Declaración de renta.
+- Asistente contable con IA.
+
+No se confirmó un producto de JVZoo que compita directamente con un agente contador para personas naturales colombianas y el Formulario 210.
+
+Este resultado significa que no se encontró un competidor directo verificable en las búsquedas realizadas. No permite asegurar que no existan productos en ofertas privadas, páginas no indexadas o promociones temporales.
+
+No se asignan nombres, precios o capacidades a productos de JVZoo que no pudieron verificarse.
+
+---
+
+# 9. FUENTES OFICIALES DE LA DIAN
+
+Estas fuentes deben ser la base de cualquier motor tributario colombiano.
+
+## Micrositio de renta para personas naturales
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/
+
+## Cómo hacer la declaración
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/como-hacer-su-declaracion/
+
+## Preparación de la declaración
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/preparese-para-la-declaracion/
+
+## Formulario 210
+
+https://muisca.dian.gov.co/WebDilIngresoFormRenta210/
+
+https://muisca.dian.gov.co/WebFormRenta210v16/
+
+## Trámites tributarios
+
+https://www.dian.gov.co/tramitesservicios/tramites-y-servicios/tributarios/Paginas/tramites-tributarios.aspx
+
+## Normograma DIAN — Resolución 227 de 2025
+
+https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0227_2025.htm
+
+### Principios importantes
+
+1. Los datos precargados por la DIAN deben verificarse.
+2. La responsabilidad de la declaración recae en el contribuyente.
+3. Un borrador no equivale a una declaración presentada.
+4. La firma y presentación deben tratarse como acciones separadas.
+5. El comprobante de presentación es la evidencia que permite verificar que el proceso terminó.
+
+No se encontró evidencia suficiente de una API pública oficial de terceros que permita presentar automáticamente declaraciones personales F210. ALBRA no debe diseñarse suponiendo que existe esa API hasta confirmarlo directamente con la DIAN.
+
+---
+
+# 10. COMPARACIÓN ARQUITECTÓNICA
+
+| Componente | Referencia prioritaria | Decisión |
+|---|---|---|
+| Motor determinista F210 | open-renta | Auditar y evaluar reutilización |
+| Contabilidad personal longitudinal | Finance Substrate | Estudiar modelo de datos y fuentes |
+| Entrevista conversacional | Tributi/Clara y Justi | Diseñar preguntas adaptativas |
+| Gestión de clientes | Contadia y renta-declaracion | Estudiar flujos y expedientes |
+| Automatización de navegador | Taxon y Finance Substrate | Adoptar patrones seguros |
+| Consulta normativa | Counti y OpenAccountants | Construir conocimiento con fuentes oficiales y licencias claras |
+| Aprobación de presentación | Terminal Tax y Taxfill | Separar preparación y autorización |
+| Seguridad y trazabilidad | Patrones de contabilidad auditable | Aplicar controles de ALBRA y Hands |
+
+---
+
+# 11. ARQUITECTURA PROPUESTA PARA EL AGENTE CONTADOR ALBRA
+
+## 11.1. Agente contador central
+
+Responsabilidades:
+
+- Conversar con el contribuyente.
+- Organizar las tareas.
+- Identificar información faltante.
+- Solicitar documentos.
+- Delegar operaciones a herramientas especializadas.
+- Explicar resultados.
+- Pedir confirmaciones.
+- Mantener el estado del expediente.
+
+El agente central no debe realizar directamente los cálculos tributarios complejos ni decidir valores desconocidos.
+
+## 11.2. Módulo de ingestión documental
+
+Debe procesar:
+
+- Certificados laborales.
+- Certificados bancarios.
+- Información exógena.
+- Facturas electrónicas.
+- Extractos.
+- Certificados de retención.
+- Información patrimonial.
+- Documentos de deudas.
+- Declaraciones anteriores.
+- Otros documentos pertinentes.
+
+Cada cifra extraída debe mantener una referencia al documento original y permitir corrección manual.
+
+## 11.3. Expediente financiero permanente
+
+Debe mantener:
+
+- Ingresos.
+- Gastos.
+- Activos.
+- Pasivos.
+- Movimientos.
+- Retenciones.
+- Certificados.
+- Patrimonio.
+- Historial tributario.
+- Fuentes de cada dato.
+- Cambios realizados por el usuario.
+
+Esta capa convierte al producto en un agente contador permanente, no en una aplicación que se utiliza únicamente durante la temporada de declaraciones.
+
+## 11.4. Motor tributario determinista
+
+Debe gestionar:
+
+- Reglas fiscales versionadas por año.
+- Parámetros oficiales.
+- Fórmulas por casilla.
+- Límites y topes.
+- Reglas de redondeo.
+- Validaciones.
+- Casos no soportados.
+- Memoria de cálculo.
+- Referencias normativas.
+
+La misma entrada, con la misma versión de reglas, debe producir el mismo resultado.
+
+## 11.5. Optimizador tributario
+
+Debe evaluar beneficios legales y comparar escenarios.
+
+Ejemplos:
+
+- Dependientes.
+- Deducciones.
+- Rentas exentas.
+- Aportes AFC.
+- Pensiones voluntarias.
+- Intereses de vivienda.
+- Beneficios por facturación electrónica.
+- Otros beneficios aplicables según el caso y la normativa vigente.
+
+El optimizador debe distinguir entre un beneficio posible y uno realmente elegible. No debe inventar gastos, dependientes ni condiciones personales.
+
+## 11.6. Auditor de riesgos
+
+Debe detectar:
+
+- Diferencias entre certificados y exógena.
+- Inconsistencias patrimoniales.
+- Valores duplicados.
+- Ingresos sin soporte.
+- Retenciones que no cuadran.
+- Datos faltantes.
+- Reglas normativas desactualizadas.
+- Casos fuera de cobertura.
+- Errores de diligenciamiento.
+
+## 11.7. Hands / automatización de navegador
+
+Hands debe actuar como ejecutor especializado.
+
+Responsabilidades:
+
+- Observar la página.
+- Identificar campos.
+- Escribir valores autorizados.
+- Leer nuevamente los campos.
+- Comparar lo escrito con lo esperado.
+- Guardar evidencia.
+- Detenerse ante cambios inesperados.
+- Solicitar autorización para acciones sensibles.
+
+Hands no debe calcular impuestos ni decidir por sí mismo las respuestas tributarias.
+
+---
+
+# 12. ESTADOS OBLIGATORIOS DE UNA DECLARACIÓN
+
+ALBRA debe distinguir claramente los siguientes estados:
+
+1. **Incompleta:** faltan datos o documentos.
+2. **Preparada:** se ha generado un borrador.
+3. **Validada:** los cálculos y comprobaciones han pasado.
+4. **Aprobada:** el contribuyente ha revisado y autorizado el resultado.
+5. **Diligenciada:** los valores se han escrito en MUISCA.
+6. **Firmada y presentada:** existe evidencia verificable de que se completó el proceso oficial.
+7. **Comprobante archivado:** se conserva el recibo oficial y se asocia al expediente.
+
+Regla innegociable:
+
+**Diligenciar no significa presentar. Guardar no significa firmar. Una respuesta del agente no sustituye el comprobante oficial.**
+
+---
+
+# 13. RIESGOS LEGALES, FISCALES Y DE SEGURIDAD
+
+## Datos personales
+
+Los documentos tributarios pueden revelar ingresos, patrimonio, cuentas bancarias, dependientes y otra información privada.
+
+ALBRA debe definir:
+
+- Cifrado.
+- Control de acceso.
+- Retención y borrado.
+- Gestión de incidentes.
+- Tratamiento de datos personales.
+- Protección de credenciales.
+- Aislamiento de sesiones autenticadas.
+- Auditoría de accesos.
+
+## Licencias
+
+MIT permite generalmente uso comercial bajo sus condiciones.
+
+AGPL puede imponer obligaciones relevantes cuando el software se distribuye o se ofrece como servicio de red.
+
+Un repositorio sin licencia explícita no debe considerarse de libre reutilización comercial.
+
+Las licencias del código pueden diferir de las de los documentos, corpus y guías incluidos en el proyecto.
+
+## Exactitud tributaria
+
+Antes de presentar declaraciones reales se necesita:
+
+- Pruebas con casos sintéticos.
+- Casos revisados por contadores.
+- Pruebas de paridad.
+- Casos límite.
+- Validación de cada año gravable.
+- Revisión de las normas oficiales.
+- Auditoría de los parámetros y dependencias.
+- Pruebas de recuperación ante fallos.
+
+---
+
+# 14. PLAN DE EJECUCIÓN RECOMENDADO
+
+## Fase 1. Definir alcance
+
+Comenzar con personas naturales residentes y los casos del F210 que se puedan soportar y probar adecuadamente.
+
+Documentar expresamente las exclusiones y los casos que requieren un profesional.
+
+## Fase 2. Auditar open-renta
+
+- Descargar una versión concreta.
+- Registrar commit y dependencias.
+- Ejecutar las pruebas.
+- Auditar fórmulas.
+- Contrastar parámetros oficiales.
+- Probar casos adicionales.
+- Revisar licencias.
+- Comparar resultados contra casos revisados por un contador.
+
+## Fase 3. Diseñar el expediente financiero
+
+Crear el modelo de datos de documentos, movimientos, ingresos, activos, pasivos, retenciones y fuentes.
+
+## Fase 4. Construir el motor fiscal
+
+Separar las reglas del modelo de lenguaje, versionar la normativa y exigir trazabilidad por casilla.
+
+## Fase 5. Construir el agente conversacional
+
+Hacer que el agente solicite únicamente información faltante y nunca asuma valores desconocidos.
+
+## Fase 6. Integrar Hands
+
+Implementar navegación controlada, verificación de valores, permisos mínimos, registro de evidencia y autorización para acciones sensibles.
+
+## Fase 7. Ejecutar un piloto controlado
+
+Usar datos sintéticos o anonimizados, probar casos límite y medir exactitud antes de habilitar el uso con declaraciones reales.
+
+---
+
+# 15. DECISIÓN FINAL
+
+## Candidatos prioritarios
+
+**1. open-renta**
+
+Primera opción para una auditoría del motor tributario. Tiene una licencia MIT verificada y un diseño explícito de cálculo determinista y trazable.
+
+**2. Finance Substrate**
+
+Primera referencia para estudiar un agente contador personal que conecte finanzas permanentes y declaración de renta. Deben corregirse las respuestas asumidas y auditarse la automatización de navegador.
+
+**3. Tributi/Clara**
+
+Referencia comercial para conversación, recolección de datos y separación entre agente y tecnología tributaria.
+
+**4. Taxon**
+
+Referencia para la automatización de MUISCA mediante navegador y verificación de campos.
+
+**5. Contadia**
+
+Referencia para expedientes, gestión de múltiples declarantes y flujo operativo de contadores.
+
+**6. Counti y TribAI**
+
+Referencias adicionales para herramientas de IA contable, extracción documental, consultas tributarias y preparación del F210.
+
+## Proyectos que requieren autorización
+
+No reutilizar comercialmente el código de renta-declaracion ni el contenido de proyectos con licencias restrictivas sin obtener la autorización correspondiente.
+
+No asumir que renta-facil puede copiarse comercialmente porque su código sea público.
+
+## Veredicto
+
+La recomendación es desarrollar un **Agente Contador Digital ALBRA** con cuatro pilares:
+
+1. Contabilidad personal permanente.
+2. Motor tributario colombiano determinista y auditable.
+3. Agente de IA para entrevista, extracción, explicación y coordinación.
+4. Hands para asistencia controlada en el navegador y el flujo de MUISCA.
+
+La estrategia no debe ser construir una multitud de agentes que calculen por separado. Debe existir un agente central que coordine herramientas especializadas, con una única fuente de verdad financiera, reglas fiscales verificables y controles explícitos para cada operación sensible.
+
+La investigación identifica referencias suficientes para comenzar el diseño técnico. No demuestra que alguno de los proyectos esté listo para integrarse en producción sin una auditoría adicional.
+
+**Próximo paso recomendado:** realizar una auditoría técnica reproducible de `open-renta` y compararlo con casos tributarios de referencia. Solo después de validar el motor debe comenzar la integración con el expediente financiero permanente y las manos de navegador de ALBRA.
+
+---
+
+# 16. ÍNDICE GENERAL DE ENLACES
+
+## Competidores colombianos
+
+- Justi: https://justitax.com/
+- Justi — precios: https://justitax.com/pricing
+- Tributi: https://www.tributi.com/
+- Tributi Clara MCP: https://mcp.tributi.com/mcp
+- Taxon: https://taxon.co/
+- Contadia: https://www.contadia.com/
+- Counti: https://counti.co/
+- TribAI: https://tribai.co/declaracion
+- Tributa Bien: https://www.tributa.com.co/
+- Finantic: https://finantic.com.co/
+- Finark: https://www.finark.net/
+- Siigo: https://www.siigo.com/
+- NETSOLIN: https://www.netsolin.com/
+
+## GitHub — Colombia
+
+- open-renta: https://github.com/Riskbreaker2077/open-renta
+- Finance Substrate: https://github.com/broomva/skills/tree/main/skills/finance/finance-substrate
+- renta-facil: https://github.com/emunozd/renta-facil
+- renta-declaracion: https://github.com/estebanduse-ai-data/renta-declaracion
+- asesor-dian-claude: https://github.com/juandiegoandres/asesor-dian-claude
+- Declaracion-Renta-Automated: https://github.com/nicolasdcubillos/Declaracion-Renta-Automated
+- calculadora-declaracion-renta: https://github.com/jsowl044/calculadora-declaracion-renta
+- contaia-colombia: https://github.com/Jhonnymgx115/contaia-colombia
+
+## GitHub — Internacional
+
+- Terminal Tax MCP: https://github.com/terminaltax/terminal-tax-mcp-server
+- Taxfill MCP: https://github.com/Ryanczj0306/taxfill-mcp
+- FreeTaxUSA MCP: https://github.com/schwarztim/freetaxusa-mcp
+- OpenAccountants: https://github.com/openaccountants/openaccountants
+- OpenAccountant Skills: https://github.com/openaccountant/skills
+- India ITR Prep Skill: https://github.com/NidheeshJain/itr-prep-skill
+- AU Tax Return: https://github.com/kiwizznz/au-tax-return
+- Spain IRPF Helper: https://github.com/antonioibars/irpf-declaration-helper
+- Brazil MCP Fiscal: https://github.com/DeHor-Labs/mcp-fiscal-brasil
+- Cynco MCP: https://github.com/cynco-labs/cynco-mcp
+- AI Accounting Skills: https://github.com/cynco-labs/ai-accounting-skills
+- Klaudia: https://github.com/Yudhyy/Klaudia
+- Norman MCP Server: https://github.com/norman-finance/norman-mcp-server
+- Jaz: https://github.com/teamtinvio/jaz-ai
+- FinGuard: https://github.com/WilliamAlexanderWilson/Finguard
+- Awesome Finance Agents: https://github.com/aowang-ai/awesome-finance-agents
+- FoundrySoft Agent for Accounting: https://github.com/FoundrySoftHQ/agent-for-accounting
+- Franken Accounting: https://github.com/Dicklesworthstone/franken_accounting
+- FinOps MCP Server: https://github.com/Chezhira/finops-mcp-server
+- Osome Skills: https://github.com/OsomePteLtd/skills
+
+## Productos internacionales
+
+- Instead: https://www.instead.com/
+- Filed: https://www.filed.com/
+- Black Ore: https://blackore.ai/
+- TaxGPT: https://www.taxgpt.com/
+- Dezu: https://www.dezu.ai/
+- UpTax: https://uptax.ai/
+- E2E Compliance: https://e2ecomply.com/
+- TaxGo: https://taxgo.uk/pricing
+- Valarix: https://valarix.com/
+- Avalara: https://www.avalara.com/
+- Fonoa: https://www.fonoa.com/
+- OpenTax: https://opentax.filed.com/
+
+## Fuentes oficiales
+
+- DIAN — renta personas naturales: https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/
+- DIAN — cómo hacer la declaración: https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/como-hacer-su-declaracion/
+- DIAN — preparación: https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/preparese-para-la-declaracion/
+- Formulario 210: https://muisca.dian.gov.co/WebDilIngresoFormRenta210/
+- Formulario 210 v16: https://muisca.dian.gov.co/WebFormRenta210v16/
+- Normograma DIAN: https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0227_2025.htm
+- Trámites tributarios: https://www.dian.gov.co/tramitesservicios/tramites-y-servicios/tributarios/Paginas/tramites-tributarios.aspx
+
+## Marketplace
+
+- JVZoo: https://www.jvzoo.com/
+
+**Fin del informe.**

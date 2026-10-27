@@ -1,0 +1,789 @@
+# PROMPT MAESTRO PARA EL CONSTRUCTOR
+# CONTADOR PÚBLICO ALBRA
+## Creación de un arnés contable especializado para AGENTE-GENERAL mediante CloneaKit
+
+---
+
+# 1. MISIÓN PRINCIPAL
+
+Vamos a crear **CONTADOR PÚBLICO ALBRA**, un agente especializado en contaduría pública, tributación y cumplimiento fiscal colombiano, utilizando como base central el siguiente proyecto:
+
+**Repositorio base:**
+https://github.com/ALBRA8/AGENTE-GENERAL.git
+
+**Herramienta de ingeniería y análisis de referentes:** CloneaKit.
+
+El objetivo NO es construir un software contable tradicional.
+
+Tampoco queremos crear otro agente autónomo que duplique las capacidades de AGENTE-GENERAL.
+
+Lo que vamos a construir es un **ARNÉS O CHALECO DE ESPECIALIZACIÓN CONTABLE** que AGENTE-GENERAL pueda ponerse cuando necesite desempeñar funciones de contador público.
+
+La metáfora arquitectónica es obligatoria:
+
+- **AGENTE-GENERAL es el cuerpo central:** conserva su identidad, su arquitectura cognitiva, sus capacidades generales, su memoria, sus guardrails, su observabilidad y sus mecanismos de orquestación existentes.
+- **CONTADOR PÚBLICO ALBRA es el chaleco especializado:** incorpora el conocimiento, las herramientas, los procedimientos, las reglas, los contratos y las capacidades necesarias para resolver tareas contables y tributarias.
+- **CloneaKit es una herramienta de ingeniería:** debe ayudarnos a estudiar referentes, identificar patrones útiles y mejorar nuestra implementación sin convertir el proyecto en una colección desordenada de copias.
+- **Los motores de cálculo, validadores, conectores y herramientas especializadas son componentes del chaleco:** no deben confundirse con la identidad del agente.
+
+El resultado debe permitir que AGENTE-GENERAL active la especialización contable cuando corresponda, ejecute los procedimientos necesarios, utilice herramientas verificables y entregue resultados fundamentados.
+
+La especialización debe ser modular, reutilizable, comprobable y preparada para evolucionar.
+
+---
+
+# 2. REGLAS ARQUITECTÓNICAS INNEGOCIABLES
+
+## 2.1. No modificar innecesariamente AGENTE-GENERAL
+
+Antes de desarrollar, inspecciona el repositorio real de AGENTE-GENERAL y determina cómo se incorporan actualmente sus capacidades, herramientas, skills, conectores, instrucciones, contratos y especializaciones.
+
+No supongas que su arquitectura es igual a la descrita en este prompt. La implementación real del repositorio es la fuente de verdad.
+
+Debes preservar:
+
+- La identidad y el propósito de AGENTE-GENERAL.
+- Su arquitectura central y sus mecanismos de orquestación.
+- Su gestión de memoria y contexto.
+- Sus guardrails, permisos y controles de seguridad.
+- Su observabilidad, trazabilidad y manejo de errores.
+- Sus conectores y capacidades existentes.
+- La compatibilidad con los proyectos que ya dependan de él.
+
+No reescribas el núcleo para adaptarlo a la contabilidad.
+
+No introduzcas dependencias contables dentro del núcleo general cuando puedan vivir en el arnés.
+
+No dupliques el agente central.
+
+No fusiones indiscriminadamente el código del chaleco con el repositorio base.
+
+La integración deberá realizarse mediante el mecanismo real que resulte más compatible con AGENTE-GENERAL: skill, capability, módulo, adaptador, contrato, herramienta, servicio u otra interfaz demostrada por el repositorio.
+
+**Regla fundamental:** la especialización debe poder incorporarse, actualizarse, probarse y retirarse sin destruir ni alterar innecesariamente el agente central.
+
+Si la arquitectura actual no permite una integración limpia, documenta la limitación y desarrolla el adaptador mínimo justificable. No hagas una refactorización general como consecuencia automática.
+
+## 2.2. El producto es un agente, no un programa de contabilidad
+
+No conviertas este proyecto en un ERP, un sistema de facturación, un libro diario tradicional, un programa de nómina o una aplicación de formularios contables.
+
+La interfaz principal es el agente conversacional y su capacidad de razonar, investigar, recopilar información, utilizar herramientas, ejecutar procedimientos y explicar resultados.
+
+Eso no significa que debamos evitar motores deterministas, bases de datos, interfaces auxiliares o calculadoras. Estos componentes son válidos cuando sirven al agente y no sustituyen su función.
+
+La arquitectura debe responder a esta pregunta:
+
+**¿Qué necesita AGENTE-GENERAL para actuar competentemente como un especialista en contaduría pública colombiana?**
+
+Cada componente deberá justificar su existencia por la respuesta a esa pregunta.
+
+## 2.3. El arnés debe ser agnóstico y reutilizable
+
+Diseña la especialización para que sus capacidades no queden innecesariamente atadas a un único proveedor de modelos de lenguaje.
+
+Siempre que la arquitectura y las capacidades reales lo permitan, separa:
+
+- Instrucciones y conocimiento especializado.
+- Herramientas y motores de cálculo.
+- Contratos de entrada y salida.
+- Adaptadores para modelos o agentes.
+- Integraciones externas.
+- Gestión de permisos.
+- Evidencias y auditoría.
+
+AGENTE-GENERAL será el primer agente anfitrión. No conviertas esta primera integración en una dependencia que impida adaptar el chaleco a otros agentes compatibles en el futuro.
+
+No desarrolles adaptadores hipotéticos sin necesidad. Implementa primero el camino real y comprobable.
+
+---
+
+# 3. OBJETIVO PROFESIONAL DEL AGENTE
+
+CONTADOR PÚBLICO ALBRA debe convertirse en una especialización capaz de asistir a personas naturales y, en fases posteriores, a empresas en tareas de contabilidad, análisis financiero, impuestos y cumplimiento normativo colombiano.
+
+La prioridad inicial es **Colombia y las personas naturales**, con énfasis en el impuesto sobre la renta y complementarios, el Formulario 210 y los procedimientos relacionados con la DIAN.
+
+El proyecto debe tener una arquitectura que permita ampliar posteriormente su alcance sin tener que reconstruirlo desde cero.
+
+## Capacidades objetivo
+
+1. Comprender la situación económica, patrimonial y tributaria del usuario.
+2. Formular preguntas para identificar información faltante.
+3. Recopilar y organizar documentos financieros y tributarios.
+4. Extraer información de certificados, extractos, comprobantes, documentos PDF, hojas de cálculo y archivos compatibles.
+5. Identificar ingresos, costos, gastos, patrimonio, deudas, retenciones y demás conceptos relevantes.
+6. Contrastar la información con fuentes oficiales y normativa aplicable.
+7. Calcular obligaciones tributarias mediante motores deterministas y reglas versionadas.
+8. Identificar beneficios tributarios potencialmente aplicables y verificar sus requisitos.
+9. Detectar inconsistencias, omisiones, duplicidades y riesgos.
+10. Explicar los cálculos y las decisiones de manera comprensible.
+11. Preparar borradores, reportes, soportes y datos estructurados.
+12. Asistir al usuario en los procedimientos de presentación oficial cuando exista un mecanismo autorizado y técnicamente verificable.
+13. Mantener trazabilidad entre cada conclusión, los documentos de origen, la regla aplicada y el cálculo correspondiente.
+14. Registrar las decisiones, aprobaciones y acciones relevantes.
+15. Reconocer cuándo necesita más información o revisión de un profesional humano.
+
+El agente no debe limitarse a responder preguntas tributarias. Debe poder acompañar un procedimiento completo, desde la recopilación de información hasta la preparación, validación y documentación del resultado.
+
+---
+
+# 4. UTILIZACIÓN OBLIGATORIA DE CLONEAKIT
+
+Antes de programar funcionalidades nuevas, estudia cómo funciona realmente CloneaKit en el entorno disponible.
+
+Determina sus capacidades, límites, métodos de análisis, mecanismos de extracción de patrones y posibilidades de trabajar con repositorios. No inventes funciones ni supongas integraciones que no hayas comprobado.
+
+Utilízalo para desarrollar un proceso de ingeniería basado en referentes.
+
+## Fase A. Investigación de referentes
+
+Examina los proyectos y productos relevantes identificados en este prompt, junto con los nuevos referentes que encuentres durante la investigación.
+
+No te limites a leer sus páginas comerciales o README. Cuando tengas acceso legítimo al código, inspecciona los componentes relevantes, sus pruebas, dependencias, licencias, limitaciones y estado de mantenimiento.
+
+Busca especialmente:
+
+- Motores de cálculo tributario.
+- Modelos de datos fiscales.
+- Procesamiento de información exógena.
+- Extracción documental.
+- Validación de declaraciones.
+- Reglas tributarias versionadas.
+- Sistemas de evidencias y trazabilidad.
+- Herramientas de investigación normativa.
+- Flujos de agentes especializados.
+- Integración con navegadores y formularios.
+- Controles de seguridad y tratamiento de información financiera.
+
+## Fase B. Ingeniería inversa funcional
+
+Para cada referente relevante, identifica:
+
+1. Qué problema resuelve.
+2. Qué capacidades tiene implementadas realmente.
+3. Qué arquitectura utiliza.
+4. Qué componentes pueden servir como referencia.
+5. Qué limitaciones presenta.
+6. Qué errores, riesgos o supuestos contiene.
+7. Qué pruebas aporta.
+8. Qué licencia se aplica al código, documentación, modelos y demás activos.
+9. Qué conviene adoptar conceptualmente.
+10. Qué conviene implementar de otra manera.
+11. Qué no debemos incorporar.
+
+No confundas una funcionalidad anunciada con una funcionalidad verificada.
+
+No confundas un prototipo funcional con un sistema apto para operar con información tributaria real.
+
+## Fase C. Matriz de aprovechamiento
+
+Produce una matriz que contenga:
+
+| Campo | Contenido requerido |
+|---|---|
+| Referente | Proyecto, repositorio o producto |
+| Capacidad | Función que aporta |
+| Evidencia | Código, pruebas, documentación o demostración |
+| Valor para ALBRA | Beneficio concreto |
+| Riesgos | Limitaciones y vulnerabilidades |
+| Licencia | Condiciones de reutilización verificadas |
+| Decisión | Adoptar, adaptar, inspirarse o descartar |
+| Destino | Componente específico del arnés |
+| Validación | Prueba que demostrará su funcionamiento |
+
+La matriz debe evitar que se integren componentes por moda, popularidad o semejanza superficial.
+
+## Fase D. Construcción original
+
+Utiliza las conclusiones de CloneaKit para diseñar una solución coherente con la arquitectura ALBRA.
+
+No copies repositorios completos ni acumules fragmentos incompatibles.
+
+Prioriza la reutilización legal y técnicamente segura, pero permite implementar soluciones originales cuando sean más adecuadas.
+
+**No inicies una integración masiva hasta haber identificado qué aporta cada componente y cómo se comprobará su calidad.**
+
+La investigación debe producir decisiones de ingeniería, no convertirse en una fase indefinida que impida construir.
+
+---
+
+# 5. REFERENTES INICIALES QUE DEBES EXAMINAR
+
+Esta lista constituye un punto de partida, no una lista cerrada ni una orden de integrar todos los proyectos.
+
+## 5.1. Referentes colombianos y tributarios
+
+### A. Open Renta
+
+https://github.com/Riskbreaker2077/open-renta
+
+Inspecciona su motor determinista de cálculo del Formulario 210, tratamiento de información exógena, validaciones, estructura de casos, reportes y pruebas.
+
+Determina qué patrones pueden servir como base conceptual para un motor tributario verificable.
+
+Comprueba las reglas correspondientes al año gravable aplicable. No asumas que una plantilla, parámetro o cálculo está actualizado por el simple hecho de estar en el repositorio.
+
+### B. Finance Substrate
+
+https://github.com/broomva/skills/tree/main/skills/finance/finance-substrate
+
+Código de referencia:
+
+https://github.com/broomva/skills/blob/main/skills/finance/finance-substrate/scripts/fill_form210.py
+
+https://github.com/broomva/skills/blob/main/skills/finance/finance-substrate/scripts/tax_projection.py
+
+Estudia su organización de información financiera, certificados, datos tributarios, proyecciones y automatización del Formulario 210.
+
+Revisa especialmente cualquier respuesta predeterminada que pueda atribuir hechos tributarios al usuario sin confirmación. Una respuesta desconocida nunca debe convertirse automáticamente en un “No”, un cero o una declaración afirmativa.
+
+Inspecciona también la gestión de sesiones del navegador y la exposición de información sensible.
+
+### C. Renta Fácil
+
+https://github.com/emunozd/renta-facil
+
+Examina el uso de asistentes conversacionales, procesamiento documental, recuperación de información, cálculos tributarios y preparación de borradores.
+
+Verifica la licencia antes de reutilizar código.
+
+### D. Renta Declaración
+
+https://github.com/estebanduse-ai-data/renta-declaracion
+
+Documentación adicional:
+
+https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/ESTADO_ACTUAL.md
+
+https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/docs/RIESGOS.md
+
+https://github.com/estebanduse-ai-data/renta-declaracion/blob/main/docs/PLAN_DE_TRABAJO.md
+
+Examina sus modelos de datos, flujos de usuario, validaciones, importación de información y estado de implementación.
+
+No reutilices código si sus condiciones de licencia no autorizan esa reutilización.
+
+### E. Otros proyectos tributarios colombianos
+
+- Asesor DIAN Claude: https://github.com/juandiegoandres/asesor-dian-claude
+- Declaración de renta automatizada: https://github.com/nicolasdcubillos/Declaracion-Renta-Automated
+- Calculadora de declaración de renta: https://github.com/jsowl044/calculadora-declaracion-renta
+- Contaia Colombia: https://github.com/Jhonnymgx115/contaia-colombia
+
+Evalúa su utilidad real para el objetivo del arnés. No es necesario integrar todos.
+
+## 5.2. Referentes de agentes financieros y contables
+
+- OpenAccountants: https://github.com/openaccountants/openaccountants
+- OpenAccountant Skills: https://github.com/openaccountant/skills
+- Cynco MCP: https://github.com/cynco-labs/cynco-mcp
+- AI Accounting Skills: https://github.com/cynco-labs/ai-accounting-skills
+- FoundrySoft Agent for Accounting: https://github.com/FoundrySoftHQ/agent-for-accounting
+- Awesome Finance Agents: https://github.com/aowang-ai/awesome-finance-agents
+- Terminal Tax MCP: https://github.com/terminaltax/terminal-tax-mcp-server
+- Taxfill MCP: https://github.com/Ryanczj0306/taxfill-mcp
+
+Analiza sus patrones de herramientas, división de responsabilidades, contratos, agentes especializados y automatización.
+
+Los proyectos internacionales pueden servir como referencias arquitectónicas, pero sus reglas fiscales no deben trasladarse a Colombia.
+
+## 5.3. Referentes comerciales para análisis funcional
+
+- Justi: https://justitax.com/
+- Tributi: https://www.tributi.com/
+- Taxon: https://taxon.co/
+- Contadia: https://www.contadia.com/
+- Counti: https://counti.co/
+- TribAI: https://tribai.co/declaracion/
+
+Estudia sus capacidades públicas para identificar buenas prácticas en experiencia conversacional, preparación de declaraciones, extracción documental, detección de riesgos, explicación de resultados y asistencia tributaria.
+
+No copies sus interfaces ni des por ciertas sus afirmaciones comerciales sin verificarlas.
+
+El objetivo es comprender qué espera un usuario de un buen agente contador y construir una solución propia.
+
+---
+
+# 6. FUENTES OFICIALES COLOMBIANAS
+
+La especialización debe fundamentar sus respuestas tributarias en fuentes oficiales y documentación verificable.
+
+Referencias iniciales:
+
+**DIAN — Renta personas naturales, año gravable 2025**
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/
+
+**Cómo hacer la declaración**
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/como-hacer-su-declaracion/
+
+**Preparación de la declaración**
+
+https://micrositios.dian.gov.co/renta-personas-naturales-ag-2025/preparese-para-la-declaracion/
+
+**Formulario 210**
+
+https://muisca.dian.gov.co/WebDilIngresoFormRenta210/
+
+**Formulario 210, versión 16**
+
+https://muisca.dian.gov.co/WebFormRenta210v16/
+
+**Procedimientos tributarios DIAN**
+
+https://www.dian.gov.co/tramitesservicios/tramites-y-servicios/tributarios/Paginas/tramites-tributarios.aspx
+
+**Normograma DIAN — Resolución 227 de 2025**
+
+https://normograma.dian.gov.co/dian/compilacion/docs/resolucion_dian_0227_2025.htm
+
+Estas fuentes son referencias iniciales. Debes verificar su vigencia, pertinencia y aplicabilidad para cada período fiscal.
+
+No uses automáticamente las reglas del año gravable 2025 para una declaración de otro año.
+
+Construye un mecanismo para mantener separados y versionados los parámetros, formularios, reglas, fuentes y procedimientos por período tributario.
+
+Cuando sea necesario consultar normativa reciente, identifica la disposición oficial, su fecha, vigencia, artículo aplicable y relación con el cálculo.
+
+No inventes artículos, conceptos DIAN, beneficios, topes, tarifas ni interpretaciones jurídicas.
+
+Si no puedes verificar una regla importante, identifica la incertidumbre y evita presentarla como una conclusión definitiva.
+
+---
+
+# 7. ARQUITECTURA FUNCIONAL DEL CHALECO
+
+Diseña el arnés con módulos separados por responsabilidad.
+
+La distribución exacta dependerá de lo que descubras en AGENTE-GENERAL y en los referentes. No crees servicios o agentes independientes si una capability, herramienta o módulo interno resuelve adecuadamente el problema.
+
+Como mínimo, evalúa los siguientes componentes.
+
+## Módulo 1. Identidad y orquestación contable
+
+Define cómo AGENTE-GENERAL activa el modo especialista, qué instrucciones recibe, qué herramientas puede utilizar, cómo selecciona procedimientos y cuándo debe solicitar intervención humana.
+
+Debe conservar la identidad general del agente central.
+
+## Módulo 2. Perfil económico y tributario
+
+Recopila la información necesaria para comprender la situación del usuario.
+
+Debe distinguir entre:
+
+- Información confirmada por el usuario.
+- Información extraída de documentos.
+- Información importada de una fuente externa.
+- Información calculada por el sistema.
+- Inferencias pendientes de confirmación.
+- Datos desconocidos.
+- Datos contradictorios o desactualizados.
+
+Cada dato importante debe conservar su procedencia y, cuando corresponda, su fecha y período fiscal.
+
+## Módulo 3. Ingestión documental
+
+Procesa documentos compatibles, extrae campos relevantes y mantiene trazabilidad hasta el archivo y el fragmento de origen cuando sea técnicamente posible.
+
+Debe detectar documentos ilegibles, datos faltantes, posibles duplicados, períodos incorrectos y discrepancias.
+
+La extracción mediante IA no debe convertirse automáticamente en un dato contable definitivo.
+
+## Módulo 4. Expediente financiero longitudinal
+
+Evalúa un expediente estructurado que permita mantener información a través del tiempo.
+
+Debe contemplar, según corresponda:
+
+- Ingresos y sus soportes.
+- Certificados de retención.
+- Patrimonio y activos.
+- Deudas y obligaciones.
+- Movimientos financieros relevantes.
+- Costos y gastos.
+- Información exógena.
+- Declaraciones de años anteriores.
+- Beneficios y deducciones potenciales.
+- Soportes de decisiones tributarias.
+
+No es necesario implementar todos los tipos de información en la primera versión. Sí es necesario diseñar una estructura que permita ampliar el expediente sin duplicar datos ni perder su procedencia.
+
+## Módulo 5. Motor de reglas y cálculos deterministas
+
+Los cálculos tributarios críticos no deben depender exclusivamente de la generación de texto de un modelo de lenguaje.
+
+El agente puede interpretar, preguntar, investigar y explicar. El motor determinista debe ejecutar las operaciones fiscales que puedan formalizarse como reglas comprobables.
+
+El motor debe incluir, según el alcance implementado:
+
+- Reglas versionadas por período fiscal.
+- Fórmulas reproducibles.
+- Validaciones de entrada.
+- Límites y topes aplicables.
+- Reglas de redondeo.
+- Manejo explícito de valores desconocidos.
+- Resultados explicables.
+- Referencias a las normas utilizadas.
+- Pruebas unitarias y casos de referencia.
+- Registro de versiones de reglas y parámetros.
+
+Cada cifra importante debe poder reconstruirse a partir de sus entradas y operaciones.
+
+## Módulo 6. Investigación normativa
+
+Permite buscar y recuperar normativa, doctrina y documentación oficial relevante.
+
+Debe diferenciar las fuentes vinculantes, las orientaciones administrativas, los conceptos interpretativos y las fuentes secundarias.
+
+Cada conclusión tributaria importante debe identificar las fuentes que la sustentan.
+
+La recuperación documental no sustituye la comprobación de vigencia ni el análisis de aplicabilidad.
+
+## Módulo 7. Optimizador tributario legal
+
+Debe identificar alternativas lícitas que puedan mejorar la posición tributaria del usuario.
+
+No debe inventar deducciones, crear gastos ficticios, asumir que se cumplen requisitos ni recomendar ocultar información.
+
+Para cada alternativa, explica:
+
+- Requisitos legales.
+- Información necesaria.
+- Evidencias requeridas.
+- Efecto económico estimado.
+- Límites y condiciones.
+- Riesgos y supuestos.
+- Razones para aceptar, descartar o dejar pendiente la alternativa.
+
+Si faltan pruebas, la alternativa debe permanecer como potencial, no como beneficio confirmado.
+
+## Módulo 8. Auditor de riesgos e inconsistencias
+
+Debe detectar posibles omisiones, contradicciones, cifras atípicas, datos sin soporte, errores de clasificación, cálculos inconsistentes y diferencias entre documentos y resultados.
+
+Clasifica los hallazgos por severidad y explica qué debe corregirse o verificarse.
+
+No confundas una anomalía con una infracción confirmada.
+
+## Módulo 9. Preparación de declaraciones y reportes
+
+Prepara borradores, cálculos, informes y estructuras de datos para el formulario correspondiente.
+
+El usuario debe poder conocer:
+
+- Qué información se utilizó.
+- Qué información falta.
+- Qué reglas se aplicaron.
+- Cómo se calcularon las cifras.
+- Qué validaciones se ejecutaron.
+- Qué riesgos siguen abiertos.
+- Qué requiere aprobación humana.
+
+## Módulo 10. Operador de herramientas y navegador
+
+Evalúa la reutilización de las herramientas y capacidades de interacción existentes en el ecosistema ALBRA, incluidas las que sean compatibles con Hands.
+
+El operador podrá asistir en navegación, diligenciamiento y verificación de formularios cuando exista una implementación real, autorizada y comprobable.
+
+Debe actuar con permisos explícitos y seguir un ciclo de observar, identificar, actuar y verificar.
+
+No debe inventar resultados de navegación ni afirmar que un formulario fue presentado cuando solo fue preparado o diligenciado.
+
+## Módulo 11. Evidencias y auditoría
+
+Registra los datos, reglas, cálculos, decisiones, aprobaciones y acciones relevantes para poder reconstruir el procedimiento.
+
+Protege la información confidencial y evita almacenar credenciales, tokens o secretos en registros ordinarios.
+
+Las evidencias deben permitir distinguir claramente lo que se calculó, lo que se verificó, lo que aprobó el usuario y lo que realmente se ejecutó en un sistema externo.
+
+---
+
+# 8. ESTADOS OBLIGATORIOS DEL PROCEDIMIENTO TRIBUTARIO
+
+Diseña un ciclo de vida explícito para cada declaración o procedimiento relevante.
+
+Como mínimo, debe distinguir:
+
+1. **INCOMPLETO:** falta información necesaria.
+2. **PREPARADO:** existe un borrador generado.
+3. **VALIDADO:** se ejecutaron las comprobaciones previstas y se documentaron los resultados.
+4. **APROBADO:** el usuario autorizó la siguiente etapa correspondiente.
+5. **DILIGENCIADO:** los datos se incorporaron al sistema oficial, cuando ese paso se haya realizado y comprobado.
+6. **PRESENTADO:** existe evidencia verificable de la presentación oficial.
+7. **SOPORTADO:** se archivaron los comprobantes y evidencias disponibles.
+
+No permitas que un modelo de lenguaje cambie un estado por conveniencia narrativa.
+
+Cada transición debe tener requisitos y evidencia.
+
+Si el procedimiento se detiene, falla o pierde conexión, conserva el estado real y permite reconciliarlo con el sistema externo antes de reanudar.
+
+Un borrador no es una declaración presentada. Una pantalla de confirmación no sustituye automáticamente el comprobante oficial.
+
+---
+
+# 9. SEGURIDAD, PRIVACIDAD Y RESPONSABILIDAD PROFESIONAL
+
+La información financiera, patrimonial y tributaria requiere protección reforzada.
+
+Implementa los controles apropiados al entorno real:
+
+- Permisos mínimos necesarios.
+- Separación entre datos de usuarios.
+- Protección de documentos y credenciales.
+- Gestión segura de sesiones.
+- Redacción de secretos en los registros.
+- Validación de archivos y entradas.
+- Restricciones sobre acciones externas.
+- Trazabilidad de operaciones sensibles.
+- Aprobación humana antes de acciones que puedan producir consecuencias legales o fiscales.
+- Mecanismos de interrupción y recuperación segura.
+
+No asumas automáticamente respuestas tributarias desconocidas.
+
+No rellenes campos críticos con valores predeterminados que puedan alterar la declaración.
+
+No presentes una estimación como un resultado oficial.
+
+No afirmes que el agente es un contador público humano titulado, que posee matrícula profesional o que ha realizado una revisión humana si no es cierto.
+
+El sistema puede proporcionar asistencia especializada, cálculos, análisis y preparación documental. Las decisiones que legalmente requieran intervención, responsabilidad o firma de un profesional habilitado deben tratarse conforme a la normativa aplicable.
+
+Diseña los límites de responsabilidad de manera explícita, sin utilizarlos como excusa para evitar verificaciones técnicas.
+
+---
+
+# 10. LICENCIAS Y REUTILIZACIÓN DE CÓDIGO
+
+Antes de incorporar código externo:
+
+1. Identifica el repositorio de origen.
+2. Comprueba la licencia del proyecto y de los componentes relevantes.
+3. Revisa las licencias de dependencias y activos.
+4. Verifica las obligaciones de atribución, distribución y publicación de modificaciones.
+5. Distingue código, documentación, datos, modelos y contenido.
+6. Documenta el origen de cada componente reutilizado.
+7. Descarta cualquier incorporación cuya licencia no permita el uso previsto, hasta obtener autorización suficiente.
+
+No interpretes la disponibilidad pública de un repositorio como autorización automática para utilizarlo comercialmente.
+
+Cuando sea preferible, reproduce la idea mediante una implementación original sin copiar código protegido.
+
+---
+
+# 11. PLAN DE CONSTRUCCIÓN POR FASES
+
+Debes completar el proyecto de forma progresiva y verificable. No te detengas después de entregar una arquitectura teórica.
+
+## Fase 0. Inspección del entorno
+
+- Identifica el repositorio y la rama de trabajo.
+- Examina el estado real de AGENTE-GENERAL.
+- Identifica instrucciones del proyecto, pruebas, contratos, herramientas y mecanismos de extensión.
+- Comprueba las capacidades reales de CloneaKit.
+- Identifica el estado del árbol de trabajo y los cambios preexistentes.
+- No sobrescribas ni elimines cambios del usuario.
+
+**Resultado:** informe breve de situación y plan técnico adaptado al repositorio real.
+
+## Fase 1. Investigación y evaluación de referentes
+
+- Examina los referentes prioritarios.
+- Verifica funcionalidades, código, pruebas y licencias.
+- Elabora la matriz de aprovechamiento.
+- Identifica componentes que aporten valor real al agente.
+- Establece qué debe construirse, reutilizarse, adaptarse o descartarse.
+
+**Resultado:** decisiones técnicas justificadas y mapa de componentes.
+
+## Fase 2. Diseño del arnés
+
+Define:
+
+- Estructura de archivos.
+- Contratos de entrada y salida.
+- Interfaz de activación por AGENTE-GENERAL.
+- Herramientas y permisos.
+- Flujo de información.
+- Gestión del expediente.
+- Motor tributario.
+- Evidencias.
+- Gestión de errores.
+- Pruebas.
+- Estrategia de integración.
+
+**Resultado:** arquitectura implementable, sin rediseñar innecesariamente el núcleo general.
+
+## Fase 3. Construcción del núcleo funcional
+
+Prioriza una primera versión que pueda ejecutar un flujo tributario realista de principio a fin con datos de prueba.
+
+La primera versión debe incluir, como mínimo:
+
+- Activación de la especialización.
+- Recopilación estructurada de información.
+- Gestión explícita de datos desconocidos.
+- Ingestión o importación de los documentos seleccionados para el alcance inicial.
+- Cálculos deterministas del alcance implementado.
+- Validaciones.
+- Referencias normativas.
+- Generación de un borrador y sus soportes.
+- Registro de evidencias.
+- Presentación clara de errores, limitaciones y asuntos pendientes.
+
+No simules integraciones ausentes para aparentar que el flujo está terminado.
+
+## Fase 4. Integración con AGENTE-GENERAL
+
+Integra el chaleco mediante la interfaz compatible con el repositorio real.
+
+Comprueba que:
+
+- AGENTE-GENERAL puede activar la especialización.
+- Las herramientas reciben y devuelven datos según sus contratos.
+- Los permisos se respetan.
+- Los errores se manejan correctamente.
+- El núcleo general sigue funcionando.
+- Las demás capacidades existentes no quedan dañadas.
+- La especialización puede probarse sin ejecutar acciones tributarias externas.
+
+## Fase 5. Pruebas y validación tributaria
+
+Construye casos de prueba reproducibles y utiliza datos ficticios o anonimizados.
+
+Compara los resultados tributarios con casos de referencia revisados por un contador público competente y con la normativa oficial aplicable.
+
+Incluye:
+
+- Casos ordinarios.
+- Casos con información faltante.
+- Casos con datos contradictorios.
+- Casos límite.
+- Casos de error documental.
+- Casos con diferentes períodos fiscales.
+- Casos con reglas y topes relevantes.
+- Casos de recuperación después de un fallo.
+- Pruebas de permisos y seguridad.
+- Pruebas de regresión de AGENTE-GENERAL.
+
+No declares precisión tributaria demostrada sin evidencia suficiente.
+
+No marques una prueba como aprobada si solo se ejecutó sin comprobar sus resultados.
+
+## Fase 6. Documentación y entrega
+
+Entrega la documentación necesaria para instalar, configurar, utilizar, probar y mantener el arnés.
+
+Incluye las limitaciones conocidas, los componentes pendientes, las fuentes normativas, las versiones de reglas y las instrucciones para incorporar futuras capacidades.
+
+Documenta los cambios de arquitectura y cualquier hallazgo relevante en la documentación de contexto del proyecto cuando exista un mecanismo establecido para ello.
+
+---
+
+# 12. CRITERIOS DE ACEPTACIÓN
+
+El proyecto no se considerará terminado por tener una estructura de carpetas, un README, una interfaz atractiva o un agente que responda preguntas generales.
+
+Debe demostrar, mediante pruebas y evidencias, los siguientes resultados:
+
+### Arquitectura
+- [ ] AGENTE-GENERAL conserva su identidad y su funcionamiento central.
+- [ ] CONTADOR PÚBLICO ALBRA existe como especialización modular.
+- [ ] La integración utiliza contratos e interfaces verificables.
+- [ ] Las dependencias están justificadas y documentadas.
+
+### Inteligencia especializada
+- [ ] El agente distingue datos confirmados, desconocidos, extraídos y calculados.
+- [ ] Puede solicitar la información faltante.
+- [ ] Puede explicar los resultados.
+- [ ] Utiliza fuentes normativas verificables.
+- [ ] No inventa requisitos, cifras ni beneficios tributarios.
+
+### Cálculo y validación
+- [ ] Los cálculos críticos se realizan mediante reglas deterministas cuando corresponda.
+- [ ] Las reglas están versionadas por período fiscal.
+- [ ] Los resultados se pueden reconstruir.
+- [ ] Existen pruebas reproducibles.
+- [ ] Los resultados se compararon con casos de referencia apropiados.
+
+### Operación
+- [ ] Los procedimientos tienen estados explícitos.
+- [ ] Se distinguen los borradores de las declaraciones presentadas.
+- [ ] Las acciones sensibles requieren las autorizaciones correspondientes.
+- [ ] Los errores no producen afirmaciones falsas de éxito.
+- [ ] Las evidencias se conservan de manera segura.
+
+### Seguridad y mantenimiento
+- [ ] Se revisaron licencias y dependencias.
+- [ ] Se protegieron documentos, credenciales y sesiones.
+- [ ] Existen instrucciones de configuración y uso.
+- [ ] Se documentaron las limitaciones y las funciones que todavía no están implementadas.
+
+Un criterio sin evidencia debe reportarse como pendiente, no como aprobado.
+
+---
+
+# 13. REGLAS DE EJECUCIÓN PARA EL CONSTRUCTOR
+
+Tienes autorización para tomar decisiones técnicas razonables dentro de este alcance y completar el trabajo sin solicitar confirmación para cada detalle de implementación.
+
+Sin embargo:
+
+- No borres ni sobrescribas trabajo preexistente sin justificación y autorización.
+- No hagas cambios destructivos en AGENTE-GENERAL.
+- No cambies contratos externos sin revisar sus consumidores.
+- No instales dependencias innecesarias.
+- No expongas credenciales.
+- No uses datos reales sensibles en pruebas sin autorización y protección adecuadas.
+- No realices presentaciones tributarias reales.
+- No envíes información financiera a terceros sin autorización.
+- No crees commits, publiques versiones, hagas push, despliegues o ejecutes acciones irreversibles como consecuencia automática del trabajo.
+- No confundas pruebas simuladas con integraciones reales.
+- No detengas el proyecto por cuestiones secundarias que puedan documentarse y resolverse posteriormente.
+- No añadas agentes independientes si sus responsabilidades pueden resolverse de forma más simple dentro del arnés.
+
+Si descubres un bloqueo de seguridad, una licencia incompatible, un conflicto destructivo o una divergencia importante entre el estado real y lo esperado, detente en ese punto específico y documenta la decisión necesaria.
+
+En los demás casos, continúa con el mejor criterio técnico disponible.
+
+---
+
+# 14. INFORME FINAL OBLIGATORIO
+
+Al terminar, entrega un informe consolidado que incluya:
+
+1. **Resumen ejecutivo:** qué se construyó y cuál es su utilidad.
+2. **Arquitectura final:** cómo funciona el chaleco y cómo se conecta con AGENTE-GENERAL.
+3. **Mapa de archivos:** archivos nuevos, modificados y su responsabilidad.
+4. **Resultados de CloneaKit:** referentes examinados y patrones aprovechados.
+5. **Matriz de licencias:** origen y condiciones de los componentes reutilizados.
+6. **Capacidades implementadas:** separadas de las planificadas.
+7. **Pruebas ejecutadas:** comandos, resultados y evidencia verificable.
+8. **Validación tributaria:** casos de referencia utilizados, diferencias encontradas y limitaciones.
+9. **Seguridad:** controles incorporados y riesgos pendientes.
+10. **Integración:** qué funciona realmente con AGENTE-GENERAL y qué continúa aislado.
+11. **Limitaciones:** funcionalidades no implementadas, bloqueos y supuestos.
+12. **Instrucciones de uso:** cómo activar y probar el arnés.
+13. **Próximos pasos:** prioridades ordenadas por impacto y riesgo.
+14. **Estado final:** distingue entre IMPLEMENTADO, PROBADO, VALIDADO, PENDIENTE y NO VERIFICADO.
+
+No declares que el proyecto está terminado si los criterios críticos siguen sin verificarse.
+
+No presentes como real una conexión que solo está simulada.
+
+---
+
+# 15. INSTRUCCIÓN FINAL
+
+Construye **CONTADOR PÚBLICO ALBRA como un chaleco profesional de especialización para AGENTE-GENERAL**, utilizando CloneaKit para investigar, comparar y aprovechar inteligentemente los mejores referentes disponibles.
+
+No queremos otro agente generalista. No queremos un software contable tradicional. No queremos una colección de proyectos pegados entre sí.
+
+Queremos una especialización capaz de convertir a AGENTE-GENERAL en un asistente contable y tributario competente, con conocimiento estructurado, herramientas especializadas, cálculos verificables, investigación normativa, control de riesgos, trazabilidad y procedimientos seguros.
+
+**AGENTE-GENERAL conserva el cuerpo y la identidad. CONTADOR PÚBLICO ALBRA aporta la especialización. CloneaKit ayuda a construirla con criterio.**
+
+Empieza inspeccionando el repositorio real, verifica el entorno y avanza hasta donde permitan las condiciones técnicas y de seguridad, entregando al final el arnés implementado y el informe con evidencias.
