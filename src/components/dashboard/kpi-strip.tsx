@@ -3,12 +3,13 @@
 import {
   Building2,
   Github,
-  Coins,
-  Globe,
+  Gauge,
   Layers,
   GitBranch,
   ListChecks,
   Target,
+  CheckSquare,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
 import { kpis } from "@/lib/albra-data";
@@ -16,12 +17,13 @@ import { kpis } from "@/lib/albra-data";
 const iconMap: Record<string, LucideIcon> = {
   building: Building2,
   github: Github,
-  coins: Coins,
-  globe: Globe,
+  gauge: Gauge,
   layers: Layers,
   branch: GitBranch,
   list: ListChecks,
   target: Target,
+  check: CheckSquare,
+  wrench: Wrench,
 };
 
 export function KpiStrip() {

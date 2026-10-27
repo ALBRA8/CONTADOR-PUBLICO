@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ALBRA · Dashboard 360° — Agente Contador Digital con IA",
+  title: "CONTADOR PÚBLICO ALBRA · Panel de proyecto",
   description:
-    "Dashboard de investigación del ecosistema ALBRA: competencia colombiana, repos open source, arquitectura del chaleco contable, riesgos y plan de ejecución. F210 · DIAN · MUISCA.",
-  keywords: ["ALBRA", "contador digital", "Formulario 210", "DIAN", "MUISCA", "declaración de renta", "Colombia"],
+    "Panel de proyecto del chaleco de especialización contable para AGENTE-GENERAL: estado real, arquitectura del chaleco (Prompt Maestro), análisis real de CloneaKit, competencia colombiana, repos open source, plan por fases y criterios de aceptación. F210 · DIAN · MUISCA.",
+  keywords: ["ALBRA", "AGENTE-GENERAL", "CloneaKit", "contador digital", "Formulario 210", "DIAN", "MUISCA", "declaración de renta", "Colombia"],
   authors: [{ name: "Ecosistema ALBRA" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",

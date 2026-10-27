@@ -1,15 +1,16 @@
 "use client";
 
-import { LayoutDashboard, Building2, Github, Layers, ShieldAlert } from "lucide-react";
+import { LayoutDashboard, Building2, Github, Layers, Wrench, ListChecks } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlbraHeader } from "@/components/dashboard/header";
 import { KpiStrip } from "@/components/dashboard/kpi-strip";
 import { AlbraFooter } from "@/components/dashboard/footer";
 import { ResumenTab } from "@/components/dashboard/resumen-tab";
+import { ArquitecturaTab } from "@/components/dashboard/arquitectura-tab";
+import { CloneakitTab } from "@/components/dashboard/cloneakit-tab";
 import { CompetenciaTab } from "@/components/dashboard/competencia-tab";
 import { OpensourceTab } from "@/components/dashboard/opensource-tab";
-import { ArquitecturaTab } from "@/components/dashboard/arquitectura-tab";
-import { RiesgosPlanTab } from "@/components/dashboard/riesgos-plan-tab";
+import { PlanTab } from "@/components/dashboard/plan-tab";
 
 export default function Home() {
   return (
@@ -21,12 +22,14 @@ export default function Home() {
           {/* Título de sección */}
           <div>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              Informe maestro de investigación <span className="text-primary">· Vista 360°</span>
+              CONTADOR PÚBLICO <span className="text-primary">ALBRA</span>
+              <span className="text-muted-foreground"> · Panel de proyecto</span>
             </h2>
             <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-              Competencia colombiana, proyectos de código abierto, tecnologías reutilizables, licencias,
-              riesgos y oportunidades para el agente contador digital del ecosistema ALBRA. Prioridad:
-              personas naturales y Formulario 210 (DIAN / MUISCA).
+              Chaleco de especialización contable para AGENTE-GENERAL, construido con el método de
+              CloneaKit. Fuentes reales del proyecto: Informe Maestro de Investigación (26-oct-2026),
+              Prompt Maestro del Constructor y repositorio ClonaKit v0.1.0. Prioridad: personas naturales
+              y Formulario 210 (DIAN / MUISCA).
             </p>
           </div>
 
@@ -38,6 +41,14 @@ export default function Home() {
                 <LayoutDashboard className="h-3.5 w-3.5" />
                 Resumen 360
               </TabsTrigger>
+              <TabsTrigger value="chaleco" className="gap-1.5 data-[state=active]:text-primary">
+                <Layers className="h-3.5 w-3.5" />
+                Chaleco
+              </TabsTrigger>
+              <TabsTrigger value="cloneakit" className="gap-1.5 data-[state=active]:text-primary">
+                <Wrench className="h-3.5 w-3.5" />
+                CloneaKit real
+              </TabsTrigger>
               <TabsTrigger value="competencia" className="gap-1.5 data-[state=active]:text-primary">
                 <Building2 className="h-3.5 w-3.5" />
                 Competencia COL
@@ -46,18 +57,20 @@ export default function Home() {
                 <Github className="h-3.5 w-3.5" />
                 Open Source
               </TabsTrigger>
-              <TabsTrigger value="arquitectura" className="gap-1.5 data-[state=active]:text-primary">
-                <Layers className="h-3.5 w-3.5" />
-                Arquitectura
-              </TabsTrigger>
-              <TabsTrigger value="riesgos" className="gap-1.5 data-[state=active]:text-primary">
-                <ShieldAlert className="h-3.5 w-3.5" />
-                Riesgos y Plan
+              <TabsTrigger value="plan" className="gap-1.5 data-[state=active]:text-primary">
+                <ListChecks className="h-3.5 w-3.5" />
+                Plan y Criterios
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="resumen" className="mt-6">
               <ResumenTab />
+            </TabsContent>
+            <TabsContent value="chaleco" className="mt-6">
+              <ArquitecturaTab />
+            </TabsContent>
+            <TabsContent value="cloneakit" className="mt-6">
+              <CloneakitTab />
             </TabsContent>
             <TabsContent value="competencia" className="mt-6">
               <CompetenciaTab />
@@ -65,11 +78,8 @@ export default function Home() {
             <TabsContent value="opensource" className="mt-6">
               <OpensourceTab />
             </TabsContent>
-            <TabsContent value="arquitectura" className="mt-6">
-              <ArquitecturaTab />
-            </TabsContent>
-            <TabsContent value="riesgos" className="mt-6">
-              <RiesgosPlanTab />
+            <TabsContent value="plan" className="mt-6">
+              <PlanTab />
             </TabsContent>
           </Tabs>
         </div>

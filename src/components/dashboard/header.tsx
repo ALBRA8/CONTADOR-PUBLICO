@@ -15,11 +15,11 @@ export function AlbraHeader() {
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h1 className="truncate text-sm sm:text-base font-semibold tracking-tight text-foreground">
-                  AGENTE CONTADOR DIGITAL <span className="text-primary">ALBRA</span>
+                  CONTADOR PÚBLICO <span className="text-primary">ALBRA</span>
                 </h1>
               </div>
               <p className="hidden sm:block text-xs text-muted-foreground">
-                Dashboard de investigación 360° · Contador público como chaleco de especialización
+                Chaleco de especialización para AGENTE-GENERAL · Informe Maestro + Prompt Maestro + CloneaKit v0.1.0
               </p>
             </div>
           </div>
